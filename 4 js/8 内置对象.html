@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        // js中对象有三种 自定义对象 内置对象 浏览器对象
+        // 内置对象使用 需要经常查阅文档 mdn 和 w3c
+
+        // Math内置对象
+        // console.log(Math.PI);
+        // console.log(Math.abs(-10));
+        // console.log(Math.max(1,2,3,4,5));
+
+        // Date内置对象 是一个构造函数 需要new Date()
+        // var date = new Date();   //h5新增 ie9以下不支持
+        // console.log(Date.now());
+        // console.log(date.toLocaleDateString() + ' ' + date.toLocaleTimeString());
+        // console.log(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds());
+
+        // 数组对象 array
+        var arr = [1, 2, 3, 4, 5];
+        // var arr1 = new Array(1,2,3,4,5);
+        // var arr2 = new Array(5); //创建长度为5的数组
+        // console.log(arr);
+        // console.log(arr1);
+        // console.log(arr2);
+
+        // // 检测一个数组是否为数组
+        // console.log(Array.isArray(arr));   //h5新增 ie9以下不支持
+        // console.log(arr instanceof Array);
+
+        // 添加数组元素
+        // console.log(arr.push(6 , 7)); //push方法 在原数组后面添加一个或多个元素 有返回值 返回数组的长度 原数组发生变化
+        // console.log(arr);
+        // console.log(arr.unshift(1 , 2)); //unshift方法 在原数组前面添加一个或多个元素 有返回值 返回数组的长度 原数组发生变化
+        // console.log(arr);
+
+        // 删除数组元素
+        // console.log(arr.pop()); //pop方法 删除数组最后一个元素 没有参数 有返回值 返回被删除的元素 原数组发生变化
+        // console.log(arr);
+        // console.log(arr.shift()); //shift方法 删除数组第一个元素 没有参数 有返回值 返回被删除的元素 原数组发生变化
+        // console.log(arr);
+
+        // 翻转数组
+        // arr.reverse(); //reverse方法 翻转数组 没有参数 原数组发生变化
+        // console.log(arr);
+
+        // 数组排序（冒泡排序）
+        // arr.sort(); //sort方法 对数组进行排序 没有参数 原数组发生变化
+        // console.log(arr);
+        // var arr = [5,3,2,14,1];
+        // console.log(arr.sort()); //这样会有逻辑问题  用如下回调函数解决
+        // console.log(arr.sort(function(a,b){ //sort方法 对数组进行排序 参数是一个回调函数
+        //     // return a-b; //升序
+        //     return b-a; //降序
+        // }));
+
+        // 数组索引方法 indexOf() lastIndexOf()
+        // var arr = [5, 3, 2, 14, 1];
+        // console.log(arr.indexOf(5));  // 0 
+        // console.log(arr.lastIndexOf(5)); // 4
+
+        // 数组转换为字符串
+        // var arr = [5, 3, 2, 14, 1];
+        // console.log(arr.toString()); //toString()方法
+        // console.log(arr.join());   //join(分隔符)方法
+        // console.log(arr.join('-'));
+
+
+        // 基本包装类型
+        // var a = 'hello world';
+        // console.log(a.length);
+        // 对象/复杂数据类型才有属性和方法 简单数据类型为啥有方法？
+        // 基本包装类型： 就是把简单数据类型 包装成复杂数据类型
+        // 上面的两行代码相当于执行了如下操作
+        // var tmp = new String('hello world'); //创建对象 包装
+        // var a = tmp;
+        // tmp = null;
+
+        // 字符串的不可变性：指里面的值不可变 虽然看上去可以改变内容 但其实是地址变了 内存中新开辟了一个内存空间
+        // var a = 'andy';
+        // console.log(a);
+        // a = 'red';
+        // console.log(a);  //这里虽然控制台结果变了 但是实际上是 andy不变 内存中新建了red并把a的地址指向了red
+        // 因为字符串的不可变性 所以不可以大量的拼接和重新赋值 否则会导致内存泄漏和性能问题
+        // var str = '';
+        // for (var i = 0; i < 100000; i++) {
+        //     str += i;
+        // }
+        // console.log(str); // 这个结果需要花大量的时间显示 因为需要不断的开辟新的空间
+
+        // 根据字符串 返回位置 
+        // var str = 'hello world';
+        // console.log(str.indexOf('o')); //返回o的位置 4
+        // console.log(str.indexOf('o',5)); //从5开始找o的位置 7
+        // console.log(str.lastIndexOf('o')); //返回o的位置 7
+        // console.log(str.lastIndexOf('o',5)); //从5开始找o的位置 4
+        // console.log(str.search('o')); //返回o的位置 
+
+        // 根据位置 返回字符
+        // var str = 'hello world';
+        // console.log(str.charAt(0)); // h
+        // console.log(str.charCodeAt(0)); // 返回ascii码
+        // console.log(str[0]); //返回字符 h5新增 ie8+浏览器支持
+
+        // 字符串操作方法
+        // var str = 'hello world';
+        // console.log(str.concat('fangyu'));
+
+        // 截取字符串
+        // console.log(str.slice(0,5));
+        // console.log(str.substring(0,5));
+        // console.log(str.substr(0,5));
+        
+        // 替换字符
+        // console.log(str.replace('hello','hi'));
+
+        // 字符串转换为数组 splice
+        // console.log(str.split(' '));  //split(分隔符)
+
+        // 简单数据类型与复杂数据类型
+        // 简单类型又叫基本数据类型或值类型 复杂类型又叫引用类型
+        // 简单数据类型/基本数据类型/值类型 在存储时变量存储的时值本身  number string boolean null undefined symbol
+        // 复杂数据类型/引用类型 在存储时变量存储的时内存地址  object array function
+        // 简单数据存到栈里 复杂数据存到堆里 其实js没有堆栈的概念 这里写只是为了方便理解
+        // 函数中参数的传递是值传递 简单数据类型直接传值 复杂数据类型传内存地址
+
+
+
+
+
+
+
+
+
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

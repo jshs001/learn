@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jquery-3.7.1.js"></script>
+</head>
+
+<body>
+    <script>
+        //上网的目的：为了获取资源（文字、图片、视频、音频）
+
+        // 服务器：负责和对外提供资源的电脑
+        // 客户端：获取和消费资源的电脑
+
+        // url：统一资源定位符，用于标识互联网上每个资源的唯一存放位置，浏览器通过url获取资源。
+        // url一般由三部分组成：通信协议、服务器名称、资源在服务器上的存放位置
+        // http://www.cnblogs.com/liulongbinblogs/p/11649393.html
+        // 如上url的三部分分别为http、www.cnblogs.com、liulongbinblogs/p/11649393.html
+
+        // 客户端服务器通信过程：客户端发起请求->服务器处理请求->服务器响应客户端
+        // 网页中的每一个资源都是通过请求-处理-响应的方式从服务器获取回来的
+        // 开发工具查看请求过程：
+        // google浏览器访问一个地址或打开一个html后 点击f12 后选择network下的doc（document页面的意思）：下面的列表会展示每个页面的请求信息和响应信息
+
+        // 数据是网页的灵魂，如在网页中请求服务器中的数据资源，需要用到xhr对象（XMLHttpRequest）
+        // 常见的请求方式：get（获取服务器资源）和post（向服务器提交资源）
+
+        // Ajax全称Asynchronous Javascript And XML(异步js和XML)，是网页中利用XML对象和服务器进行数据交互的方式。
+        // 原生的XML用法复杂，所以jQuery对XML进行了封装后可以使用Ajax系列函数，简化数据交互。
+        // jQuery中发起Ajax请求 最常用三个方法：$.get()、$.post()、$.ajax()
+
+
+        $(function () {
+            // $.get(url, [data], [callback])
+            $('#btn1').on('click', function () {
+                $.get(
+                    'http://jsonplaceholder.typicode.com/posts',
+                    // {userId: 1},             //带参
+                    // { userId: 1, id: 1 },    //带参
+                    function (res) {
+                        console.log(res);
+                        // console.log(res[0].title);
+                        // console.log(typeof res);
+                    }
+                )
+            })
+
+            // $.post(url, [data], [callback])
+            $('#btn2').on('click', function () {
+                $.post(
+                    'http://jsonplaceholder.typicode.com/posts',
+                    { userId: 1, title: 'foo', body: 'bar' },
+                    function (res) {
+                        console.log(res);
+                    }
+                )
+            })
+
+            //调试ajax请求可以google浏览器的network功能下过滤xhr 或者console功能下查看ajax请求返回的数据
+
+            // $.ajax({
+            //     type:'', //请求方式
+            //     url:'', //请求地址
+            //     data:{}, //请求需要携带的数据
+            //     success:function(res){ //请求成功后的回调函数
+            //         console.log(res);
+            //     },
+            // })
+
+            $('#btn3').on('click', function () {
+                $.ajax({
+                    type: 'get',
+                    url: 'http://jsonplaceholder.typicode.com/posts',
+                    data: { userId: 1 },
+                    success: function (res) {
+                        console.log(res);
+                    }
+                })
+            })
+            $('#btn4').on('click', function () {
+                $.ajax({
+                    type: 'post',
+                    url: 'http://jsonplaceholder.typicode.com/posts',
+                    data: { userId: 1, title: 'foo', body: 'bar' },
+                    success: function (res) {
+                        console.log(res);
+                    }
+                })
+            })
+
+
+
+            // 接口：使用ajax请求数据时，被请求的url地址就叫做数据接口（简称接口）。同时每个接口必须有自己的请求方式。
+            // 接口测试工具：postman，好处不写任何代码的情况下，对接口进行调用和测试。
+            // 接口文档就是接口的说明文档，接口文档中会记录接口名称、请求方式、请求地址、请求参数、返回结果、返回示例等信息。
+
+
+            // 图书管理案例 bs3渲染ui页面后核心函数如下：
+            // 1 渲染图书列表
+            // function getBookList() {
+            //     $.get('http://www.liulongbin.top:3006/api/getbooks', function (res) {
+            //         if (res.status !== 200) return alert('获取图书列表失败！')
+            //         var rows = []
+            //         $.each(res.data, function (i, item) {
+            //             rows.push('<tr><td>' + item.id + '</td><td>' + item.bookname + '</td><td>' + item.author + '</td><td>' + item.publisher + '</td><td>' + item.price + '</td><td><a href="javascript:;" class="del" data-id="'+item.id+'">删除</a></td></tr>')
+            //         })
+            //         $('#bookBody').empty().append(rows.join(''))
+            //     })
+            // }
+            // getBookList()
+
+            // 2 删除图书 给a链接添加点击事件 因为a链接是动态渲染出来的 所以需要使用事件委托
+            // $('#bookBody').on('click', '.del', function () {
+            //     var id = $(this).attr('data-id')
+            //     $.get('http://www.liulongbin.top:3006/api/delbook', { id: id }, function (res) {
+            //         if (res.status !== 200) return alert('删除图书失败！')
+            //         getBookList()
+            //     })
+            // })
+
+            // 3 添加图书 给添加图书按钮添加点击事件
+            // $('#btnAdd').on('click', function () {
+            //     var bookname = $('#iptBookName').val().trim()
+            //     var author = $('#iptAuthor').val().trim()
+            //     var publisher = $('#iptPublisher').val().trim()
+            //     if (bookname.length === 0 || author.length === 0 || publisher.length === 0) {
+            //         return alert('请填写完整的图书信息！')
+            //     }
+            //     $.post('http://www.liulongbin.top:3006/api/addbook', {
+            //         bookname: bookname,
+            //         author: author,
+            //         publisher: publisher
+            //     }, function (res) {
+            //         if (res.status !== 201) return alert('添加图书失败！')
+            //         getBookList()
+            //         $('#iptBookName').val('')
+            //         $('#iptAuthor').val('')
+            //         $('#iptPublisher').val('')
+            //     })
+            // })
+
+
+
+            // 聊天机器人案例 主要用到了jquery jqueryui mousewheel 还有一个功能室发送消息后需要重置滚动条的操作实现方法见google标签学习-前端-框架-jquery 黑马是通过resetui方法实现的 核心函数如下：
+            // 1 发送消息
+            $('#btnSend').on('click', function () {
+                var text = $('#ipt').val().trim()
+                if (text.length <= 0) {
+                    return $('#ipt').val('')
+                }
+                $('#talk_list').append('<li class="right_word"><img src="img/person02.png" /><span>' + text + '</span></li>')
+                $('#ipt').val('')
+                resetui()
+                getMsg(text) // 调用获取聊天机器人回复的函数
+            })
+
+            // 2 获取聊天机器人回复
+            function getMsg(text) {
+                $.ajax({
+                    type: 'get',
+                    url: 'http://ajax.frontend.itheima.net:3006/api/robot',
+                    data: { spoken: text },
+                    success: function (res) {
+                        if (res.message === 'success'){
+                            var msg = res.data.info.text
+                            $('#talk_list').append('<li class="left_word"><img src="img/person01.png" /><span>' + msg + '</span></li>')
+                            resetui()
+                            getVoice(msg)
+                        }
+                    }
+                })
+            }
+
+            // 3 将机器人的聊天内容转化为语言
+            // 这里把语言url赋值给audio标签添加src属性，同时audio标签需要加antoplay属性才能自动播放，同时需要disabled:none隐藏起来
+            function getVoice(text) {
+                $.ajax({
+                    type: 'get',
+                    url: 'http://ajax.frontend.itheima.net:3006/api/synthesize',
+                    data: { text: text },
+                    success: function (res) {
+                        if (res.status === 200) {
+                            $('#voice').attr('src', res.voiceUrl)
+                        }
+                    }
+                })
+            }
+
+            // 4 使用回车键发送消息
+            $('#ipt').on('keyup', function (e) {
+                if (e.keyCode === 13) {
+                    $('#btnSend').click()
+                }
+            })
+
+
+        })
+    </script>
+    <button id="btn1">$.get请求</button>
+    <button id="btn2">$.post请求</button><br>
+    <button id="btn3">$.ajax 发送get请求</button>
+    <button id="btn4">$.ajax 发送post请求</button>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!-- 移动适配是网站元素的宽高都根据设备实际宽高而适配变换 -->
+<!-- 目前解决方案有:rem和vw/vh -->
+
+<!-- rem是相对单位,相对于html标签的字号计算结果,1rem=1html字号大小, -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        /* rem demo */
+        /* html {
+            font-size: 37.5px;
+        } */
+
+        /* 实现不同设备宽度设置不同html字号,用媒体查询实现
+        媒体查询能识别设备宽度,写差异化css
+        常用习惯性设置字号为视口宽度的1/10
+        */
+        /* @media (width:320px) {
+            html {
+                font-size: 32px;
+            }            
+        }
+
+        @media (width:375px) {
+            html {
+                font-size: 37.5px;
+            }            
+        } */
+        /* 媒体查询可以写范围写法 如上写法不一定生效 只有完全等于320或者375px的时候才生效 如果不生效请检查查看html实际大小 问题可能是显示设置了缩放大小 改为100%即可*/
+        
+        /* 可以用flexible插件替换媒体查询 */
+
+        .f1 {
+            width: 5rem;
+            height: 3rem;
+            /* 实际工作需要把设计稿的像素单位 转换为rem单位 */
+            /* rem单位=设计稿的像素单位/rem具体大小（通用的1/10的字号大小 如37.5） */
+
+            background-color: palegreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="f1"></div>
+
+    <script src="..\lib\lib-flexible-2.0\index.js"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dropdown Navigation</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        /* 导航行，横向排列 */
+        .nav-row {
+            display: flex;
+            gap: 10px; /* 按钮之间的间距 */
+        }
+
+        /* 每一个按钮和它的菜单的容器 */
+        .item-group {
+            position: relative; /* 关键：子元素绝对定位的参考点 */
+        }
+
+        /* 按钮样式 */
+        .nav-btn {
+            display: block;
+            width: 100px;
+            padding: 12px 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            text-align: center;
+            user-select: none;
+        }
+
+        /* 下拉菜单样式 */
+        .dropdown {
+            display: none; /* 默认隐藏 */
+            position: absolute; /* 绝对定位 */
+            top: 100%; /* 紧贴按钮下方 */
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            line-height: 100px;
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 5px; /* 增加一点按钮和菜单的间距 */
+        }
+
+        .c1 {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="nav-row">
+        <div class="item-group">
+            <span class="nav-btn">btn1</span>
+            <div class="dropdown">1</div>
+        </div>
+        
+        <div class="item-group">
+            <span class="nav-btn">btn2</span>
+            <div class="dropdown">2</div>
+        </div>
+        
+        <div class="item-group">
+            <span class="nav-btn">btn3</span>
+            <div class="dropdown">3</div>
+        </div>
+        
+        <div class="item-group">
+            <span class="nav-btn">btn4</span>
+            <div class="dropdown">4</div>
+        </div>
+        
+        <div class="item-group">
+            <span class="nav-btn">btn5</span>
+            <div class="dropdown">5</div>
+        </div>
+    </div>
+
+    <button class="b1">点击动起来</button>
+    <div class="c1"></div>
+
+    <script>
+        // $('.nav-btn').click(function () {
+            
+        //     //这样写不生效 siblings是同级兄弟
+        //     // $(this).css('background-color', 'pink').siblings('.nav-btn').css('background-color', '#fff'); 
+
+        //     // 这样
+        //     // $('.nav-btn').not(this).css('background-color', '#fff');   //排他思想
+        //     // $(this).css('background-color', 'pink');
+
+        //     // 或
+        //     $(this).css('background-color', 'pink');
+        //     $(this).parent().siblings().find('.nav-btn').css('background-color', '#fff');
+
+
+        //     // 1. 获取当前点击按钮对应的下拉菜单
+        //     var $currentDropdown = $(this).next('.dropdown');
+            
+        //     // 2. 隐藏其他所有的菜单
+        //     $('.dropdown').not($currentDropdown).hide();
+            
+        //     // 3. 切换当前菜单的显示/隐藏状态
+        //     $currentDropdown.toggle();
+        // });
+
+        $(function(){
+            // $('.nav-btn').mouseover(function(){ 
+            //     $(this).css('background-color', 'pink');
+            //     $(this).siblings('.dropdown').slideDown();
+            // })
+            // $('.nav-btn').mouseout(function(){ 
+            //     $(this).css('background-color', '#fff');
+            //     $(this).siblings('.dropdown').slideUp();
+            // })
+            
+            $('.nav-btn').hover(   //hover有两个参数一个是鼠标经过的函数 一个是鼠标离开的函数 ，可以简写为一个函数 经过和离开都触发
+                // function(){ 
+                // // $(this).css('background-color', 'pink');  这里不处理颜色了 颜色不能这样写
+                // $(this).siblings('.dropdown').slideDown();},
+                // function(){ 
+                // // $(this).css('background-color', 'pink');  这里不处理颜色了 颜色不能这样写
+                // $(this).siblings('.dropdown').slideUp();}
+            function(){ 
+                // $(this).css('background-color', 'pink');  这里不处理颜色了 颜色不能这样写
+                // $(this).siblings('.dropdown').slideToggle();}  //这里有一个问题 动画延迟了 鼠标快速一过 动画就一个个的来 看起别扭有bug
+                $(this).siblings('.dropdown').stop().slideToggle(200);} //添加stop()方法，必须写道动画的前面 停止动画排队 
+            )
+        });
+
+        // animate动画
+        $('.b1').click(function(){
+            $('.c1').animate({
+                top: '+=100px',
+                left: '+=100px',
+                width: '+=100px',
+                height: '+=100px',
+                backgroundColor: 'pink',
+                opacity: 0.5
+            }, 1000, function(){
+                $(this).animate({
+                    width: '-=100px',
+                    height: '-=100px',
+                    backgroundColor: '#fff',
+                })
+            }
+            )
+        })
+
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .d1,
+        .d2 {
+            width: 100px;
+            height: 50px;
+            background-color: red;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+        }
+
+        .d2 {
+            background-color: blue;
+            top: 50px;
+        }
+    </style>
+    <script src="../lib/fastclick.js"></script>
+</head>
+
+<body>
+    <script>
+        // pc网页轮播图案例 这里不写了 有几个点需要注意
+        // 1 轮播图下面的小圈圈可以查询图片的数量然后循环生成，生成时候加上data-index属性存上索引号；
+        //   循环内部用排他思想添加click事件监听处理current类样式和图片移动的距离（索引号*图片宽度）；
+        // 2 右击按钮 通过设置num变量控制图片移动的距离（num*图片宽度）； 无缝滚是复制第一个图片到最后，最后一次点击时移动到复制的图片上同时num和left值重置为0
+        //   复制图片的操作通过js实现且放到1部分代码后面 这样小圆圈就不会变多
+        //   小圆圈的current类和右侧按钮一起移动：再添加一个变量circle通过排他思想控制小圆圈的current类,注意点击到复制的图片时，小圆圈的变量应该为0. 
+        //      同时1中代码click事件需要把index的值赋值给num和circle
+        // 3 左侧按钮功能和右侧按钮功能类似 第一个图图片时候 需要快速移动到复制的图片位置。
+        // 4 添加定时器，自动播放轮播图，自动播放时类似点击右侧按钮直接把右侧按钮元素获取后使用click()方法触发点击事件。同时鼠标经过按钮时停止定时器，离开按钮时重新开启定时器。
+        // 5 节流阀 当多次点击右侧按钮 动画会过快 添加节流阀解决；
+        //   节流阀原理：在定时器开始工作之前，如果再次调用定时器，则直接返回，直到定时器结束，再次调用定时器时，才重新开始工作。
+        //   核心实现思路：创建一个变量，值设置为true，在定时器开始工作，将变量值设置为false，当定时器结束，通过回调函数将变量值设置为true
+
+        // 返回顶部案例 通过scroll事件控制返回按钮的隐藏和显示 按钮点击后通过window.scroll(x,y)方法返回顶部
+        // 为了更优雅 添加缓动画 
+
+        // 筋斗云导航案例 这里就不研究了
+
+
+
+
+        // 移动端网页特效 
+        // 移动端浏览器兼容性较好 不用考虑js兼容问题 但是移动端有自己独特的事件
+        // 1. 触摸事件 touchstart touchmove touchend 
+        //    touchevent 事件对象主要注意三个地方 :
+        //          touches（正在触摸屏幕的所有手指列表） 
+        //          targetTouches (正在触摸当前dom元素的手指列表) 如果侦听的是一个dom元素，那么这个属性就等于touches
+        //          changedTouches（手指状态发生了改变的手指列表 从无到有 或者 从有到无） 当手指离开的时候touchend事件 touches和targetTouches都会减少或为0 changedTouches就会增加
+
+        // 2 拖动元素
+        window.addEventListener('load', function () {
+            var d1 = document.querySelector('.d1');
+            var startX = 0;  // 获取手指的初始位置
+            var startY = 0;
+            var moveX = 0;   // 获取手指移动的位置
+            var moveY = 0;
+            var x = 0;    // 获取d1元素的初始位置
+            var y = 0;
+            d1.addEventListener('touchstart', function (e) {
+                e.preventDefault();//手指移动会默认会触发屏幕滚动事件，所以要阻止
+                startX = e.targetTouches[0].pageX;
+                startY = e.targetTouches[0].pageY;
+                x = this.offsetLeft;
+                y = this.offsetTop;
+            })
+            d1.addEventListener('touchmove', function (e) {
+                e.preventDefault();
+                moveX = e.targetTouches[0].pageX - startX;
+                moveY = e.targetTouches[0].pageY - startY;
+                this.style.left = x + moveX + 'px';
+                this.style.top = y + moveY + 'px';
+            })
+
+
+            // 移动端轮播图案例 
+            // 1 小圆圈是写死的不是循环生成的。
+            // 2 图片需要补两张 最后一个图补道第一个前面 第一个图补道最后一个后面 因为手指拖动需要看到上一个或下一个图片的一部分。补充图片的操作也是dom写死的，且为了显示的是第一张图片
+            //   而不是显示的补在第一张图片前的最后一个图 需要定位
+            // 3 图片移动可以用translateX 实现，缓慢移动加过度属性transition, 图片自动播放用定时器
+            // 4 无缝滚动原理是滚动到最后一张补出来的第一个图片时 需要去掉过度效果 快速移动到第一张图片的位置;反过来滚到到第一张前补的图片时候 也需要去过度快速移动到最后一张
+            //   需要监听过度事件transitionend
+            // 5 小圆点切换类用classList（ie10以上兼容 这里移动端开发 不考虑兼容） (pc是排他思想 麻烦) 把li中带有current类的去掉，把需要的li添加上current类，需要写到transitionend事件里
+            //   想要li缓慢的转换current类，需要给li设置一个过渡样式transition:all 0.5s;
+            // 6 手指拖动轮播图需要停止定时器 拖动完成后重新开启定时器 拖动原理跟55行开始的代码类似
+            // 7 手指离开事件里 需要计算轮播图的移动距离 参考一个数值 让轮播图回弹或者播放上一个或下一个
+
+
+
+            // 移动端click 300ms延迟的问题
+            // 移动端页面有时候需要去掉这延迟
+            // 1 视口标签中添加 content="...,user-scalable=no"属性
+            // 2 利用touch事件 自己封装函数
+            function tap(obj, callback) {
+                var startTime = 0;
+                var maxTime = 300; // 正常的 tap 应该在 300ms 内完成
+                var isMove = false;
+
+                obj.addEventListener("touchstart", function (e) {
+                    startTime = Date.now();
+                    isMove = false; // 每次按下时，必须重置移动标志位
+                });
+
+                obj.addEventListener("touchmove", function (e) {
+                    isMove = true; // 只要动了，就不是 tap 而是 drag/scroll
+                });
+
+                obj.addEventListener("touchend", function (e) {
+                    var duration = Date.now() - startTime;
+
+                    // 判断条件：1. 没有移动 2. 按下时间小于阈值
+                    if (!isMove && duration < maxTime) {
+                        if (callback) callback();
+                    }
+
+                    // 重置变量，准备下一次点击
+                    startTime = 0;
+                    isMove = false;
+                });
+            }
+            // 这段代码的作用是在移动端模拟一个“轻触”（Tap）事件。
+            // 由于早期的移动端浏览器在处理 click 事件时会有大约 300ms 的延迟（这是为了判断用户是否是想“双击缩放”），开发者通常会利用触摸事件（Touch Events）来自己封装一个响应速度更快的“点击”逻辑。
+
+            // 这段代码的核心逻辑是:
+            //     没有滑动 (!ismove)：如果你手指按下去后移动了（触发了 touchmove），代码就认为你是在“拖拽”或“翻页”，而不是“点击”。
+            //     时间极短 (Date.now() - startTime < 150)：如果你手指按住屏幕不松开（长按），超过了你设置的时间阈值（代码里是 0.15 秒），代码就认为你是在“长按”，而不是“点击”。
+            //     状态重置 在抬起手指（touchend）后，无论是否触发了回调，都会把状态归零，准备迎接下一次触摸。
+            tap(d1, function () {  //调用tap方法
+                console.log("点击了d1");
+            });
+
+            // 上面两种方案都有问题：使用标签方案如果有的页面还需要移动或者长按就有问题了；方案2还得写代码 而且元素多的话需要多次调用
+            // 方案3是移动端插件 fastclick
+            if ('addEventListener' in document) {
+                document.addEventListener('DOMContentLoaded', function () {
+                    FastClick.attach(document.body);
+                }, false);
+            }
+            var d2 = document.querySelector('.d2');
+            d2.addEventListener('click', function () { 
+                console.log("点击了d2");
+            })
+
+
+
+            
+            //移动端插件 swiper轮播图插件使用
+            //   下载好swiper插件后打开官方文档在线演示 每一个演示上面有一个标号如010 分别对应插件中的每一个demo文件；浏览器打开对应的demo文件看效果，然后右键查看代码；
+            //   一般需要引入swiper的css文件 和swiper的js文件 然后参照dome添加dom结构 添加css样式 添加js代码
+            //   官方文档有使用方法文档 跟上面的过程类似  
+            //   还有参数更改的文档详见官方文档中api文档页面
+
+
+
+            //插件使用方法总结
+            // 1 确认插件的功能
+            // 2 去官网查看使用说明
+            // 3 下载插件
+            // 4 打开demo实例文件，查看需要引入的相关文件，并且引入
+            // 5 复制demo实例文件中的结构html，样式css以及js代码
+
+
+            // 移动端插件superslide2插件 目前网上没有资源了 找github
+            // 视频插件zy.media.js
+
+
+            // 框架与插件的区别 框架是一个一套架构，它基于自身的特点向用户提供一套较为完整的解决方案
+            // 插件一般是为了解决某个问题而专门存在，功能单一，且比较小
+            // 前端常用框架有bootstrap、vue、angular、react等
+            // 前端常用插件有swiper、superslide2、zy.media.js、iscroll等
+
+            // bootstrap轮播案例见：.\bootstrap\2 组件 js插件demo.html
+            // 如果框架样式有冲突 想自己修改样式 1是可以修改bootstrap样式文件 2.可以自己写样式覆盖bootstrap样式后面加 !important
+        
+        
+        
+        
+        // 本地存储sessionStorage 和localStorage
+        // sessionStorage 存储的数据会话结束后被清除
+        // localStorage 存储的数据不会被清除
+        // sessionStorage 存储的数据只有当前页面的域名下的数据
+        // localStorage 存储的数据所有页面的域名下的数据
+        // sessionStorage 存储的数据大小一般不超过5M
+        // localStorage 存储的数据大小一般不超过10M
+
+        // sessionStorage 生命周期为关闭浏览器窗口；在同一个窗口（页面）下数据可以共享；以键值对的形式存储使用
+        sessionStorage.setItem("name", "张三");
+        sessionStorage.getItem("name");
+        // sessionStorage.removeItem("name");
+        // sessionStorage.clear();
+        sessionStorage.length;
+        for (var i = 0; i < sessionStorage.length; i++) {
+            var key = sessionStorage.key(i);
+            var value = sessionStorage.getItem(key);
+            console.log(key + ":" + value);
+        }
+
+        // localStorage 生命周期永久生效；在多个窗口（页面）下数据可以共享；以键值对形式存储使用
+        localStorage.setItem("name", "张三");
+        localStorage.getItem("name");
+        // localStorage.removeItem("name");
+        // localStorage.clear();
+        localStorage.length;
+        for (var i = 0; i < localStorage.length; i++) {
+            var key = localStorage.key(i);
+            var value = localStorage.getItem(key);
+            console.log(key + ":" + value);
+        }
+
+
+
+
+
+
+
+        
+        
+        })
+    </script>
+    <div class="d1"></div>
+    <div class="d2"></div>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // url是互联网标准资源地址：
+        //      协议://主机名:端口号/目录/资源名?参数1=值1&参数2=值2#片段名称 
+        //      protocol:host:port/path/file?query#fragment
+
+        // location对象：
+        //      location.href   获取或设置当前页面的URL
+        //      location.host   获取当前页面的主机名
+        //      location.hostname   获取当前页面的主机名
+        //      location.port   获取当前页面的端口号
+        //      location.pathname   获取当前页面的路径名
+        //      location.search   获取当前页面的参数
+        //      location.hash   获取当前页面的片段名称
+        //      location.assign()   跳转
+        //      location.replace()   跳转
+        //      location.reload()   刷新当前页面
+
+        window.addEventListener("load", function () {
+            var cs = location.search.substr(1).split("=")[1];  //跨页面提交参数小案例 这里懒得新建页面就用了一个页面测试效果
+            console.log(cs);
+            var div0 = document.getElementsByTagName("div")[0];
+            div0.innerHTML = cs+"欢迎你";
+
+            var btn = document.getElementsByTagName("button")[0]; //点击打印location对象属性
+            btn.addEventListener("click", function () {
+                console.log(location.href);
+                console.log(location.host);
+                console.log(location.hostname);
+                console.log(location.port);
+                console.log(location.pathname);
+                console.log(location.search);
+            })
+            var btn1 = document.getElementsByTagName("button")[1]; //点击跳转小案例
+            btn1.addEventListener("click", function () {
+                location.href = "https://www.baidu.com";
+                // location.assign("https://www.baidu.com"); //跳转带历史记录
+                // location.replace("https://www.baidu.com"); //跳转不带历史记录
+                // location.reload(); //刷新当前页面 可以加true参数代表强制刷新或刷新缓存
+            })
+        })
+
+        // navigator对象：
+        //      navigator.appCodeName   获取浏览器的代码名
+        //      navigator.appName   获取浏览器的名称
+        //      navigator.appVersion   获取浏览器的版本
+        //      navigator.language   获取浏览器的语言
+        //      navigator.platform   获取操作系统平台
+        //      navigator.userAgent   获取浏览器的用户代理字符串 此属性最常用 可以知道用户终端信息 系统信息等
+        if (( navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))){
+            console.log("手机端");
+            // window.location.href = "8 bom 其他对象.html?uname="+"手机端";
+        } else {
+            console.log("PC端");
+            // window.location.href = "8 bom 其他对象.html?uname="+"pc端";
+        } //此代码可以检测当前是手机端还是pc端 从而跳转不同页面
+        // 可以在f12页面 控制台 直接输入navicator 然后回车 打印对象信息
+
+        // history对象 与浏览器的历史记录进行交互 
+        // window.history.go(-1); //返回上一页
+        // window.history.go(1); //前进一页
+        // window.history.back(); //返回上一页
+        // window.history.forward(); //前进一页
+        // window.history.pushState(null, null, "8 bom 其他对象.html?uname="+"手机端"); //添加历史记录
+        // window.history.replaceState()
+    </script>
+    <button>点击</button><br>
+    <button>点击跳转</button>
+    <form action="8 bom 其他对象1.html">
+        用户名：<input type="text" name="uname"></input>
+        <input type="submit" value="提交">
+    </form>
+    <div></div>
+</body>
+</html>

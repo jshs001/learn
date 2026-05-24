@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul class="u1">
+        <li>我是uli1</li>
+        <li>我是uli2</li>
+        <li>我是uli3</li>
+        <li>我是uli4</li>
+        <li>我是uli5</li>
+    </ul>
+    <ol>
+        <li>我是oli1</li>
+        <li>我是oli2</li>
+        <li>我是oli3</li>
+        <li>我是oli4</li>
+        <li>我是oli5</li>
+    </ol>
+    <div class="box">
+        <span class="son">子div</span>
+    </div>
+
+    <div class="d1">兄弟0</div>
+    <span>兄弟1</span> 
+
+    <br>
+    <button class="btn">删除</button>
+    <ul class="u2">
+        <li>熊大</li>
+        <li>熊二</li>
+        <li>光头</li>
+    </ul>
+    <br>
+    <button class="btn1">创建</button>
+    <hr></hr>
+    <div class="inner"></div>
+    <div class="create"></div>
+
+    <script> 
+        // 1 父节点：element.parentNode
+        var son = document.querySelector('.son');
+        // var box = document.querySelector('.box');  // 这句可以省略了
+        console.log(son.parentNode);
+
+        // 2 子节点：element.childNodes element.children
+        var ol = document.querySelector('ol');
+        console.log(ol.childNodes); // 获取的是所有子节点 包含文本节点 所以返回数组元素超过了5个 可通过nodetype属性判断节点类型
+        console.log(ol.children); //获取的是所有子元素节点 不包含文本节点 所以返回数组元素只有5个 实际开发常用
+
+        console.log('--------------------------------------------------------------');
+        // 3 第一个和最后一个子节点：element.firstChild element.lastChild element.firstElementChild element.lastElementChild
+        console.log(ol.firstChild); // 获取的是第一个子节点 包含文本节点
+        console.log(ol.lastChild);
+        console.log(ol.firstElementChild); // 获取的是第一个子元素节点 不包含文本节点 ie9或以上才支持
+        console.log(ol.lastElementChild);
+        // 实际开发为了处理兼容性 用下面的写法
+        console.log(ol.children[0]);
+        console.log(ol.children[ol.children.length - 1]);
+
+        // 4 兄弟节点：element.previousSibling element.nextSibling element.previousElementSibling element.nextElementSibling
+        console.log('4 兄弟节点');
+        var d1 = document.querySelector('.d1');
+        console.log(d1.nextSibling); //下一个节点 包括文本节点
+        console.log(d1.nextElementSibling);  //下一个元素节点 ie9或以上才支持
+
+        // 解决兼容性 自己封装函数
+        function getNextElementSibling(element) {
+            var el = element;
+            while(el = el.nextSibling) {
+                if(el.nodeType === 1) {
+                    return el;
+                }
+            }
+            return null;
+        }
+
+        // 5 创建元素节点
+        console.log("5 创建元素节点");
+        var li1 = document.createElement('li'); //创建元素节点
+        var u1 = document.querySelector('.u1'); 
+        u1.appendChild(li1); //添加元素节点
+
+        var li2 = document.createElement('li');
+        u1.insertBefore(li2, u1.children[0]);
+
+        // 6 删除元素节点
+        console.log("6 删除元素节点");
+        var u2 = document.querySelector('.u2');
+        var btn = document.querySelector('.btn');
+        // u2.removeChild(u2.children[0]);
+        btn.onclick = function(){
+            if (u2.children.length == 0){
+                this.disabled = true;
+            }else{
+                u2.removeChild(u2.children[0]);
+            }
+        }
+
+        // 7 复制节点
+        var li3 = u2.children[0].cloneNode(false);
+        // var li3 = u2.children[0].cloneNode(true); //参数为true表示复制节点及其子节点 包括文本内容  参数为false或空表示只复制节点本身 不包括内容
+        u2.appendChild(li3);
+
+        // 8 三种创建元素方法的区别
+        // document.write() 
+        document.write('<div>write div</div>'); //直接将内容写入页面的内容流 
+        var btn1 = document.querySelector('.btn1');
+        btn1.onclick = function(){
+            document.write('<div>write div</div>'); //文档流执行完毕时，执行它 会导致页面重绘
+        }
+        // window.onload = function(){
+        //     document.write('<div>write div</div>'); //文档流执行完毕时，执行它 会导致页面重绘
+        // }
+        
+
+        var inner = document.querySelector('.inner');  //innerHTML 创建大量元素时候 效率会比createElement高 但是不要采用拼接字符串的方式 要采用数组的方式
+        inner.innerHTML = '<div>innerHTML</div>';
+
+        var create = document.querySelector('.create'); //createElement
+        var a = document.createElement('a');
+        create.appendChild(a);
+
+    </script>
+
+</body>
+</html>

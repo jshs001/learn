@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .w {
+            width: 50px;
+            height: 50px;
+            background-color: rgb(141, 24, 108);
+            padding: 5px;
+            border: 1px solid black;
+            margin: 0 auto;
+        }
+
+        .fa {
+            width: 100px;
+            height: 100px;
+            background-color: rgb(14, 128, 130);
+            margin: 80px;
+            position: relative;
+            /* 定位与否直接影响son的offsetleft和offsettop属性 */
+        }
+
+        .son {
+            width: 50px;
+            height: 50px;
+            background-color: rgb(22, 153, 98);
+            margin: 20px;
+        }
+
+        .w1 {
+            width: 100px;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid rgb(11, 11, 11);
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        window.addEventListener("load", function () {
+            // 1 offsset属性 获取元素距离有定位的父元素的位置 获取元素大小 返回的数值为像素且不带单位 可以动态的获取元素位置
+            var fa = document.getElementsByClassName("fa")[0];
+            var son = document.getElementsByClassName("son")[0];
+            var w = document.querySelector(".w");
+
+            console.log('fa左侧距离' + fa.offsetLeft); //获取元素距离有定位的父元素左边的距离
+            console.log('fa上侧距离' + fa.offsetTop); //获取元素距离有定位的父元素上边的距离
+
+            console.log('son左侧距离' + son.offsetLeft);
+            console.log('son上侧距离' + son.offsetTop);
+
+            console.log('w宽度' + w.offsetWidth); //宽度高度 包括边框和padding
+            console.log('w高度' + w.offsetHeight);
+
+            console.log(son.offsetParent) //获取元素有定位的父元素 如有父元素无定位 返回body； 此属性与定位有关和parentNode有区别
+            console.log(son.parentNode) //获取元素的亲爸爸
+
+            // offsetWidth 与 style.width 区别
+            console.log('w offset宽度' + w.offsetWidth);
+            console.log('w style宽度' + w.style.width); //style.width获取元素样式的宽度 不包含border和padding 只能获取内联样式 返回带单位 
+            w.style.width = '100px'; //style.width 可读写； offsetWidth 只读
+            //总结 获取元素宽度用offsetWidth 更改元素宽度用style.width
+
+
+            // 2 client属性 client宽高不包含边框 其他特性和offset一样；client属性只读 能单独读取边框宽度
+            console.log('w client宽度' + w.clientWidth);
+            console.log('w client高度' + w.clientHeight);
+            console.log('w client左边框' + w.clientLeft);
+            console.log('w client上边框' + w.clientTop);
+
+            // 3 scroll属性 scrollWidth scrollHeight是内容的宽高不含边框含padding； scrollLeft scrollTop 常用，获取滚动条的偏移量，需结合scroll事件使用 
+            var w1 = document.querySelector('.w1');
+            console.log('w1 scrollWidth:' + w1.scrollWidth);
+            console.log('w1 client宽度' + w1.clientWidth);
+            console.log('w1 offset宽度' + w1.offsetWidth);
+            console.log('w1 scrollHeight:' + w1.scrollHeight);
+            console.log('w1 client高度' + w1.clientHeight);
+            console.log('w1 offset高度' + w1.offsetHeight);
+            w1.addEventListener('scroll', function () {
+                console.log('w1 scrollLeft:' + w1.scrollLeft);
+                console.log('w1 scrollTop:' + w1.scrollTop);
+            })
+            // 注意页面被卷去头部有兼容性问题 
+            function getScroll(){
+                return { //兼容性写法 ie9以上||声明了dtd||未声明dtd||0     （dtd声明就是本页代码第一行<!DOCTYPE html>）
+                    left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+                    top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+                }
+            }
+            // getScroll().left //获取滚动条的x轴位置
+
+            // 三大系列最常用法：获取元素位置(offsetTop,offsetLeft) 获取元素大小(clientWidth,clientHeight) 获取滚动条位置(scrollTop,scrollLeft)
+            // 注意页面滚动距离用pageXOffset和pageYOffset获得
+
+            // 4 立即执行函数 不需要调用就能立即执行
+            var fn = function () {
+                console.log('传统调用执行');
+            };
+            fn(); //传统调用执行的写法
+            (function (a, b) {
+                sum = a + b;
+                console.log('立即执行写法1:' + sum);
+            })(1, 2); //立即执行写法1 括号不包裹调用
+            (function (a, b) {
+                sum = a * b;
+                console.log('立即执行写法2:' + sum);
+            }(2, 3)); //立即执行写法2 括号包裹调用
+            // 立即执行函数里面是独立的作用域 里面的变量是局部变量 不会有命名冲突情况
+
+            // 5 mouseover和mouseenter 区别
+            fa.addEventListener("mouseover", function () {console.log("mouseover")}) //鼠标进入元素时触发 鼠标进入子元素也会触发 会冒泡
+            fa.addEventListener("mouseenter", function () {console.log("mouseenter")}) //鼠标进入元素时触发 鼠标进入子元素不会触发 不会冒泡
+            // 跟mouseenter搭配的mouseleave，mouseleave 事件也不会冒泡
+        })
+    </script>
+    <div class="w" style="width: 50px;"></div>
+    <div class="fa">
+        <div class="son"></div>
+    </div>
+    <div class="w1">我是内容 我是内容 我是内容 我是内容 我是内容 我是内容 我是内容 我是内容 我是内容 我是内容 我是内容 我是内容 我是内容 我是内容 我是内容 我是内容 我是内容 我是内容 我是内容 我是内容
+        我是内容 我是内容 我是内容 </div>
+</body>
+
+</html>

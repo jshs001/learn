@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jquery-3.7.1.js"></script>
+
+    <style>
+        .gwc div {
+            display: inline-block;
+        }
+    </style>
+</head>
+<hr>
+<a href="http://www.baidu.com" title="都挺好">都挺好</a>
+<input type="checkbox" name="" id="" checked>
+<div class="c1" data-index="a">div</div>
+<span class="s1">span</span>
+<hr>
+</hr>
+<div class="c2"><span>获取元素内容</span></div>
+<input class="i1" type="text" name="" id="" value="默认值">
+<hr>
+</hr>
+<div>购物车选中小样例</div>
+<div><input class="checkall" type="checkbox" name="" id=""></input>全选<span>总数：</span><span
+        class="szs"></span><span>总价：</span><span class="szj"></span></div>
+<hr>
+</hr>
+<div class="gwc"><input class="checkonly" type="checkbox" name="" id=""></input>
+    <div class="spms">商品1</div>
+    <div class="dj">¥12</div>
+    <div class='ms'> 数量：</div><a href="javascript:;" class="jia">+</a><input type="text" class="itext" name="" id=""
+        value="1"><a href="javascript:;" class="jian">-</a>
+    <div class='ms1'> 小计：</div>
+    <div class="xj">¥12</div>
+</div>
+<div class="gwc"><input class="checkonly" type="checkbox" name="" id=""></input>
+    <div class="spms">商品2</div>
+    <div class="dj">¥13</div>
+    <div class='ms'> 数量：</div><a href="javascript:;" class="jia">+</a><input type="text" class="itext" name="" id=""
+        value="1"><a href="javascript:;" class="jian">-</a>
+    <div class='ms1'> 小计：</div>
+    <div class="xj">¥12</div>
+</div>
+<div class="gwc"><input class="checkonly" type="checkbox" name="" id=""></input>
+    <div class="spms">商品3</div>
+    <div class="dj">¥14</div>
+    <div class='ms'> 数量：</div><a href="javascript:;" class="jia">+</a><input type="text" class="itext" name="" id=""
+        value="1"><a href="javascript:;" class="jian">-</a>
+    <div class='ms1'> 小计：</div>
+    <div class="xj">¥12</div>
+</div>
+<div class="gwc"><input class="checkonly" type="checkbox" name="" id=""></input>
+    <div class="spms">商品4</div>
+    <div class="dj">¥15</div>
+    <div class='ms'> 数量：</div><a href="javascript:;" class="jia">+</a><input type="text" class="itext" name="" id=""
+        value="1"><a href="javascript:;" class="jian">-</a>
+    <div class='ms1'> 小计：</div>
+    <div class="xj">¥12</div>
+</div>
+
+<script>
+    //jquery属性操作 prop() 获取属性值或者设置元素固有属性值
+    console.log($('a').prop('href'));
+    $('a').prop('title', '我们都挺好');
+
+    $('input').change(function () {
+        console.log($(this).prop('checked'));
+    })
+    // $('div').prop('index');
+
+    //attr 获取属性值或者设置自定义属性值
+    console.log($('.c1').attr('index'));
+    $('.c1').attr('index', 'b');
+    console.log($('.c1').attr('index'));
+    console.log($('.c1').attr('data-index'));
+
+    //data() 把数据存储到元素中
+    $('.s1').data('name', 'cc');
+    console.log($('.s1').data('name'));
+
+    //获取与修改元素内容值
+    console.log($('.c2').html());
+    // $('.c2').html('<span>修改内容</span>');
+    console.log($('.c2').text());
+    $('.c2').text('修改内容');
+    console.log($('.i1').val());
+    $('.i1').val('修改值');
+
+    // 购物车选小样例
+    var getSum = function () {
+        var zs = 0;
+        var zj = 0;
+        $('.gwc .itext').each(function () {
+            zs += parseInt($(this).val());
+            zj += parseInt($(this).val()) * $(this).siblings('.dj').text().substring(1);
+        })
+        $('.szs').text(zs);
+        $('.szj').text('¥' + zj);
+    }
+    getSum();
+
+    $('.checkall').click(function () {
+        $('.checkonly').prop('checked', this.checked);
+    })
+    $('.checkonly').click(function () {
+        $('.checkall').prop('checked', $('.checkonly:checked').length == $('.checkonly').length);
+    })
+    $('.jia').click(function () {
+        var n = $(this).siblings('.itext').val();
+        // console.log(n);
+        n++
+        $(this).siblings('.itext').val(n);
+        $(this).siblings('.xj').text('¥' + n * $(this).siblings('.dj').text().substring(1));
+        getSum();
+    })
+    $('.jian').click(function () {
+        var n = $(this).siblings('.itext').val();
+        // console.log(n);
+        if (n == 1) {
+            return;
+        }
+        n--
+        $(this).siblings('.itext').val(n);
+        $(this).siblings('.xj').text('¥' + n * $(this).siblings('.dj').text().substring(1));
+        //此处样例有一个bug 文本框修改后 价格不会改变 这里最好直接禁用文本框的修改功能，否则需要数据验证，如必须是大于0的自然数 不能是小数等等
+        getSum();
+    })
+    // 最开始的小计 也有一个bug 暂时不处理了
+
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../lib/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <script src="../lib/jquery-3.7.1.js"></script>
+    <script src="../lib/persion/itheima.js"></script>
+</head>
+
+<body>
+    <script>
+        // 基于XMLHttpRequest对象发起get请求
+
+        // 1 创建xhr对象
+        // var xhr = new XMLHttpRequest()
+        // // 2 调用open方法
+        // // xhr.open('get', 'http://jsonplaceholder.typicode.com/posts') //不带参的get请求
+        // // xhr.open('get', 'http://jsonplaceholder.typicode.com/posts?userId=1') //带参的get请求
+        // xhr.open('get', 'http://jsonplaceholder.typicode.com/posts?userId=1&id=1') //带多个参的get请求
+        // // 3 调用send方法
+        // xhr.send()
+        // // 4 监听xhr对象的onreadystatechange事件
+        // xhr.onreadystatechange = function () { 
+        //     if (xhr.readyState === 4 && xhr.status === 200){ //此处的status是http状态码 不是返回数据里的属性status
+        //         // 获取响应数据
+        //         console.log(xhr.responseText)
+        //         console.log(typeof xhr.responseText) //原生的xhr返回的是字符串 转换成对象需要用JSON.parse()方法转换成对象 jquery中会自动将响应数据转换成对象
+        //     }
+        // }
+        // xhr的readyState属性：0-4，0 unsent 未初始化，1 opened 已打开，2 headers_received 已接收到响应头，3 loading 正在接收响应体，4 done 已完成
+
+
+
+        // 查询字符串：url地址中带有的参数。使用时需要在url地址后面添加？参数名=参数值 参数之间用&连接
+        // 无论是$.get(),还是$.ajax()发送的get请求，请求参数的本质都是查询字符串
+        // 使用$.get(),还是$.ajax()发送的get请求时 打开google浏览器的network功能下过滤xhr 可以查看请求参数查询字符串拼接在url后面的
+
+        // url编码与解码：url地址中只允许出现英文相关的字母、数字、标点符号，如果url中出现中文，则必须对中文进行编码
+        // url编码的原则：使用安全字符（没有特殊用途或者特殊意义的可打印字符）去表示那些不安全的字符
+        // url编码原则的通俗理解：用英文字符去表示非英文字符
+        console.log('1 url编码与解码演示')
+        var str = '黑马程序员'
+        var str1 = encodeURI(str)
+        console.log(str1)
+        var str2 = decodeURI(str1)
+        console.log(str2)
+        // 注意：浏览器会自动将url中的中文进行编码，大多数情况下程序不需要关心url地址的编码与解码操作。
+
+
+        // // // 基于XMLHttpRequest对象发起post请求
+        // // 1 创建xhr对象
+        // var xhr = new XMLHttpRequest()
+        // // 2 调用open方法
+        // xhr.open('post', 'http://jsonplaceholder.typicode.com/posts')
+        // // 3 设置请求头
+        // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded') // 固定写法
+        // // 4 调用send方法
+        // xhr.send('userId=2') // 不加？号的查询字符串
+        // // 5 监听xhr对象的onreadystatechange事件
+        // xhr.onreadystatechange = function () {         // on监听的事件会覆盖
+        //     if (xhr.readyState === 4 && xhr.status === 201){
+        //         // 获取响应数据
+        //         console.log(xhr.responseText)
+        //         console.log(typeof xhr.responseText)  //原生的xhr返回的是字符串 转换成对象需要用JSON.parse()方法转换成对象 jquery中会自动将响应数据转换成对象
+        //     }
+        // }
+
+
+        // 数据交换格式：服务器端与客户端进行数据传输与交换的格式，前端领域经常提及的两种数据交换格式：json、xml。xml很少用，重点学json
+        // XML：可扩展标记语言 跟html类似都是标记语言。html被设计用来描述网页上的内容；xml被设计用来传输和存储数据，是数据的载体；
+        // XML缺点：格式臃肿，和数据无关代码多，体积大，传输效率低；在js中解析XML比较麻烦。
+        // JSON：JavaScript Object Notation，js对象表示法。简单讲JSON就是js对象和数组的字符串表示法，本质就是字符串。
+        // JSON是一种轻量级的文本数据交换格式，作用类似XML，专门用于存储和传输数据，但是JSON比XML更简单易读，JSON比XML更小、更快、更易解析。
+        // JSON已经成为了主流的数据交换格式。
+
+        // JSON数据格式：
+        // 1 对象：{key:value,key:value,key:value}      key必须是使用英文的双引号包裹，value的数据类型可以是数字、字符串、布尔值、null、数组、对象6种类型
+        // 2 数组：[value,value,value]        value的数据类型可以是数字、字符串、布尔值、null、数组、对象6种类型
+        // 3 字符串："value"      json中所有的字符串必须使用英文双引号包裹
+        // 4 数值：123
+        // 5 布尔值：true false
+        // 6 null
+        // 对象和数据结构可以互相嵌套
+        // 注意事项：属性名和字符串必须使用英文双引号包裹；不能写注释；不能使用上面6种类型以外的类型作为json的值；json最外层必须是对象或数组；
+
+        // json和js对象的互换 parse() stringify()
+        console.log('2 json和js对象互换')
+        var jsonStr = '{"a":"Hello","b":"World"}'
+        var obj = JSON.parse(jsonStr) // 字符串转对象称为反序列化
+        console.log(obj)
+
+        var obj1 = { a: 'Hello', b: 'World', c: false }
+        var jsonStr1 = JSON.stringify(obj1)   // 对象转字符串称为序列化
+        console.log(jsonStr1)
+
+
+
+
+        // 封装自己的ajax方法
+        // itheima({
+        //     method: 'get',
+        //     url: 'http://jsonplaceholder.typicode.com/posts',
+        //     data: {userId:1,id:1},
+        //     success: function (data) {
+        //         console.log(data)
+        //     }
+        // })
+        // itheima({
+        //     method: 'post',
+        //     url: 'http://jsonplaceholder.typicode.com/posts',
+        //     data: {userId:1,id:1},
+        //     success: function (data) {
+        //         console.log(data)
+        //     }
+        // })
+
+
+
+
+        // XML level2新特性
+        // 旧版的xml只支持文本数据的传输，无法用来读取和上传文件；传输和接收数据时，没有进度信息，只能提示有没有完成。
+        // xml level2新功能：可以设置http请求时限；可以使用formdata对象管理表单数据；可以上传文件；可以获取上传进度信息；
+
+        // 1 设置超时时间和监听超时事件
+        // var xhr = new XMLHttpRequest()
+        // xhr.open('get', 'http://jsonplaceholder.typicode.com/posts?userId=2&id=13')
+        // // xhr.timeout = 5000 // 设置超时时间为5秒
+        // xhr.timeout = 30
+        // xhr.ontimeout = function () { // 监听超时事件
+        //     console.log('请求超时了')
+        // }
+        // xhr.send()
+        // xhr.onreadystatechange = function () { 
+        //     if (xhr.readyState === 4 && xhr.status === 200){
+        //         console.log(xhr.responseText)
+        //     }
+        // }
+
+        // 2 使用formdata对象管理表单数据
+        // 2.1 ajax操作往往用来提交表单数据。为了方便表单处理，html5新增了一个formdata对象，可以模拟表单操作。
+        // var fd = new FormData()
+        // fd.append('userId', 111)
+        // fd.append('id', 123123123)
+        // var xhr = new XMLHttpRequest()
+        // xhr.open('post', 'http://jsonplaceholder.typicode.com/posts')
+        // xhr.send(fd)  //浏览器在检测到 send() 方法传入的是 FormData 实例时，会自动将请求头的 Content-Type 设置为 multipart/form-data
+        // xhr.onreadystatechange = function () {
+        //     if (xhr.readyState === 4 && xhr.status === 201) {
+        //         console.log(xhr.responseText)
+        //     }
+        // }
+
+        // 2.2 formdata对象管理表单数据
+        $(function () {
+            var form1 = document.getElementById('form1')
+
+            form1.addEventListener('submit', function (e) {
+                e.preventDefault() // 阻止表单的默认提交行为
+
+                var fd = new FormData(form1) // 创建formdata对象 快速获取表单数据
+                var xhr = new XMLHttpRequest()
+                xhr.open('post', 'http://jsonplaceholder.typicode.com/posts')
+                xhr.send(fd)
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 201) {
+                        console.log(JSON.parse(xhr.responseText))
+                    }
+                }
+
+            })
+
+            // 3 上传文件 
+            // 如下代码是一个演示函数 我没有后端文件服务器 这里演示单个文件上传 多个文件上传得改代码
+            var btn1 = $('#btn1')
+            // var file1s = $('#file1')[0].files //这里写会有问题 页面加载完成后只执行一次
+            var img1 = $('#img1')
+
+            btn1.on('click', function () {
+                var file1s = $('#file1')[0].files //需要写在这里 因为用户是加载后的时间段执行操作
+                if (file1s.length <= 0) {
+                    return alert('请选择需要上传的文件')
+                }
+
+                var fd = new FormData()
+                fd.append('avatar', file1s[0])
+
+                var xhr = new XMLHttpRequest()
+
+                // 4 文件上传
+                // 4.1 监听上传进度信息 upload.onprogress
+                xhr.upload.onprogress = function (e) { // 上传进度信息对象e 有三个重要属性
+                    if (e.lengthComputable) { //e.lengthComputable 布尔值 表示当前上传的资源是否具有可计算的长度
+                        var percentComplete = Math.cell(e.loaded / e.total * 100) // e.loaded 已上传的字节数 e.total 需上传的总字节数
+                        console.log(percentComplete)
+                        $('#percnet').attr('style', 'width:' + percentComplete + '%').html(percentComplete + '%') // 设置进度条样式
+                    }
+                }
+                // 4.2 监听上传完成事件 upload.onload
+                xhr.upload.onload = function () { // 上传完成事件
+                    $('#percnet').removeClass().addClass('progress-bar progress-bar-success')
+                }
+
+
+                xhr.open('post', 'http://jsonplaceholder.typicode.com/posts')
+                xhr.send(fd)
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var data = JSON.parse(xhr.responseText)
+                        if (data.status === 200) { // 上传成功
+                            img1.attr('src', 'http://jsonplaceholder.typicode.com/posts' + data.url)
+                        } else { // 上传失败
+                            console.log('data.message')
+                        }
+                    }
+                }
+
+            })
+
+            // 扩展多个文件上传 核心代码如下
+            // 前端js
+            // // HTML: <input type="file" id="fileInput" multiple>
+
+            // const fileInput = document.getElementById('fileInput');
+
+            // function uploadFiles() {
+            //     const formData = new FormData();
+            //     // 遍历所有选中的文件并添加到 FormData 中
+            //     for (let i = 0; i < fileInput.files.length; i++) {
+            //         formData.append('files', fileInput.files[i]);
+            //     }
+
+            //     // 发送请求
+            //     fetch('你的后端上传接口', {
+            //         method: 'POST',
+            //         body: formData
+            //     }).then(response => {
+            //         return response.json();
+            //     }).then(data => {
+            //         console.log('上传成功', data);
+            //     }).catch(error => {
+            //         console.error('上传失败', error);
+            //     });
+            // }
+
+            // 后端java
+            // @PostMapping("/upload")
+            // public String uploadMultipleFiles(@RequestParam("files") List<MultipartFile> files) {
+            //     for (MultipartFile file : files) {
+            //         // 处理每个文件的保存逻辑
+            //     }
+            //     return "上传成功";
+            // }
+
+            // 高级进阶技巧
+            // 若涉及大量文件或大文件上传，推荐采用以下进阶方案，确保上传的稳定性和效率：
+            //     并发控制： 对于多文件上传，可以通过控制并发请求数，避免浏览器瞬间发起过多请求导致页面卡顿。具体实现可参考掘金前端多文件上传并发控制文章。
+            //     分片与断点续传： 若单个文件体积很大，可将文件切割为多个数据块（切片），并发上传至服务端再进行合并。这种方式支持失败重传和秒传。更多原理解析可参考知乎大文件上传指南
+
+            // 前端组件库推荐
+            // 如果使用现代前端框架，可以直接借助现成的UI库来减少原生代码编写，它们通常内置了多选、拖拽、进度条等功能：
+            //     React: 可以使用 react-dropzone 插件。详细自定义组件步骤可参考腾讯云多文件拖拽上传教程。  
+            //     Vue: 可使用 el-upload 或 u-upload 等内置了多选与批量上传机制的组件。  
+
+            // 单文件上传 formdata结构如下：
+            // 键 (Key)   | 值 (Value)
+            // ---------------------------------
+            // "file"     | [File 对象 (avatar.jpg)]
+
+            // 多文件上传 formdata结构如下：
+            // 键 (Key)   | 值 (Value)
+            // ---------------------------------
+            // "files"    | [File 对象 (pic1.png)]
+            // "files"    | [File 对象 (pic2.png)]  <-- 键名相同，依次追加
+            // 后端通过同一个键名 "files"，就能一次性读取到一个文件集合（数组/列表）。
+
+            // FormData虽然内部是键值对结构 但是和字典数据结构不一样。
+            // 绝大多数编程语言中，普通字典（Dictionary/Map/Object）的底层逻辑是 键（Key）必须唯一。当你对同一个键多次赋值时，后面的值会直接覆盖前面的值，而不是追加。
+            // FormData 的底层不是普通字典，它是一个有序的键值对列表（List of Pairs）。当你调用 formData.append('key', value) 时，它只是在列表末尾追加了一行 [key, value]
+            // 它允许列表中存在多行 ['files', file1] 和 ['files', file2]。
+
+
+        })
+
+    </script>
+
+    <form id="form1">
+        <input type="text" name="userId"></input>
+        <input type="text" name="id"></input>
+        <button type="submit">提交</button>
+    </form>
+
+    <br>
+    <input type="file" id="file1">
+    <button id="btn1">上传文件</button>
+    <br>
+    <img src="" alt="" id="img1" width="200" height="200">
+    <br>
+
+    <!-- bs3 组件 进度条-动画效果 -->
+    <div class="progress" style="width: 500px; margin: 15px 10px;">
+        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0"
+            aria-valuemax="100" style="width: 45%" id="percent">
+            <!-- <span class="sr-only">45% Complete</span> -->
+            <!-- .sr-only 类让其在视觉上表现出隐藏的效果。 -->
+            45% Complete
+        </div>
+    </div>
+
+</body>
+
+</html>

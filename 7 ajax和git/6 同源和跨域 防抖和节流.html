@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jquery-3.7.1.js"></script>
+    <script src="../lib/template-web.js"></script>
+</head>
+
+<body>
+    <script>
+        // 同源和跨域
+        // 同源：协议、域名、端口号相同
+        // 跨域：协议、域名、端口号不同
+
+        // 跨域问题：
+        // 1. 同源策略：同源策略是浏览器的安全策略，是浏览器对ajax请求的默认限制。同源策略限制了不同源的脚本不能进行ajax请求。
+        //             通俗的理解：a网站的js文件不能请求非同源的b网站的数据。
+        //                        无法读取非同源b网站的Cookie、localStorage、indexDB数据
+        //                        无法解除非同源网页的DOM
+        //                        无法向非同源地址发送ajax请求
+
+        // 2. 浏览器对跨域请求的拦截
+        //    跨域请求可以正常发起，浏览器能正常接收到跨域响应的数据，浏览器会根据同源策略进行拦截，不会把数据给到ajax。
+
+        // 3. 如何实现跨域数据请求，最主要的两种解决方案，分别是 JSONP 和 CORS。
+        //    JSONP： 出现的早，兼容性好（兼容低版本IE）。是前端程序员为了解决跨域问题，被迫想出来的一种临时解决方案。缺点是只支持 GET 请求，不支持 POST 请求。
+        //    CORS： 出现的较晚，它是 W3C 标准，属于跨域 Ajax 请求的根本解决方案。支持 GET 和 POST 请求。缺点是不兼容某些低版本的浏览器
+
+        // 4. JSONP的实现原理
+        //    由于浏览器同源策略的限制，网页中无法通过 Ajax 请求非同源的接口数据。但是 <script> 标签不受浏览器同源策略的影响，可以通过 src 属性，请求非同源的 js 脚本。
+        //    JSONP 的实现原理，就是通过 <script> 标签的 src 属性，请求跨域的数据接口，并通过函数调用的形式，接收跨域接口响应回来的数据。
+
+
+        // 如下跨域请求报错：Access to XMLHttpRequest at 'http://ajax.frontend.itheima.net:3006/api/jsonp' from origin 'null' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+        // $.ajax({
+        //     method: "get",
+        //     url: "http://ajax.frontend.itheima.net:3006/api/jsonp",
+        //     data: {},
+        //     success: function (res) {
+        //         console.log(res);
+        //     }
+        // })
+
+
+
+    </script>
+
+
+
+
+
+
+    <!-- 模拟jsonp实现原理 -->
+    <!-- <script>
+        function success(data) {  //函数定义
+            console.log("我是success，拿到了data数据")
+            console.log(data);
+        }
+        function abc(data) {  //函数定义
+            console.log("我是abc，拿到了data数据")
+            console.log(data);
+        }
+    </script> -->
+
+    <!-- 模拟jsonp实现原理1 -->
+    <!-- <script>
+        success({   // 函数调用
+            name: "张三",
+            age: 18
+        })
+    </script> -->
+
+    <!-- 模拟jsonp实现原理2 把函数调用放到了一个js文件中 -->
+    <!-- <script src="../lib/getdata.js"></script> -->
+
+    <!-- 模拟jsonp实现原理3 假如js文件就是服务器端 这里需要通过查询字符串的方式 告诉服务器需要调用的函数 -->
+    <!-- <script src="../lib/getdata.js?callback=success"></script> -->
+    <!-- <script src="../lib/getdata.js?callback=abc"></script> -->
+
+
+
+
+
+
+    <!-- jsonp原理：
+    1. 定义一个回调函数，2.通过script标签的src属性去请求一个函数的调用，将回调函数名通过查询字符串的方式传递给服务器，3.服务器返回函数调用，参数为服务器返回的数据。 -->
+
+
+
+
+
+
+    <!-- 手工实现一个jsonp请求（这里只演示前端，服务器端目前没有） -->
+    <!-- <script>
+        function success(data) {
+            console.log("jsonp请求成功");
+            console.log(data);
+        }
+    </script>
+    <script src="http://ajax.frontend.itheima.net:3006/api/jsonp?callback=success&name=ls&age=30"></script> -->
+    <!-- 注意此时浏览器查看network发现jsonp不是ajax请求，而是script请求（get请求）。 script标签没有post请求。 -->
+
+
+
+
+
+
+    <!-- jquery中的ajax实现jsonp请求： -->
+    <!-- <script>
+        $(function () {
+            $.ajax({
+                url: "http://ajax.frontend.itheima.net:3006/api/jsonp?name=ls&age=30",
+                dataType: "jsonp", // 告诉jquery使用jsonp方式发送请求
+
+                jsonp: "callback", // 指定jsonp回调函数名称  这个参数基本没人用
+                jsonpCallback: "success", // 自定义回调函数名称    这两个参数就是手工实现jsonp的:callback=success
+
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        })
+    </script> -->
+    <!-- 浏览器 network js 里看请求。默认情况下，jquery发起jsonp请求时，会自动为url添加一个callback参数，值为一个随机函数名jQueryxxx。 -->
+
+
+
+
+
+
+    <!-- jQuery中JSONP的实现过程
+        jQuery 中的 JSONP，也是通过 <script> 标签的 src 属性实现跨域数据访问的，只不过，jQuery 采用的是动态创建和移除标签的方式，来发起 JSONP 数据请求。
+        在发起 JSONP 请求的时候，动态向 <header> 中 append 一个 <script> 标签；
+        在 JSONP 请求成功以后，动态从 <header> 中移除刚才 append 进去的 <script> 标签；
+            
+        jquery中的ajax实现jsonp请求的代码 请求时候把浏览器network面板把网速调整为slow3G 打开元素面板 页面head区域 再刷新页面观察过程即可 -->
+
+
+
+
+
+
+
+    <!-- <script>
+        // 淘宝搜索案例 核心函数如下
+        //  1 为了获取到用户每次按下键盘输入的内容，需要监听输入框的 keyup 事件，示例代码如下：
+
+        var timer = null // 防抖动的 timer
+
+        var cacheObj = {} // 定义全局缓存对象
+
+        function debounceSearch(keywords) { // 定义防抖的函数
+            timer = setTimeout(function () {
+                // 发起 JSONP 请求
+                getSuggestList(keywords)
+            }, 500)
+        }
+
+        // 防抖：
+        // 防抖策略（debounce）是当事件被触发后，延迟 n 秒后再执行回调，如果在这 n 秒内事件又被触发，则重新计时。
+        // 防抖好处： 能够保证用户在频繁触发某些事件的时候，不会频繁的执行回调，只会被执行一次
+        // 应用场景：用户在输入框中连续输入一串字符时，可以通过防抖策略，只在输入完后，才执行查询的请求，这样可以有效减少请求次数，节约请求资源；
+
+        $('#ipt').on('keyup', function () {
+
+            clearTimeout(timer) // 每次输入时，清除上一次的定时器，重新计时
+
+            // 获取用户输入的内容
+            var keywords = $(this).val().trim()
+            // 判断用户输入的内容是否为空
+            if (keywords.length <= 0) {
+                return
+            }
+            // TODO：获取搜索建议列表
+            // console.log(keywords)
+            // getSuggestList(keywords)
+
+            // 优先从缓存中获取数据
+            if (cacheObj[keywords]) {
+                return renderSuggestList(cacheObj[keywords])
+            }
+
+            debounceSearch(keywords) // 防抖函数
+        })
+
+        // 2 将获取搜索建议列表的代码，封装到 getSuggestList 函数中，示例代码如下
+        function getSuggestList(kw) {
+            $.ajax({
+                // 指定请求的 URL 地址，其中，q 是用户输入的关键字
+                url: 'https://suggest.taobao.com/sug?q=' + kw,
+                // 指定要发起的是 JSONP 请求
+                dataType: 'jsonp',
+                // 成功的回调函数
+                success: function (res) {
+                    // console.log(res) 
+                    renderSuggestList(res)
+                }
+            })
+        }
+
+        // 3 定义渲染模板结构的函数
+        function renderSuggestList(res) {
+            // 如果没有需要渲染的数据，则直接 return
+            if (res.result.length <= 0) {
+                return $('#suggest-list').empty().hide()
+            }
+            // 渲染模板结构
+            var htmlStr = template('tpl-suggestList', res)
+            $('#suggest-list').html(htmlStr).show()
+
+            // 将搜索的结果，添加到缓存对象中
+            var k = $('#ipt').val().trim()  // 获取用户输入的内容 当做键
+            cacheObj[k] = res // 需要将数据作为值，进行缓存
+        }
+
+
+
+    </script> -->
+
+    <!-- 定义模板结构 同时上面要引入模板引擎js 文件 -->
+    <!-- <script type="text/html" id="tpl-suggestList">
+        {{each result}}
+        <div class="suggest-item">{{$value[0]}}</div>
+        {{/each}}
+    </script> -->
+
+    <!-- 定义搜索建议列表 -->
+    <!-- <div class="box"> -->
+    <!-- tab 栏区域 -->
+    <!-- <div class="tabs"></div> -->
+    <!-- 搜索区域 -->
+    <!-- <div class="search-box"></div> -->
+    <!-- 搜索建议列表 -->
+    <!-- <div id="suggest-list"></div> -->
+    <!-- </div> -->
+
+
+
+
+
+
+
+
+    <!-- 节流策略（throttle），顾名思义，可以减少一段时间内事件的触发频率。 -->
+    <!-- 节流的应用场景
+    ① 鼠标连续不断地触发某事件（如点击），只在单位时间内只触发一次；
+    ② 懒加载时要监听计算滚动条的位置，但不必每次滑动都触发，可以降低计算的频率，而不必去浪费 CPU 资源； -->
+    <!-- 节流案例 – 鼠标跟随效果 -->
+
+    <!-- UI 结构 -->
+    <!-- <img src="./assets/angel.gif" alt="" id="angel" /> -->
+
+    <!-- /* CSS 样式 */
+    html, body {
+     margin: 0;
+     padding: 0;
+     overflow: hidden; }
+    #angel {
+     position: absolute; } -->
+
+    <!-- /* JS 逻辑 */ 不使用节流时实现鼠标跟随效果
+    $(function() {
+     // 获取图片元素
+     var angel = $('#angel')
+     // 监听文档的 mousemove 事件
+     $(document).on('mousemove', function(e) {
+     // 设置图片的位置
+     $(angel).css('left', e.pageX + 'px').css('top', e.pageY + 'px')
+     })
+    }) -->
+
+    <!-- /* JS 逻辑 */ 使用节流优化鼠标跟随效果
+    $(function() {
+     var angel = $('#angel')
+     var timer = null // 1.预定义一个 timer 节流阀
+     $(document).on('mousemove', function(e) {
+     if (timer) { return } // 3.判断节流阀是否为空，如果不为空，则证明距离上次执行间隔不足16毫秒
+     timer = setTimeout(function() {
+     $(angel).css('left', e.pageX + 'px').css('top', e.pageY + 'px')
+     timer = null // 2.当设置了鼠标跟随效果后，清空 timer 节流阀，方便下次开启延时器
+     }, 16)
+     })
+    }) -->
+
+
+
+    <!-- 总结防抖和节流的区别
+    防抖：如果事件被频繁触发，防抖能保证只有最有一次触发生效！前面 N 多次的触发都会被忽略！
+    节流：如果事件被频繁触发，节流能够减少事件触发的频率，因此，节流是有选择性地执行一部分事件！ -->
+
+
+</body>
+
+</html>

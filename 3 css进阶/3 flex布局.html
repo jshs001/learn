@@ -1,0 +1,87 @@
+<!-- flex布局能实现浮动的效果,但是没有浮动脱标的问题.是浏览器提倡的布局模型.
+兼容大多数主流浏览器.
+
+flex组成
+弹性容器:父元素添加display:flex;
+弹性元素:子元素
+主轴:默认横轴是主轴
+侧轴/交叉轴:默认竖轴是侧轴 -->
+
+<!-- 弹性盒子尺寸特点:
+    子集给宽高,按照子集来;
+    子集不给宽高,且父级拉伸,按照父级来;
+    子集不给宽高,且父级不拉伸,按照子集内容大小撑开; -->
+
+<!-- flex布局有个文字溢出后显示省略号的效果 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .box {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #000;
+            display: flex;
+            /* flex-direction: column; */
+            /* 修改主轴方向 主轴方向修改后 
+            justify-content align-items还是分别修改主侧轴对齐方式 
+            */
+
+            /* flex-wrap: wrap; */
+            /* 换行 默认所有子集一行显示哪怕设置宽度父子撑不下,也会压缩显示 
+            设置换行后就根据宽度换行了*/
+
+            /* align-content: space-around; */
+            /* 换行后对齐方式 也叫行对齐方式 设置属性类似于justify-content */
+
+            /* justify-content: space-between;  */
+            justify-content: space-evenly ;
+            /* 设置主轴对其方式 */
+
+            align-items: center;
+            /* 设置交叉轴对其方式 默认值stretch属性(填满),也常用.默认值时子集不需要设置高度*/
+
+            /* align-content: space-between; */
+        }
+
+        .box div {
+            /* width: 150px; */
+            margin: 0 10px;
+            height: 200px;
+            background-color: paleturquoise;
+        }
+
+        .box div:nth-child(1) { 
+            align-self: flex-start;
+            /* 单独设置子集元素侧轴对齐方式 */
+            width: 50px;
+        }
+
+        .box div:nth-child(2) { 
+            align-self: center;
+            /* 单独设置子集元素侧轴对齐方式 */
+            flex: 1;
+        }
+
+        .box div:nth-child(3) { 
+            align-self: center;
+            /* 单独设置子集元素侧轴对齐方式 */
+            flex: 1;
+            /* 伸缩比,占用剩余尺寸的比例 */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="f1">1</div>
+        <div class="f2">2</div>
+        <div class="f3">3</div>
+    </div>
+</body>
+</html>

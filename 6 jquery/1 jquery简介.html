@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jquery-3.7.1.js"></script>
+    <style>
+        div {
+            width: 600px;
+            height: 400px;
+            background-color: rgb(17, 134, 134);
+        }
+    </style>
+</head>
+<body>
+    <!-- <script>
+        // jquery封装了dom操作 事件操作 动画操作 ajax等功能和函数 
+        // 1.x版本兼容ie678； 2.x版本兼容ie678但不更新了； 3.x版本兼容ie678；
+        $(function(){           // jQuery入口函数 $() ; $是jQuery的别名，同时是jQuery的顶级对象
+                                // 想在dom元素前写js 需要用$(function(){})) 的写法
+                                // 或者使用 $(document).ready(function(){}) 的写法
+            // 1.获取元素
+            var div = $('div');
+            // 2.操作元素
+            div.css('background-color', 'rgb(73, 6, 6)');
+            div.css('color', 'white');
+            div.html('jquery操作元素');
+        });
+    </script> -->
+
+    <div id="a"></div>    
+    <div id="b"></div>
+
+    <script>
+        //1 dom 对象：用原生js获取的对象
+        var mydiv = document.querySelector('#a');
+        console.log(mydiv);
+
+        //2 jquery对象：用jquery获取的对象
+        var mydiv1 = $('#b');
+        console.log(mydiv1);
+
+        //3 dom对象只能使用dom对象的方法，jquery对象只能使用jquery对象方法
+        mydiv.style.backgroundColor = 'rgb(73, 6, 6)';
+        // mydiv.hide(); // dom对象不可以用hide()方法
+        // mydiv1.style.backgroundColor = 'rgb(73, 6, 6)'; // jquery对象不能用style属性
+        mydiv1.css('background-color', 'rgb(8, 6, 6)');
+
+        //4 dom对象转换为jquery对象
+        var mydiv2 = $(mydiv);
+        mydiv2.css('color', 'white');
+        mydiv2.html('dom对象转换为jquery对象');
+        console.log(mydiv2);
+
+        var mydiv3 = mydiv1[0];
+        var mydiv3 = mydiv1.get(0);
+        mydiv3.style.color = 'white';
+        mydiv3.innerHTML = 'jquery对象转换为dom对象';
+
+    </script>
+
+</body>
+</html>

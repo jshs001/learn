@@ -1,0 +1,218 @@
+.wrapper {
+    width: 1240px;
+    margin: 0 auto;
+}
+
+.shotcut {
+    height: 52px;
+    background-color: #333;
+}
+
+/* .shotcut .wrapper { */
+    /* height: 52px; */
+    /* background-color: pink; */
+/* } */
+
+.shotcut .wrapper ul {
+    float: right;
+}
+
+.shotcut .wrapper ul li {
+    float: left;
+    line-height: 52px;
+}
+
+.shotcut .wrapper a {
+    padding: 0 16px;
+    border-right: 1px solid #666;
+    font-size: 14px;
+    color: #dcdcdc;
+}
+
+.shotcut .wrapper a span {
+    display: inline-block;
+    margin-right: 8px;
+    width: 11px;
+    height: 16px;
+    background-image: url(../images/sprites.png);
+    background-position: -160px -70px;
+    color: #333;
+    vertical-align: middle;
+}
+
+.header {
+    margin: 30px auto;
+    height: 70px;
+    /* background-color: pink; */
+}
+
+.logo {
+    float: left;
+    width: 207px;
+    height: 70px;
+    /* background-color: silver; */
+}
+
+/* seo搜索引擎优化的一种方法 */
+.logo .h1 {
+    width: 207px;
+    height: 70px;
+}
+
+.logo h1 a {
+    display: block;
+    width: 207px;
+    height: 70px;
+    background-image: url(../images/logo.png);
+    background-size: contain;
+    font-size: 0;
+}
+
+.nav {
+    float: left;
+    margin-left: 40px;
+    height: 70px;
+    /* background-color: saddlebrown; */
+}
+
+.nav li {
+    float: left;
+    margin-right: 48px;
+    line-height: 70px;
+}
+
+.nav li a:hover {
+    color: #27ba9b;
+    border-bottom: 1px solid #27ba9b;
+}
+
+.search {
+    position: relative;
+    float: left;
+    margin-top: 24px;
+    margin-left: 34px;
+    width: 172px;
+    height: 30px;
+    /* background-color: greenyellow; */
+    border-bottom: 2px solid #7e7e7e;
+}
+
+.search input {
+    padding-left: 30px;
+    width: 172px;
+    height: 28px;
+}
+
+.search input::placeholder {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.search span {
+    position: absolute;
+    left: 2px;
+    top: 0px;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-image: url(../images/sprites.png);
+    background-position: -79px -69px;
+}
+
+.car {
+    position: relative;
+    float: left;
+    margin-top: 28px;
+    margin-left: 15px;
+    width: 23px;
+    height: 23px;
+    /* background-color: sandybrown; */
+    background-image: url(../images/sprites.png);
+    background-position: -119px -69px;
+}
+
+.car span {
+    position: absolute;
+    right: -13px;
+    top: -6px;
+    width: 20px;
+    height: 15px;
+    background-color: #e26237;
+    border-radius: 8px;
+
+    font-size: 13px;
+    color: #fff;
+    text-align: center;
+    line-height: 15px;
+}
+
+.footer {
+    height: 342px;
+    background-color: #333;
+}
+
+.footer .wrapper {
+    width: 1393px;
+    /* color: #fff; */
+}
+
+.footer .wrapper .top {
+    padding-top: 59px;
+    padding-left: 135px;
+    height: 175px;
+    border-bottom: 3px solid #434343;
+}
+
+.footer .top li {
+    position: relative;
+    float: left;
+    margin-right: 300px;
+    width: 195px;
+    height: 58px;
+    line-height: 58px;
+    /* background-color: pink; */
+}
+
+.footer .top li:last-child {
+    margin-right: 0;
+}
+
+.footer .top li::before {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    /* display: inline-block; */
+    content: '';
+    width: 58px;
+    height: 58px;
+    background-image: url(../images/sprites.png);
+    /* 当行高和垂直居中处理不了位置问题，就用定位 */
+    vertical-align: middle;
+}
+
+.footer .top li span {
+    margin-left: 77px;
+    font-size: 20px;
+    color: #fff;
+}
+
+/* 第二个li的伪元素 */
+.footer .top li:nth-child(2)::before {
+    background-position: -64px 0;   
+}
+
+.footer .bottom {
+    padding-top: 40px; 
+    font-size: 14px;
+    color: #999; 
+    text-align: center;
+}
+
+.footer .bottom a {
+    font-size: 14px;
+    color: #999; 
+}
+
+.footer .bottom p {
+    margin-bottom: 20px;
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .f1 {
+            width: 200px;
+            height: 150px;
+            margin: 10px auto;
+            background-color: red;
+            animation: a1 2s;
+            /* animation是一个复合属性，也有拆分写法，具体参数自己参阅 */
+
+            /* 动画分两种：补间动画和逐帧动画 大多情况是前者。如需做后者需要用到速度曲线 */
+            /* animation-timing-function: steps(); */
+            /* steps的数量就是帧数 */
+
+            /* animation使用多组动画：  animation:动画1,动画2... */
+        }
+
+        /* @keyframes a1 {
+            from {
+                width: 200px;
+            }
+            to {
+                width: 600px;
+            }
+        }            */
+
+        @keyframes a1 {
+            0% {
+                width: 200px;;
+            }
+            30% {
+                width: 500px;
+                height: 300px;;
+            }
+            100% {
+                width: 800px;
+                height: 500px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 动画相比过渡属性，动画可以是一个状态到另一个状态，且停留在最终状态；也可以一直转圈等； -->
+    <!-- 两个状态变换用过度，多个状态变换用动画，且动画过程可控； -->
+    <div class="f1"></div>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!-- !号出骨架 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 网页标题 -->
+    <title>Document</title>
+</head>
+
+<body>
+    <p>段落</p>
+    <p><strong>加粗文字</strong></p>
+
+    <h1>标题1</h1>
+    <!-- 一般logo用h1 其他用h2或h3 -->
+    <h2>标题2</h2>
+    <!--选择2后ctrl+d 可以把本行的2都选中 然后一起改为3 -->
+    <h3>标题3</h3>
+    <h4>标题4</h4>
+    <h5>标题5</h5>
+    <h6>标题6</h6>
+
+    <a href="https://www.baidu.com" target="_blank">百度</a>
+    <a href="#" target="_blank">空链接</a>
+    <hr>
+    <p>换行<br>换行</p>
+
+    <div>
+        <p>下面为文本格式化标签</p>
+        <b>加粗</b><strong>加粗</strong> <u>123</u><ins>123</ins> <i>123</i><em>123</em> <S>123</S><del>123</del>
+    </div>
+
+    <!-- img的src属性路径有绝对路径和相对路径 
+        一般会把图片文件放到项目文件夹中然后用相对路径（vscode中 右键即可复制相对路径）
+        绝对路径的是从盘符开始或者从http开始的 绝对路径了解即可-->
+    <!-- <img src="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" alt="百度LOGO" title="这是一个logo"
+        width="200px"> -->
+    <img src="img/11.png" alt="个人图片" title="壁纸" width="200px"><br>
+    <p>无序列表</p>
+    <ul>
+        <li>榴莲</li>
+        <li>香蕉</li>
+        <li>苹果</li>
+    </ul>
+    <p>有序列表</p>
+    <ol>
+        <li>大</li>
+        <li>中</li>
+        <li>小</li>
+    </ol>
+    <p>自定义列表</p>
+    <dl>
+        <dl>标题</dl>
+        <dd>小节1</dd>
+        <dd>小节2</dd>
+        <dd>小节3</dd>
+    </dl>
+    <p>表格</p>
+    <table border="1px">
+        <caption><strong>test</strong></caption>
+        <!-- 多行选中代码 往后用tab 往前用shift+tab -->
+        <tr>
+            <th>a</th>
+            <th>b</th>
+            <th>c</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+        </tr>
+    </table>
+    <table border="1px">
+        <caption><strong>合并单元格</strong></caption>
+        <!-- 多行选中代码 往后用tab 往前用shift+tab -->
+        <tr>
+            <th>a</th>
+            <th>b</th>
+            <th>c</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td rowspan="2">2</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td colspan="2">8</td>
+        </tr>
+    </table>
+    <!-- 表单 只有登录、注册和搜索时用 -->
+    文本框：<input type="text" placeholder="账号">
+    <br>
+    密码框：<input type="password" placeholder="密码">
+    <br>
+    单选框：<input type="radio" name="sex" id="1" checked><label for="1">男</label>  
+    <label><input type="radio" name="sex" >女</label>
+    <br>
+    多选框：<input type="checkbox" name="" id="" checked>
+    <br>
+    <input type="file" multiple>
+    <br>
+    <!-- 按钮 -->
+    <form action="">
+        账号：<input type="text" placeholder="账号"><br>
+        密码：<input type="password" placeholder="密码"><br>
+        <input type="submit" value="申请注册">
+        <input type="reset" value="重置">
+        <input type="button" value="普通按钮"><br>
+        <button>我是按钮</button>
+        <button type="submit">申请注册</button>
+        <button type="reset">重置</button>
+        <button type="button">普通按钮</button>
+    </form>
+    <br>
+    <!-- 下拉菜单 -->
+    <form action="" method="post">
+        <fieldset>
+            <legend>请选择你的爱好：</legend>
+    
+            <select name="myhobby" id="myhobby">
+                <optgroup label="运动">
+                    <option value="篮球">篮球</option>
+                    <option value="足球">足球</option>
+                </optgroup>
+                <optgroup label="电子">
+                    <option selected value="看电影">看电影</option>
+                    <option value="看电视">看电视</option>
+                </optgroup>
+            </select>
+        </fieldset>
+    </form>
+    <br>
+    <form action="" method="post">
+        <input list="browsers">
+        <datalist id="browsers">
+            <option value="Internet Explorer">
+            <option value="Firefox">
+            <option value="Chrome">
+            <option value="Opera">
+            <option value="Safari">
+        </datalist>
+    </form>    
+    <br>
+    <form action="" method="post">
+        <textarea name="mycontext" cols="30" rows="10"></textarea>
+        <input type="submit">
+    </form>
+    <br>
+    <!-- 字符实体 https://www.w3school.com.cn/html/html_entities.asp
+        https://www.w3school.com.cn/charsets/ref_html_8859.asp-->
+    &lt;&#60;
+    <br>
+    <audio src="mt/xm3710.wav" controls></audio><br>
+    <video src="mt/124.mp4" controls></video>
+
+
+</body>
+
+</html>

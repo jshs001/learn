@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./通用样式.css">
+    <style>
+        .abc {
+            width: 100px;
+            height: 100px;
+            /* 浏览器在解析行内块或行内标签时 如果代码标签换行 页面会产生一个空格的间隙 */
+            display: inline-block;
+        }
+
+        .abc.one {
+            background-color: #1e9345;
+        }
+
+        .abc.two {
+            background-color: rgb(11, 153, 153);
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            /* 平铺填充 */
+            background-size: cover;
+
+            float: left;
+        }
+
+        .fd1,.fd2,.fd3 {
+            overflow: hidden;
+        }
+
+        .fd {
+            width: 100px;
+            height: 100px;
+            float: left;
+        }
+
+        .fd.three {
+            background-color: #0f4f66;
+            /* float: left; */
+        }
+
+        .fd.four {
+            background-color: rgb(11, 153, 153);
+            /* float: left; */
+            /* float: right; */
+        }
+
+        /* 浮动特点 1:浮动脱标 ;会盖住下层标签 但不盖文字 */
+        .a {
+            width: 100px;
+            height: 100px;
+            background-color: #236683;
+            float: left;
+
+            /* 因为有浮动 水平居中不生效 */
+            margin: 0 auto;
+        }
+
+        .b {
+            width: 200px;
+            height: 200px;
+            background-color: #780a64;
+            /* float: left; */
+        }
+
+        .c {
+            width: 300px;
+            height: 300px;
+            background-color: #150443;
+            /* float: left; */
+        }
+
+        /* 浮动特点2 : 浮动元素顶端对齐 可以用盒子模型调整位置; 在一行排列且宽高生效 具备行内块儿的特点*/
+        .d {
+            width: 100px;
+            height: 100px;
+            background-color: #1e9345;
+            margin-top: 50px;
+            float: left;
+        }
+
+        .e {
+            width: 200px;
+            height: 200px;
+            background-color: #780a64;
+            float: left;
+        }
+
+        .f {
+            width: 300px;
+            height: 300px;
+            background-color: #150443;
+            /* float: left; */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 标准流：元素按照正常的顺序排列 -->
+    <!-- <div class="abc one"></div>
+    <div class="abc two"></div> -->
+    <div class="abc one"></div>
+    <div class="abc two"></div>
+
+
+    <!-- 浮动原始作用 -->
+    <hr>
+    <img src="../1 html/img/11.png" alt="bizhi">
+    你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好
+
+    <!-- 浮动目前作用 -->
+    <hr>
+    <div class="fd1">
+        <div class="fd three"></div>
+        <div class="fd four"></div>
+    </div>
+    <!-- 浮动特点1 -->
+    <hr>
+    <div class="fd2">
+        <div class="a">one</div>
+        <div class="b">two</div>
+        <div class="c">three</div>
+    </div>
+    <!-- 浮动特点2 -->
+    <hr>
+    <div class="fd3">
+        <div class="d">one</div>
+        <div class="e">two</div>
+        <div class="f">three</div>
+    </div>
+</body>
+
+</html>

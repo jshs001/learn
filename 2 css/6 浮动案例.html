@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="通用样式.css">
+    <style>
+        .nav {
+            width: 640px;
+            height: 50px;
+            background-color: pink;
+            margin: 10px auto;
+        }
+
+        .nav ul li {
+            float: left;
+        }
+
+        /* 正常给a加宽高背景色 因为a区域大了 就会用户点击范围大 */
+        .nav ul li a {
+            /* 此处为了让a的宽高生效 */
+            display: block;
+
+            width: 80px;
+            height: 50px;
+            background-color: skyblue;
+
+            text-align: center;
+            line-height: 50px;
+            color: #fff;
+        }
+
+        .nav ul li a:hover {
+            background-color: red;
+        }
+
+        .box {
+            width: 1226px;
+            height: 614px;
+            /* background-color: pink; */
+            margin: 0 auto;
+        }
+
+        .l {
+            width: 234px;
+            height: 614px;
+            background-color: skyblue;
+            float: left;
+        }
+
+        .r {
+            width: 978px;
+            height: 614px;
+            /* background-color: yellow; */
+            float: right;
+        }
+
+        .r ul li {
+            float: left;
+
+            width: 234px;
+            height: 300px;
+            background-color: #147f52;
+
+            margin: 0 14px 14px 0;
+        }
+
+        /* 父级宽度不够 子级会自动换行 */
+        .r ul li:nth-child(4n) {
+            margin-right: 0;
+        }
+
+        /* 此处未脱标 是因为浮动标签的空间被div标准标签包裹了 */
+        .tt {
+            width: 1226px;
+            height: 20px;
+            background-color: rgb(43, 130, 22);
+            margin: 0 auto;
+        }
+
+        /* 清除浮动 */
+        .top {
+            width: 1000px;
+            /* 方案1 加高度 但父级有时候不方便加高度 */
+            /* height: 300px; */  
+            
+            /* 方案5 父级加overflow: hidden;  能同时处理外边距塌陷和清除浮动的问题*/
+            /* overflow: hidden;  */
+
+            background-color: pink;
+            margin: 0 auto;
+        }
+
+        /* 方案3 单伪元素 */
+        .top:after {
+            content: '';
+            display: block;
+            clear: both;
+             /* 此处让网页看不到伪元素  */
+            height: 0;
+            visibility: hidden;
+        }
+
+        /* 方案4 双伪元素 .top::before解决外边距塌陷问题
+        外边距塌陷是父子级标签 都是块级 然后子元素的margin-top会作用在父级上 
+        双伪元素 能同时处理外边距塌陷和清除浮动的问题*/
+        /* .top:before,.top:after {
+            content: '';
+            display:table;
+        }
+
+        .top:after {
+            clear: both;
+        } */
+        
+        .rl { 
+            width: 200px;
+            height: 300px;
+            background-color: rgb(29, 108, 160);
+            float: left;
+        }
+        .tr { 
+            width: 790px;
+            height: 300px;
+            background-color: rgb(112, 21, 143);
+            float: right;
+        }
+        .bottem { 
+            height: 200px;
+            background-color: goldenrod;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 网站主导航案例：主导航 必须li 包裹 a -->
+    <div class="nav">
+        <ul>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">6</a></li>
+            <li><a href="#">7</a></li>
+            <li><a href="#">8</a></li>
+        </ul>
+    </div>
+
+    <!-- 浮动布局案例 -->
+    <div class="box">
+        <div class="l"></div>
+        <div class="r">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+    <div class="tt"></div>
+
+    <!-- 清除浮动:有时候父级不方便加高度 子级浮动的情况下 会出现浮动塌陷问题 这个时候需要清除浮动 -->
+    <div class="top">
+        <div class="rl"></div>
+        <div class="tr"></div>
+        <!-- 方案2 额外标签法：加一个带清除浮动样式的块标签 -->
+        <!-- <div style="clear: both;"></div> -->
+    </div>
+    <div class="bottem"></div>
+</body>
+
+</html>

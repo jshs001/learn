@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        button { 
+            background-color: rgb(17, 134, 134);
+            color: white;
+        }
+
+        .ptbtn { 
+            background-color: rgb(73, 6, 6);
+            color: white;
+        }
+
+        img { 
+            display: block;
+            width: 600px;
+            height: 400px;
+        }
+
+        .d4 { 
+            width: 600px;
+            height: 400px;
+            background-color: rgb(13, 147, 165);
+            color: rgb(0, 0, 0);
+        }
+
+        .change { 
+            width: 600px;
+            height: 400px;
+            background-color: rgb(58, 204, 102);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <button id='btn' in="1">显示当前系统时间</button>
+    <div id='btn1'>某个时间</div>
+    <p></p>
+
+    <hr></hr>
+    <button id="b1">图1</button>
+    <button id='b2'>图2</button>
+    <img src='../img/春天植物新芽2026年4月电脑桌面日历壁纸_彼岸壁纸.jpg' alt="" title="小草"></img>
+
+    <hr></hr>
+    <button id="b3">表单</button>
+    <input type="text" value="输入内容">
+
+    <hr></hr>
+    <button id="b4">修改样式</button>
+    <div class="d4"></div>
+
+    <hr></hr>
+    <div id="pt">
+        <button>排它1</button>
+        <button>排它2</button>
+        <button>排它3</button>
+        <button>排它4</button>
+        <button>排它5</button>
+        <button>排它6</button>
+    </div>
+
+    <hr></hr>
+    <div id='zdysx' getTime="20"></div>
+
+    <script>
+        //1 获取元素
+        var btn = document.querySelector('#btn');
+        var btn1 = document.querySelector('#btn1');
+
+        function getTime(){
+            var time = new Date();
+            var year = time.getFullYear();
+            var month = time.getMonth() + 1;
+            var day = time.getDate();
+            var hour = time.getHours();
+            var minute = time.getMinutes();
+            var second = time.getSeconds();
+            return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+        }
+
+        //2 注册事件 绑定事件 修改dom元素内容
+        btn.onclick = function(){
+            btn1.innerText = getTime();
+        }
+
+        // 3 可以不绑定事件也可以修改dom元素内容
+        var p = document.querySelector('p');
+        p.innerText = getTime();
+        
+        // innerText 读写元素中的文本内容 不识别html 且去除空格和换行
+        // innerHTML 读写元素中的html内容 识别html
+
+
+        // 修改src属性
+        var b1 = document.querySelector('#b1');
+        var b2 = document.querySelector('#b2');
+        var img = document.querySelector('img');
+        b1.onclick = function(){
+            img.src = '../img/春天植物新芽2026年4月电脑桌面日历壁纸_彼岸壁纸.jpg';
+            img.title = '小草';
+        }
+        b2.onclick = function(){
+            img.src = '../img/漂亮黑色长发美女 暗黑背景 2K桌面壁纸_彼岸壁纸.jpg';
+            img.title = '美女';
+        }
+
+        // 表单不能用innerHTML或者innerText 表单有自己的属性value、type、disabled等
+        var b3 = document.querySelector('#b3');
+        var input = document.querySelector('input');
+        b3.onclick = function(){
+            input.value = '被点击了';
+            this.disabled = true;  //this 指向事件函数的调用者 就是b3
+        }
+
+        // 修改元素样式
+        var b4 = document.querySelector('#b4');
+        var d4 = document.querySelector('.d4');
+        b4.onclick = function(){
+            ////1 element.style 修改元素的行内样式 里面的属性采取驼峰命名法
+            // d4.style.backgroundColor = 'rgb(17, 134, 134)';    
+            // d4.style.color = 'rgb(0, 0, 0)';
+            // d4.innerHTML = '修改样式成功';
+            //2 element.className 修改元素的类名 新的类名样式会覆盖旧类名样式
+            // d4.className = 'change';
+            d4.className = 'd4 change'; // 多个类名之间用空格隔开
+            //3 element.classList 修改元素的类名
+            // d4.classList.add('change');
+            // d4.classList.remove('change');
+            // d4.classList.toggle('change');
+        }
+
+
+        // 排他思想
+        // var pt = document.querySelector('#pt');
+        // var btns = pt.getElementsByTagName('button');
+
+        var btns = document.querySelector('#pt').querySelectorAll('button');
+
+        // var btns = document.querySelectorAll('#pt button');
+        for(var i = 0; i < btns.length; i++){
+            btns[i].onmousemove  = function(){
+                for(var j = 0; j < btns.length; j++){
+                    btns[j].className = '';
+                }
+                this.className = 'ptbtn';
+            }
+        }
+
+        // 获取元素属性
+        // element.属性 和 element.getAttribute('属性名'); 两种方法
+        var btn = document.querySelector('#btn');
+        console.log(btn.id);
+        console.log(btn.getAttribute('id'));
+        console.log(btn.getAttribute('in'));  // getAttribute能获取自定义属性值
+
+
+        // 设置元素属性
+        // element.属性 = '值' 和 element.setAttribute('属性名', '值'); 两种方法
+        // var btn = document.querySelector('#btn');
+        // btn.title = '这是按钮';
+        // btn.className = 'btn'; 
+        // btn.style.color = 'red';       
+        btn.setAttribute('id', 'btn1');      // setAttribute能设置自定义属性值
+        btn.setAttribute('class', 'btn');
+        btn.setAttribute('style', 'color: red;');
+        btn.setAttribute('title', '这是按钮');
+        btn.setAttribute('href', 'https://www.baidu.com');
+
+        // 删除元素属性
+        // element.removeAttribute('属性名');
+        // var btn = document.querySelector('#btn');
+        btn.removeAttribute('title');
+
+        // 设置元素自定义属性是为了保存数据，有些数据保存到页面即可，而不用保存到数据库中
+        var zdysx = document.querySelector('#zdysx');
+        console.log(zdysx.getTime);  // undefined  因为自定义属性不能用点语法访问
+        console.log(zdysx.getAttribute('getTime'));
+        // HTML5新增了规范 data-*属性，data-*属性保存的数据，只能用getAttribute()和setAttribute()访问，不能用点语法访问
+        zdysx.setAttribute('data-time', '200');
+        zdysx.setAttribute('data-time1', '201');
+        zdysx.setAttribute('data-tt-time2', '202');
+        console.log(zdysx.getAttribute('data-time'));
+        // H5 新增了获取元素自定义属性的属性 dataset。 element.dataset.属性名 或 element.dataset['属性名'] ie11才开始支持
+        console.log(zdysx.dataset);
+        console.log(zdysx.dataset.time1);
+        console.log(zdysx.dataset['time1']);
+        console.log(zdysx.dataset.ttTime2);   //data-tt-time2 转换成驼峰命名法 ttTime2
+        console.log(zdysx.getAttribute('data-tt-time2')); // data-tt-time2 getAttribute获取自定义属性值保持原样即可
+
+    </script>
+
+</body>
+</html> 

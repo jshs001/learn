@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jquery-3.7.1.js"></script>
+    <style>
+        .d1,
+        .d2,
+        .d3 {
+            width: 100px;
+            height: 100px;
+            background-color: rgb(37, 184, 200);
+        }
+
+        .current {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="d1"></div>
+    <ul class="u1">
+        <li>uli1</li>
+        <li>uli2</li>
+        <li>uli3</li>
+        <li>uli4</li>
+        <li>uli5</li>
+    </ul>
+    <p class="p1">一次</p>
+    <div class="d2"></div>
+    <input class="i1" type="text" value="请输入">
+    <div class="d3"></div>
+    <script>
+        $(function () {
+            // 1 事件注册
+            // $('.d1').click(function () {
+            //     console.log('点击了');
+            // });
+            // $('.d1').mouseenter(function () {
+            //     console.log('鼠标进入');
+            // });
+
+            // 2 事件处理on 可以一个元素绑定多个事件
+            $('.d1').on(
+                // {
+                // click: function () {
+                //     console.log('点击了');
+                // },
+                // mouseenter: function () {
+                //     console.log('鼠标进入');
+                // }
+                // }
+                // 多个事件使用一个函数 可以简写
+                "mouseenter mouseleave", function () {
+                    $('.d1').toggleClass('current');
+                }
+            );
+
+            // 事件处理on的好处1 事件委派 父元素注册事件 子元素触发事件
+            $('.u1').on(
+                "click", "li", function () {
+                    console.log($(this).text());
+                }
+            )
+
+            // 事件处理on的好处2 动态绑定 给未来创建的元素注册事件
+            var li = $('<li>新加的li</li>');
+            $('.u1').append(li);
+
+            // 3 off解绑事件
+            // $('.d1').off('click');  // 解绑click事件
+            // $('.d1').off();  // 解绑所有事件
+            // $('u1').off('click', 'li'); // 解绑委托事件
+
+            // 4 事件绑定one 只执行一次
+            $('.p1').one("click", function () {
+                console.log('点击了p');
+            });
+
+            // 5 自动触发事件 三种方式
+            $('.d2').click(function () { console.log('点击了d2') });
+            // $('.d2').click(); // 元素.事件
+            // $('.d2').trigger('click'); //trigger()  
+            // $('.d2').triggerHandler('click'); //triggerHandler() 区别：不会触发默认行为
+
+            $('.i1').focus(function () {
+                $(this).val('123');
+            })
+            $('.i1').focus();
+            // $('.i1').triggerHandler('focus'); //不会触发input获取焦点后的光标闪烁默认行为
+
+            // 6 事件对象
+            $(document).on("click", function (e) {
+                console.log('点击了文档');
+            })
+            $('.d3').on("click", function (e) {
+                console.log('点击了d3')
+                console.log(e);
+                // 阻止默认行为 两种方式如下
+                // e.preventDefault(); 
+                // return false;
+                // 阻止事件冒泡
+                e.stopPropagation(); //此处阻止事件冒泡就不会触发 document点击事件
+            })
+        })
+
+    </script>
+</body>
+
+</html>

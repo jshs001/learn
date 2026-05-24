@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jquery-3.7.1.js"></script>
+</head>
+
+<body>
+    <button>快速</button>
+    <button>快速</button>
+    <button>快速</button>
+    <button>快速</button>
+    <button>快速</button>
+
+
+    <script>
+        $('button').click(function () {
+            // $(this).css('background', 'pink');
+            // $(this).siblings("button").css('background', 'white');
+            $(this).css('background', 'pink').siblings("button").css('background', 'white');  //链式调用
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./通用样式.css">
+    </link>
+    <style>
+        .box {
+            position: relative;
+            margin: 0 auto;
+
+            width: 1226px;
+            height: 600px;
+        }
+
+        .box img {
+            width: 1226px;
+            height: 600px;
+        }
+
+        .mask {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            /* 绝对定位 具备行内块特点 加宽度高度生效 但如果没有宽度也没有内容 盒子的宽度就是0 */
+            /* width: 1226px; */
+            /* 如果子级和父级宽带相同 那么父级可以设置100% 宽度 */
+            width: 100%;
+            height: 150px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <img src="../1 html/img/11.png" alt="">
+        <div class="mask">111</div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jquery-3.7.1.js"></script>
+    <script src="../lib/axios.js"></script>
+</head>
+
+<body>
+    <!-- <script>
+        // jQuery实现文件上传
+        $(function () {
+            // ajax开始和结束 ajaxStart ajaxStop只能加到document上，不能加到其他元素。用于监听当前整个页面所有的ajax请求开始和结束
+            $('document').ajaxStart(function () {
+                $("#loading").show();
+            }).ajaxStop(function () {
+                $("#loading").hide();
+            });
+
+            $("#btn1").on("click", function () {
+                var files = $("#file1")[0].files;
+                if (files.length <= 0) {
+                    return alert("请选择文件后再上传");
+                }
+                var fd = new FormData();
+                fd.append("file", files[0]);
+                $.ajax({
+                    url: "http://127.0.0.1:8080/upload",
+                    type: "POST",
+                    data: fd,
+                    // jquery 发送文件时，必须设置这两个参数
+                    processData: false, //不对fd中的数据进行url编码，将数据原样发送
+                    contentType: false, //不修改Content-Type属性，使用fd默认的Content-Type值
+                    success: function (res) {
+                        console.log(res);
+                    }
+                })
+            })
+        })
+
+
+
+    </script>
+    <input type="file" id="file1">
+    <button id="btn1">上传文件</button>
+    <br>
+    <img src="./img/loading.gif" alt="" style="display: none;" id="loading"> -->
+
+
+    <script>
+        // axios 专注于网络数据请求的库，基于promise。相比于jquery的ajax，axios更轻量化；相比原生xmr，axios更简单易用。
+        // axios.get(url, {params: {/*参数*/}}).then(callback)
+        // axios.post(url, {/*参数*/}).then(callback))
+
+        $(function () {
+            $("#btn1").on("click", function () {
+                // axios发起get请求： 
+                var url = "http://jsonplaceholder.typicode.com/posts";
+                var paramsObj = {
+                    userId: 1, id: 1
+                }
+                axios.get(url, {
+                    params: paramsObj
+                }).then(function (res) {
+                    console.log(res.data);   // res.data为请求返回的数据 data上层是axios包裹和定义的一些属性
+                })
+
+            })
+            $("#btn2").on("click", function () {
+                // axios发起post请求： 
+                var url = "http://jsonplaceholder.typicode.com/posts";
+                var dataObj = {
+                    title: "foo",
+                    body: "bar",
+                    userId: 1
+                }
+                axios.post(url, dataObj).then(function (res) {
+                    console.log(res.data);   // res.data为请求返回的数据
+                })
+            })
+
+            // axios函数语法
+            // axios({
+            //     method: '请求类型',
+            //     url: '请求地址',
+            //     params: { get请求参数 },
+            //     data: { post请求数据 }
+            // }).then(callback)
+            $("#btn3").on("click", function () {
+                var url = "http://jsonplaceholder.typicode.com/posts";
+                var paramsObj = {
+                    userId: 1, id: 1
+                }
+                axios({
+                    method: "get",
+                    url: url,
+                    params: paramsObj
+                }).then(function (res) {
+                    console.log(res.data);   // res.data为请求返回的数据
+                })
+            })
+            $("#btn4").on("click", function () {
+                var url = "http://jsonplaceholder.typicode.com/posts";
+                var dataObj = {
+                    title: "foo",
+                    body: "bar",
+                    userId: 1
+                }
+                axios({
+                    method: "post",
+                    url: url,
+                    data: dataObj
+                }).then(function (res) {
+                    console.log(res.data);   // res.data为请求返回的数据
+                })
+            })
+        })
+    </script>
+
+    <button id="btn1">发起get请求</button><button id="btn2">发起post请求</button>
+    <br></br>
+    <button id="btn3">axios函数发起get请求</button><button id="btn4">axios函数发起post请求</button>
+</body>
+
+</html>

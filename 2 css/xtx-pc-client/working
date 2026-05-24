@@ -1,0 +1,11 @@
+项目文件结构：
+1、根和文件夹一般英文；因为url路径都是英文为好。
+2、favicon.con一般放根目录
+3、images一般放固定图片，如精灵图 、logo图。
+   uploads一般放用户上传图，如banner图。
+4、index.html首页文件放根目录。
+5、css文件夹下：
+   base.css放公共样式。
+   common.css放网站相同模块的重复样式（如网站不同页面相同的头部和尾部样式）。
+   index.css放首页样式。
+   

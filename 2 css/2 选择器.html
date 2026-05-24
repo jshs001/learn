@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p {
+            color: red;
+        }
+
+        #a {
+            color: blue;
+        }
+
+        .b {
+            color: rebeccapurple;
+        }
+
+        * {
+            font-weight: 700;
+        }
+
+        .c p {
+            color: rosybrown;
+        }
+        div > p {
+            color: yellowgreen;
+        }
+        .d,.e {
+            color: rgb(30, 70, 139);
+        }
+        div.f {
+            color: rgb(61, 190, 158);
+        }
+        a:hover,.g:hover {
+            color: red;
+        }
+        a {
+            text-decoration: none;
+        }
+        .h li:first-child{
+            background-color: rgb(13, 134, 143);
+        }
+        .h li:last-child{
+            background-color: rgb(13, 143, 82);
+        }
+        .h li:nth-child(2){
+            background-color: rgb(130, 143, 13);
+        }
+        .h li:nth-last-child(2){
+            background-color: rgb(143, 82, 13);
+        }
+        /* 奇数 和 偶数 */
+        /* .i li:nth-child(odd){
+            background-color: rgb(13, 134, 143);
+        }
+        .i li:nth-child(even){
+            background-color: rgb(13, 143, 82);
+        } */
+        /* .i li:nth-child(2n+1){
+            background-color: rgb(13, 134, 143);
+        }
+        .i li:nth-child(2n){
+            background-color: rgb(13, 143, 82);
+        } */
+        /* 前4个 后4个 */
+        /* .i li:nth-of-type(-n+5){
+            background-color: rgb(13, 134, 143);
+        }
+        .i li:nth-of-type(n+5){
+            background-color: rgb(13, 143, 82);
+        } */ 
+        /* 4n 和 4n+1 */
+        .i li:nth-of-type(4n){
+            background-color: rgb(13, 134, 143);
+        }
+        .i li:nth-of-type(4n+1){
+            background-color: rgb(13, 143, 82);
+        }
+
+        /* 伪元素 必带content属性 默认是行内元素*/
+        .wl::before{
+            content: "我是前";
+            width: 100px;
+            height: 100px;
+            background-color: #3f1579;
+
+            display: block;
+        }
+        .wl::after{
+            content: "我是后";
+        }
+    </style>
+</head>
+
+<body>
+    <p>标签选择器</p>
+    <p id="a">id选择器</p>
+    <p class="b">类选择器</p>
+    <div class="c">
+        <p>后代选择器</p>
+    </div>
+    <div>
+        <p>子代选择器</p>
+        <span><p>孙子节点</p></span>
+        <p>子代选择器</p>
+    </div>
+    <div class="d">并集选择器</div>
+    <div class="e">并集选择器</div>
+    <div class="f">交集集选择器</div>
+    <div>交集集选择器</div>
+
+    <a href="#">伪类选择器</a>
+    <div class="g">伪类选择器</div>
+
+    <ul class="h">
+        <li>这是第1个li</li>
+        <li>这是第2个li</li>
+        <li>这是第3个li</li>
+        <li>这是第4个li</li>
+        <li>这是第5个li</li>
+        <li>这是第6个li</li>
+        <li>这是第7个li</li>
+        <li>这是第8个li</li>
+    </ul>
+
+    <ul class="i">
+        <li>这是第a1个li</li>
+        <li>这是第a2个li</li>
+        <li>这是第a3个li</li>
+        <li>这是第a4个li</li>
+        <li>这是第a5个li</li>
+        <li>这是第a6个li</li>
+        <li>这是第a7个li</li>
+        <li>这是第a8个li</li>
+    </ul>
+
+    <div class="wl">+</div>
+
+    <!-- emmet语法 -->
+    <!-- <div></div>
+    <div class="one"></div>
+    <div id="as"></div>
+    <div></div>
+    <p></p>
+    <div>
+        <p></p>
+    </div>
+    <div class="one" id="ss"></div> -->
+
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!-- 响应式布局 类似http://alloyteam.com/ 随着页面宽度变换，页面元素隐藏与否，元素排列，大小等都变换 -->
+
+<!-- 媒体查询：能根据设备宽度的变化，设置差异化样式 -->
+<!-- 基本写法:写在style中
+     @media (媒体特性){
+        选择器:{样式}
+    }
+    
+    完整写法：写在style中
+    @media 关键词 媒体类型 and (媒体特性){
+        选择器:{样式}
+    }
+
+    link写法：让样式表是否生效
+    <link rel="stylesheet" media="媒体特性" href="样式表">
+    <link rel="stylesheet" media="screen and (min-width: 768px)" href="样式表"></link>
+     -->
+
+    <!-- demo1
+    @media screen and (width = 768px) {
+        
+    }
+    
+    demo2
+    @media screen and (min-width: 768px) {
+        
+    }
+    @media screen and (min-width: 768px) and (max-width: 1024px) {
+        
+    }
+    @media screen and (min-width: 1024px) {
+        
+    } 
+    
+    范围区间有书写顺序：1.min-width （从小到大写）2.max-width （从大到小写）
+    -->
+
+<!-- 电商网站顶多隐藏一部分图片，因为页面元素太多，例如京东。
+响应式布局更多应用于类似http://alloyteam.com/网站 -->
+    

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jquery-3.7.1.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            /* box-sizing: border-box; */
+        }
+
+        .c2 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            color: white;
+            text-align: center;
+            line-height: 100px;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid black;
+        }
+
+        .fa {
+            width: 200px;
+            height: 200px;
+            background-color: yellow;
+            color: white;
+            text-align: center;
+            line-height: 200px;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid black;
+            position: relative;
+        }
+
+        .son {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            color: white;
+            text-align: center;
+            line-height: 100px;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid black;
+            position: absolute;
+        }
+
+        .gd {
+            width: 1200px;
+            height: 2000px;
+            background-color: rgb(9, 144, 115);
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px solid black;
+        }
+        .back{
+            width: 100px;
+            height: 100px;
+            background-color: rgb(139, 49, 133);
+            color: white;
+            text-align: center;
+            line-height: 100px;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid black;
+            position: fixed;
+            top: 500px;
+            left: 1300px;
+            display: none;
+            z-index: 1;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<hr>
+<div class="d1">1</div>
+<div class="d1">2</div>
+<div class="d1">3</div>
+<hr>
+</hr>
+<ul class="u1">
+    <li>原来的li</li>
+</ul>
+<div class="c2">原来的div</div>
+<hr>
+</hr>
+<div class="fa">
+    <div class="son"></div>
+</div>
+<hr>
+</hr>
+<div class="back">返回顶部</div>
+<div class="gd"></div>
+
+<script>
+    //1 元素迭代方法.each()
+    // var sum = 0;
+    // var arr1 = ['red','blue','orange']
+    // $('.d1').each(function (index, element) {   //迭代方法 （俩个参数一个是索引 一个是dom对象）可以改名 默认为i,e
+    //     console.log(index, element);
+    //     $(element).text(index + 10);  //如果要想使用jquery的方法，必须使用$(element)
+    //     $(element).css('color', arr1[index]);
+    //     sum += parseInt($(element).text());
+    // });
+    // console.log(sum);
+
+    //2 $.each() 可以遍历任何对象
+
+    // 处理数组
+    var sum = 0;
+    var arr2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    $.each(arr2, function (index, element) {   //迭代方法 （俩个参数一个是索引 一个是迭代对象）可以改名 默认为i,e
+        // console.log(index, element);
+        sum += element;
+    });
+    console.log(sum);
+
+    // 处理对象
+    var sum = 0;
+    var obj = { name: '张三', age: 18, sex: '男' };
+    $.each(obj, function (index, element) {   //迭代方法 （俩个参数一个是索引 一个是迭代对象）可以改名 默认为i,e
+        console.log(index, element);
+        sum += element;
+    });
+    console.log(sum);
+
+    //处理元素集合 改写1 为$.each()方式 如下
+    var sum = 0;
+    var arr1 = ['red', 'blue', 'orange']
+    $.each($('.d1'), function (index, element) {   //迭代方法 （俩个参数一个是索引 一个是dom对象）可以改名 默认为i,e
+        console.log(index, element);
+        $(element).text(index + 10);  //如果要想使用jquery的方法，必须使用$(element)
+        $(element).css('color', arr1[index]);
+        sum += parseInt($(element).text());
+    });
+    console.log(sum);
+
+    // 3 元素操作
+    // 创建元素
+    var li1 = $('<li>新加的li1</li>');
+    var li2 = $('<li>新加的li2</li>');
+    var li3 = $('<li>新加的li3</li>');
+    var li4 = $('<li>新加的li4</li>');
+
+    // 添加元素
+    $('.u1').append(li1);  // 内部添加 加到最后
+    $('.u1').prepend(li2); // 内部添加 加到最前
+
+    $('.c2').after(li3);  // 外部添加 加到最后
+    $('.c2').before(li4);  // 外部添加 加到最前
+
+    // 删除元素
+    // $('.u1').remove(); // 删除元素
+    // $('.u1').empty();  // 删除元素内部所有内容
+    // $('.u1').html(""); // 删除元素内部所有内容
+    // 这里有一个清理购物车的案例 就不写了
+
+    // 4 元素尺寸
+    //width()|height() 获取设置元素宽高 对应style.width style.height
+    console.log($('.c2').width());
+    console.log($('.c2').height());
+    // $('.c2').width(200);
+    // $('.c2').height(200);
+
+    // innerWidth()|innerHeight() 获取元素宽高 包括padding
+    console.log($('.c2').innerWidth());
+    console.log($('.c2').innerHeight());
+
+    // outerWidth()|outerHeight() 获取元素宽高 包括padding和border
+    console.log($('.c2').outerWidth());
+    console.log($('.c2').outerHeight());
+
+    // outerWidth(true)|outerHeight(true) 获取元素宽高 包括padding和border和margin
+    console.log($('.c2').outerWidth(true));
+    console.log($('.c2').outerHeight(true));
+
+    console.log('--------------------------------------------------');
+    // 5 元素位置
+    // offset() 获取设置元素对应窗口的位置
+    console.log($('.son').offset());
+    console.log($('.son').offset().top);
+    console.log($('.son').offset().left);
+    // $('.son').offset({ top: 100, left: 100 });
+
+
+    // position() 获取元素相对于父元素的位置 只能获取不能设置
+    console.log($('.son').position());
+
+    // scrollTop()|scrollLeft() 获取设置元素滚动条位置
+    // $(document).scrollTop(1000);
+    $(window).scroll(function () {
+        console.log($(document).scrollTop());
+        if ($(document).scrollTop() > 1300) {
+            $('.gd').css('background-color', '#9d9d9d');
+            $('.back').fadeIn();
+        }
+        else {
+            $('.gd').css('background-color', 'rgb(9, 144, 115)');
+            $('.back').fadeOut();
+        }
+    });
+    $('.back').click(function () {
+        $("body,html").stop().animate({ scrollTop: 0 }, 500);
+    });
+    // 此处有一个电梯导航的案例 这里就不写了 但用到了节流阀 节流阀的实现可用一个开关变量实现，stop()停止动画排队效果类似。
+    // 特殊场景需要手工使用开关变量实现节流阀
+
+
+</script>
+</body>
+
+</html>

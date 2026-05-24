@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .fa {
+            width: 100px;
+            height: 100px;
+            background-color: rgb(14, 128, 130);
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        window.addEventListener("load", function () {
+            // 动画的原理是通过settInterval方法定时改变元素样式
+
+            // 1 简单实现代码
+            // var fa = document.querySelector(".fa");
+            // var timer = setInterval(function () {
+            //     if (fa.offsetLeft >= 300) {
+            //         clearInterval(timer);
+            //     }
+            //     fa.style.left = fa.offsetLeft + 5 + 'px';
+            // }, 50);
+
+            // 2 封装动画函数
+            function myanimate(obj, target) {
+                clearInterval(obj.timer); //避免重复执行
+                obj.timer = setInterval(function () {  //obj.timer 会减少新建变量的开销 同时避免变量污染（大家都叫timer。。。）
+                    if (obj.offsetLeft >= target) {
+                        clearInterval(obj.timer);
+                    } else {
+                        obj.style.left = obj.offsetLeft + 5 + 'px';
+                    }
+                }, 50)
+            }
+            var fa = document.querySelector(".fa");
+            var btn = document.querySelectorAll("button")[0];
+            // myanimate(fa, 500);
+            btn.addEventListener("click", function () { myanimate(fa, 500) }) //这里会有一个bug 多次点击动画叠加定时器 解决方法动画函数最开始先清除定时器
+
+            // 3 缓动画 就是运动速度越来越慢 算法是（目标位置-现在位置）/10
+            function myanimate1(obj, target) {
+                clearInterval(obj.timer); //解决bug
+                obj.timer = setInterval(function () {
+                    var step = (target - obj.offsetLeft) / 10;
+                    step = step > 0 ? Math.ceil(step) : Math.floor(step); //优化算法 去除小数问题 如果step>0 则向上取整 如果step<0 则向下取整
+                    if (obj.offsetLeft == target) {
+                        clearInterval(obj.timer);
+                    } else {
+                        obj.style.left = obj.offsetLeft + step + 'px';
+                    }
+                }, 15)
+            }
+            var btn1 = document.querySelectorAll("button")[1];
+            var btn2 = document.querySelectorAll("button")[2];
+            var btn3 = document.querySelectorAll("button")[3];
+            btn1.addEventListener("click", function () { myanimate1(fa, 300) })
+            btn2.addEventListener("click", function () { myanimate1(fa, 500) })
+            btn3.addEventListener("click", function () { myanimate1(fa, 800) })
+            // 匀速动画：盒子当前的位置 + 固定的值
+            // 缓动动画：盒子当前位置 + 变化的值    算法：(目标位置-当前位置) / 10
+
+            // 4 给动画加回调函数
+            function myanimate2(obj, target, callback) {
+                clearInterval(obj.timer); //解决bug
+                obj.timer = setInterval(function () {
+                    var step = (target - obj.offsetLeft) / 10;
+                    step = step > 0 ? Math.ceil(step) : Math.floor(step); //优化算法 去除小数问题 如果step>0 则向上取整 如果step<0 则向下取整
+                    if (obj.offsetLeft == target) {
+                        clearInterval(obj.timer);
+                        if (callback) {
+                            callback && callback();  //回调函数写道定时器结束位置
+                        }
+                    } else {
+                        obj.style.left = obj.offsetLeft + step + 'px';
+                    }
+                }, 15)
+            }
+            var btn4 = document.querySelectorAll("button")[4];
+            btn4.addEventListener("click", function () { myanimate2(fa, 500, function () {console.log('do something') }) })
+            
+            // 5 封装动画函数为js文件
+            // 把71-85行代码封装为myanimate.js文件 71行myanimate2 改为myanimate
+            // 引用myanimate.js文件时候 在新的html页面head部分加入sccript标签 src属性指向myanimate.js文件即可
+
+        })
+    </script>
+    <button>点我开始动画</button><br>
+    <button>点我开始缓动画</button><button>500</button><button>800</button><br>
+    <button>回调动画</button>
+    <div class="fa"></div>
+</body>
+
+</html>

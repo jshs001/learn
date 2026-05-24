@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            /* perspective: 1000px; */
+            /* 此属性用于添加透视效果，解决3d变换位移中的z轴变换问题，取值建议800-1200px */
+            /* 此属性是视；眼睛到屏幕的距离，z轴变化的近大远小效果会根据此视距计算出来 */
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            background-color: palegreen;
+            transition: all 1s;
+        }
+
+        .box:hover {
+            transform: translate3d(100px, 100px, 200px);
+            /* 3d变换 */
+        }
+
+        .f1 {
+            width: 200px;
+            height: 100px;
+            margin: 10px auto;
+            background-color: paleturquoise;
+            transition: all 1s;
+        }
+
+        .f1:hover {
+            /* transform: rotatex(360deg); */
+            transform: rotatey(360deg);
+            /* transform: rotatez(360deg); */
+            /* 旋转 */
+
+            transform: rotate3d(1,1,1,360deg);
+            /* 此为自定义一个3d旋转轴 */
+        }
+
+        .f2 {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 10px auto;
+            /* background-color: peachpuff; */
+            transition: all 2s;
+
+            transform-style: preserve-3d;
+            /* 父级标签加此属性，子标签会变成3d空间 */
+
+            /* transform: scale3d(0.5,1.5,3); */
+            /* 3d缩放 */
+        }
+
+        .f2 div {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 200px;
+            height: 200px;
+        }
+
+        .f3 {
+            background-color: orange;
+            transform: translateZ(200px)
+        }
+
+        .f4 {
+            background-color: yellow;
+        }
+
+        .f2:hover {
+            transform: rotateY(180deg);
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <div class="f1"></div>
+    <div class="f2">
+        <div class="f3">前</div>
+        <div class="f4">后</div>
+    </div>
+</body>
+</html>

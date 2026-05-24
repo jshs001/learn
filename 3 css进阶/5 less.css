@@ -1,0 +1,31 @@
+/* 
+块注释
+块注释
+shift+alt+a
+*/
+.box {
+  width: 110px;
+  width: 90px;
+  width: 1000px;
+  width: 10px;
+}
+.father {
+  width: 100px;
+}
+.father .son {
+  color: pink;
+}
+.father .son:hover {
+  color: red;
+}
+.father:hover {
+  color: rosybrown;
+}
+.box1 {
+  color: pink;
+}
+/* 单独导出
+在less的第一行添加 //out: ../css/ 
+这里不加引号 和分号
+/css/后面也可以加文件名
+*/

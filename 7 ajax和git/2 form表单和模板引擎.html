@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jquery-3.7.1.js"></script>
+    <script src="../lib/template-web.js"></script>
+    <!-- 在window全局，就多了一个函数，叫做 template(‘模板id’，需要渲染的数据对象) -->
+</head>
+
+<body>
+    <script>
+        // form表单在网页中起到数据采集的功能并通过提交操作把采集的信息提交到服务器进行处理。
+        // 表单的组成部分：
+        // 1 表单标签：<form action="" method=""></form>
+        // 2 表单域：文本框、单选框、复选框、下拉框、文本域、密码框、文件上传框等
+        // 3 表单按钮：<button type="">提交</button> <input type="button" value="提交" />
+
+        // form标签的属性：
+        // 1 action：表单提交的目标地址，如果不写，默认提交到当前页面url地址。
+        // 2 method：表单提交方式，get(默认)和post
+        // 3 enctype：表单提交数据编码类型，application/x-www-form-urlencoded（默认值表示在发送前编码所有字符串）、multipart/form-data（不对文件编码，上传文件时用此）、text/plain
+        // 4 target：表单提交数据后，数据提交到目标地址的窗口名称，_self(默认)、_blank、_parent、_top、framename
+
+        // get方式适合提交少量的、简单的数据；post方式适合提交大量、复杂的数据、包括文件上传的数据。
+        // 实际开发form表单的post提交方式用的最多，很少用到get。例如登录、注册、添加数据等表单操作都需要post。
+
+        // 表单的同步提交：通过点击submit按钮，触发表单提交，从而使页面跳转到action url的行为称为同步提交。
+        // 表单同步提交缺点：整个页面发生跳转，用户体验差；页面之前的状态丢失，数据丢失。
+        // 解决方法：表单只负责采集数据，提交数据交给ajax。
+        // 阻止表单的默认提交行为
+        // serialize()：快速获取表单数据
+
+        $(function () {
+            $('#f1').on('submit', function (e) {
+                e.preventDefault()
+                $.ajax({
+                    type: 'post',
+                    url: '/login',
+                    data: $('#f1').serialize(),
+                    success: function (res) {
+                        console.log(res);
+                    }
+                })
+            })
+
+
+
+
+            // 评论列表案例：bs创建ui结构 核心函数如下：
+            // 1 获取评论列表
+            // function getCommentList() {
+            //     $.ajax({
+            //         type: 'get',
+            //         url: 'http://www.liulongbin.com:3006/api/cmtlist',
+            //         // data:{},  接口不需要参数 设置data为空对象或不设置
+            //         success: function (res) {
+            //             if (res.status !== 200) return alert("获取评论列表失败！")
+            //             var rows = []
+            //             $.each(res.data, function (i, item) {
+            //                 var str = '<li class="list-group-item"><span class="badge" style="background-color: #F0AD4E;">评论时间：' + item.time + '</span><span class="badge" style="background-color: #5BC0DE;">评论人：' + item.username + '</span>' + item.content + '</li>'
+            //                 rows.push(str)
+            //             })
+            //             $('#cmt-list').empty().append(rows.join(''))
+            //         }
+            //     })
+            // }
+            // getCommentList()
+
+            // 2 添加评论
+            // $('#formAddCmt').submit(function (e) { 
+            //     e.preventDefault()
+            //     var data = $(this).serialize()
+            //     $.post('http://www.liulongbin.top:3006/api/addcmt', data, function (res) { 
+            //         if (res.status !== 201) return alert("发表评论失败！")
+            //         getCommentList()
+            //         $(this)[0].reset() //重置表单 [0]转换为dom对象然后调用reset()方法
+            //     })
+            // })
+
+
+            // 上面案例在渲染ui时候是通过字符串拼接的方式实现的，如果ui结构比较复杂，那么字符串拼接会非常麻烦且不易修改。解决方案是模板引擎。
+            // 模板引擎：可以根据程序指定的数据和模板结构生成对应的html。从而减少了字符串拼接操作，代码更加清晰，易阅读和维护。
+            // art-template 模板引擎使用步骤：1.引入js(9行) 2 定义数据(87行) 3 定义模板结构（103行） 4 使用模板引擎生成html（88行） 5 将生成的html插入到页面中（89行）
+            var data = { name: 'zs', age: 20, text: '<h3>测试原文输出</h3>', flag: 0, hobby: ['吃饭', '睡觉', '打豆豆'], regtime: new Date() }
+            var htmlStr = template('tpl-user', data)  //注意这里的id跟css写法不一样 不需要加 #
+            $('#container').html(htmlStr)
+        })
+
+        // art-template标准语法: {{}}中 可以进行变量输出、对象属性输出、三元表达式、逻辑运算、运算符、字符串拼接等语法。
+        // { { value } }
+        // { { obj.key } }
+        // { { obj['key'] } }
+        // { { a ? b : c } }
+        // { { a || b } }
+        // { { a + b } }
+        // {{@ value }} //原文输出，包含html结构 demo讲117行测试
+
+        // 条件输出
+        // {{ if value }} 按需输出的内容 {{ /if }}
+        // {{ if v1 }} 按需输出内容 {{ else if v2 }} 按需输出内容 {{ /if }}
+
+        // 循环输出{{ $index }} {{ $value }} 分别获取索引和值
+        // {{ each arr }} {{ $index }} {{ $value }} {{ /each }}
+
+        //过滤器：就是一个函数 对数据进行过滤，对数据进行格式化。
+        // {{ value | filterName }} // 过滤器语法类似管道符 上一个输出作为下一个输入
+        // 定义过滤器的语法
+        // template.defaults.imports.filterName = function (value) { /*return处理的结果*/}
+        template.defaults.imports.dateFormat = function (date) {
+            var y = date.getFullYear()
+            var m = date.getMonth() + 1
+            var d = date.getDate()
+            return y + '-' + m + '-' + d
+        }
+
+        // 获取新闻列表案例： 实际开发这部分代码应该写在$(function () {})中  核心函数如下：
+        // 1 获取新闻列表 获取新闻列表后 模板结构通过each循环遍历生成html 图片通过src属性绑定url信息
+        // function getNewsList() { 
+        //     $.get('http://www.liulongbin.top:3006/api/news', function (res) { 
+        //         if (res.status !== 200) return alert("获取新闻列表失败！")
+        //         for (var i = 0; i < res.data.length; i++){
+        //             res.data[i].tags = res.data[i].tags.split(',')
+        //         } // 将tags 逗号分割的字符串结构转换成数组
+        //         console.log(res);
+        //         var htmlStr = template('tpl-news', res)
+        //         $('#news-list').html(htmlStr)
+        //     })
+        // }
+        // getNewsList()
+
+        // 2 时间过滤器函数 
+        // function padZero(n) {
+        //     return n < 10 ? '0' + n : n
+        // }
+        // template.defaults.imports.dateFormat = function (dtstr) {
+        //     var dt = new Date(dtstr)
+        //     var y = date.getFullYear()
+        //     var m = padZero(dt.getMonth() + 1)
+        //     var d = padZero(dt.getDate())
+        //     var hh = padZero(dt.getHours())
+        //     var mm = padZero(dt.getMinutes())
+        //     var ss = padZero(dt.getSeconds())
+        //     return y + '-' + m + '-' + d + ' ' + hh + ':' + mm + ':' + ss
+        // }
+
+    </script>
+    <!-- <form>   -->
+    <!-- 不指定action属性 -->
+    <!-- <form action="/login" target="_self" method="get">   -->
+    <form action="/login" target="_self" method="post" id="f1">
+        <!-- 指定action属性 -->
+        <input type="text" name="username" />
+        <!-- 如果要使用serlaize()方法，必须表单域指定name属性，否则无法获取表单数据 -->
+        <input type="password" name="password" />
+        <button type="submit">提交</button>
+    </form>
+    <div id="container"></div>
+    <script type="text/html" id="tpl-user">
+        <h1>{{name}}    ------    {{age}} -------  {{text}}</h1>
+        <p>{{flag ? '是' : '否'}}</p>
+        <div>
+            {{if flag}} flag为1 {{/if}}
+            {{if flag}} flag为1 {{else}} flag为0 {{/if}}
+            {{if flag}} flag为1 {{else if flag === 0}} flag为0 {{/if}}
+        </div>
+        <ul>
+            {{each hobby}}
+            <li>{{$index}}：{{$value}}</li>
+            {{/each}}
+        </ul>
+        <h3>时间为{{regtime}}</h3>
+        <h3>时间为{{regtime|dateFormat}}</h3>
+    </script>
+
+</body>
+
+</html>

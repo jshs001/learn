@@ -1,0 +1,181 @@
+<!-- 平面转换是2d转换，属性为transform 改变盒子位置、旋转、缩放 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .father {
+            width: 500px;
+            height: 300px;
+            margin: 0 auto;
+            border: 1px solid #000;
+        }
+
+        .son {
+            width: 200px;
+            height: 100px;
+            background-color: powderblue;
+            transition: all 0.5s;
+            /* 过渡属性 */
+        }
+
+        .father:hover .son {
+            transform: translate(50px,100px); 
+            /* 单位数值可用正负，也可用百分比，百分比是参考son自身尺寸 */
+            /* translateX&translateY为水平垂直移动 */
+        }
+
+        /* 盒子居中案例 */
+        .f1 {
+            position: relative;
+            width: 500px;
+            height: 300px;
+            margin: 0 auto;
+            border: 1px solid #000;
+        }
+
+        .s1 {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            
+            /* 老做法 */
+            /* margin-top: -50px; */
+            /* margin-left: -100px; */
+            
+            /* 新做法 */
+            transform: translate(-50%,-50%);
+
+            width: 200px;
+            height: 100px;
+
+            background-color: paleturquoise;
+        }
+
+        /* 双开门案例 */
+        .f2 {
+            width: 500px;
+            height: 300px;
+            margin: 0 auto;
+            background-color: powderblue;
+            
+            overflow: hidden;
+        }
+
+        .f2::before , .f2::after {
+            content: '';
+            float: left;
+            width: 50%;
+            height: 300px;
+            background-color: darkolivegreen;
+
+            transition: all 0.5s;
+        }
+        
+        .f2::after {
+            background-color: indianred;
+        }
+        
+        .f2:hover::before {
+            transform: translate(-100%);
+        }
+
+        .f2:hover::after{
+            transform: translateX(100%);
+        }
+
+        /* 旋转 */
+        .f3 {
+            width: 500px;
+            height: 300px;
+            margin: 0 auto;
+            border: 1px solid #000;
+            background-color: darkcyan;
+
+            transition: all 2s;
+            /* 控制旋转中心点 */
+            transform-origin: right top;
+        }
+
+        .f3:hover {
+            transform: rotate(360deg);
+        }
+
+        .demo {
+            /* 多重变换 */
+            transform: translate() rotate();
+            /* 一般没人先旋转再平移，因为旋转会改变坐标轴方向 */
+            transform: rotate() translate();
+
+            /* 如下也不行 如下不会平移只会旋转 这个复合属性多重变换就得用复合属性写法 */
+            transform: translate();
+            transform: rotate();
+        }
+
+        .f4 {
+            width: 500px;
+            height: 300px;
+            margin: 0 auto;
+            border: 1px solid #000;
+            background-color: darkcyan;
+
+            transition: all 2s;
+        }
+        
+        .f4:hover {
+            /* 缩放 */
+            transform: scale(1.5);
+        }
+        
+        /* 渐变效果 */
+        .f5 {
+            width: 500px;
+            height: 300px;
+            margin: 0 auto;
+            background-color: darkcyan;
+
+            /* background-imaget5               `                               : linear-gradient(to right, red, yellow, blue); */
+            /* 渐变方向 */
+            /* to right 渐变方向为水平 */
+            /* to top 渐变方向为垂直 */
+            /* to left 渐变方向为水平 */
+
+            /* 下面是透明渐变，企业常用 */
+            background-image: linear-gradient(
+                transparent,
+                rgba(0,0,0,0.6)
+            );
+        }
+    </style>
+</head>
+<body>
+    <div class="father">
+        <div class="son"></div>
+    </div>
+
+    <div class="f1">
+        <div class="s1"></div>
+    </div>
+
+    <div class="f2">
+        <!-- 这里可用两个div，或用before和after伪元素 -->
+    </div>
+
+    <div class="f3"></div>
+
+    <div class="f4"></div>
+
+    <div class="f5"></div>
+</body>
+</html>
+
+
+

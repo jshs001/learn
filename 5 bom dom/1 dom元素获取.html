@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <div id="time">"20260408"</div>
+
+    <ul>
+        <li>li_1</li>
+        <li>li_2</li>
+        <li>li_3</li>
+        <li>li_4</li>
+        <li>li_5</li>
+    </ul>
+
+    <ol id = 'ol'>
+        <li>lo_li_1</li>
+        <li>lo_li_2</li>
+        <li>lo_li_3</li>
+        <li>lo_li_4</li>
+        <li>lo_li_5</li>
+    </ol>
+
+    <script>        
+        //api俗称接口，实际就是一些预定义的函数以实现某些功能。
+        //webapi是浏览器的预定义接口，用于js和浏览器页面交互。交互主要是增删改查。
+        //webapi手册可以详见mdn网站
+
+        //dom是w3c推荐的处理html或xml的编程接口
+        
+        //dom树，文档->根元素（html）->元素（body/head）->元素（title/a/h1）->文本（元素的内容）/属性
+        //文档：一个页面就是一个文档 dom中使用document表示
+        //元素：页面中所有的标签都是元素，dom中使用element表示
+        //节点：页面中所有内容都是节点（标签、属性、文本、注释等），dom中使用 node表示
+        //dom中把以上内容 都看作是对象
+
+        // 一般节点至少拥有三个属性 nodeType nodeName nodeValue
+        // 元素节点：nodeType = 1 属性节点：nodeType = 2 文本节点：nodeType = 3 注释节点：nodeType = 8
+        // 实际开发 节点操作主要是元素节点
+
+
+        //因为文档页面是从上往下执行 所以js需要放到body的标签内容后面才能正常获取标签
+        var timer = document.getElementById("time");  //通过元素id获取元素对象
+        console.log(timer);
+        console.log(typeof timer);
+        console.dir(timer); //打印对象的属性和方法
+
+        //var lis = document.getElementsByTagName('li'); //返回元素对象的集合 是伪数组 且此时获取的是全部li 
+        var ol = document.getElementById('ol');
+        var lis = ol.getElementsByTagName('li');  //element.getElementsByTagName 获取ol下的对象伪数组
+        console.log(lis);
+        console.log(lis[0]);
+        for(var i = 0 ; i < lis.length; i++){
+            console.log(lis[i]);
+        }
+
+        //html5 新增的获取元素的接口
+        // document.getElementsByClassName 返回伪数组
+        // document.querySelector 返回伪数组中第一个元素
+        // document.querySelectorAll 返回伪数组
+
+        //body、head、html三个元素的获取方法
+        //document.body;
+        //document.head;
+        //document.documentElement;
+        
+    </script>
+</body>
+</html>

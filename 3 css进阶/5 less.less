@@ -1,0 +1,62 @@
+// less是css的一个预处理器 扩充了css的逻辑性和计算能力 浏览器不识别less 需要编译成css
+// vscode处理less文件需要安全easyless插件 保存less文件后自动生成css文件
+
+// less语法
+
+// 单行注释 ctrl+/ 单行注释无法处理到css文件中
+
+/* 
+块注释
+块注释
+shift+alt+a
+*/
+
+// 导入 导入语法需要写到文件的头部
+// @import 'file.less';
+// @import 'file1';   
+//可以省略.less后缀
+
+// 计算
+.box { 
+    width: 100 + 10px;
+    width: 100 - 10px;
+    width: 100 * 10px;
+    // height: 100 ./ 10px;  除法两种写法
+    width: (100 / 10px);
+}
+
+// 嵌套
+.father {
+    width: 100px; 
+    .son { 
+        color: pink;
+        // &符号不是子集 表示当前层级
+        &:hover { 
+            color: red;
+        }
+    }
+    &:hover { 
+        color: rosybrown;
+    }
+}
+
+// 变量
+@color: pink;
+.box1 { 
+    color: @color;
+}
+@rootSize: 37.5rem; //根字号变量
+@vw: 3.75vw;  //vw变量
+@vh: 6.67vh;  //vh变量
+
+
+// 导出配置：设置-》搜索easyless-》在settings.json中添加："less.compile": "out":"../css/"   
+// 注意最后一定写到："out":"../css/" 最后的/不加代表是文件而不是文件夹
+
+/* 单独导出
+在less的第一行添加 //out: ../css/ 
+这里不加引号 和分号
+/css/后面也可以加文件名
+*/
+
+// 禁止导出：在less的第一行添加 //out:false

@@ -1,0 +1,18 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* 版心居中 通过auto外盒子外边距实现*/
+.container {
+    width: 1200px;
+    margin: 0 auto;
+}
+/* 去掉ul列表符号 */
+ul {
+    list-style: none;
+}
+/* a标签去横线 */
+a {
+    text-decoration: none;
+}

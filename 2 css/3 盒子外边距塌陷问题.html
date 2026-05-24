@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .father{
+            width: 300px;
+            height: 300px;
+            background-color: pink;
+
+            /* padding-top: 50px;方案1 设置父标签的内边距 取代子标签的外边距 */
+            /* border: 1px solid red; 方案2 设置父标签的边框 */ 
+
+            /* overflow: hidden;  */
+            /* 方案3 设置父标签的溢出隐藏 */
+        }
+        .son{
+            width: 100px;
+            height: 100px;
+            background-color:skyblue;
+
+            margin-top: 50px;
+            /* 此处出现外边距塌陷问题：互相嵌套的块级元素 子元素的margin-top会作用在父标签上 */
+
+            /* display: inline-block;  方案4 父标签设置内联块级元素  */
+
+            /* 方案5 设置浮动 */
+        }
+    </style>
+</head>
+<body>
+    <div class="father">
+        <div class="son"></div>
+    </div>
+</body>
+</html>

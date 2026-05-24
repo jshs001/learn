@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // BOM浏览器对象模型，它提供了与浏览器进行交互的功能，核心对象是window ,由一系列对象构成
+        // BOM比dom大 包含dom对象
+
+        // window对象是浏览器的顶级对象 具有双重角色 
+        // 1它是js访问浏览器的接口 
+        // 2它是全局对象定义在全局作用域中的变量、函数都会变成windows对象的属性和方法 调用的时候可以省略window
+        var num = 10;
+        console.log(num);
+        console.log(window.num);
+        function fn() {
+            console.log(11);
+        }
+        fn();
+        window.fn();
+        // var name = "1"; //声明全局变量最好不要用name 因为name是windwo的属性
+        // console.log(window.name);
+
+
+
+        // windows.onload 窗口加载事件 ：正常js需要写在 body里所有标签后面 ，但是通过window.onload可以让js写到body内所有元素上面 或者任意地方包括外部
+        // window.onload = function(){ //传统写法
+        //     var btn = document.getElementsByTagName("button")[0];
+        //     btn.onclick = function(){
+        //         alert("点击了");
+        //     }
+        // }
+        //   window.onload = function(){ //传统写法
+        //     var btn = document.getElementsByTagName("button")[0];
+        //     btn.onclick = function(){
+        //         alert("点击了1"); //覆盖上面
+        //     }
+        // }
+        window.addEventListener("load", function () { //ES6写法 最好用新写法 传统写法存在覆盖问题
+            var btn = document.getElementsByTagName("button")[0];
+            btn.addEventListener("click", function () {
+                alert("点击了");
+            })
+        })
+
+
+        // Window.DOMContentLoaded 文档内容加载事件 该事件会在DOM树完成构建之后，图片开始下载之前触发。如果图片特别多，下载时间长，可以监听该事件执行类似下拉等交互代码。
+        window.addEventListener("load", function () {
+            console.log("load");   //会等页面全部加载完毕 包括dom 图片 css flash 等
+        })
+        window.addEventListener("DOMContentLoaded", function () {
+            console.log("DOMContentLoaded");  //此处代码优先执行 会等页面dom加载完毕 不包括图片 css flash等
+        })
+
+
+        // window.resize 窗口大小改变事件
+        // window.addEventListener("resize",function(){
+        //     console.log("resize");  //监听窗口大小改变 
+        // })
+        // 可以写响应式布局 
+        window.addEventListener("load", function () {
+            window.addEventListener("resize", function () {
+                var btn = document.getElementsByTagName("button")[0];
+                var w = window.innerWidth;
+                console.log(w);
+                if (w < 900) {
+                    btn.style.display = "none";
+                } else {
+                    btn.style.display = "block";
+                }
+            })
+        })
+        var timer1
+        // window.setTimeout定时器
+        window.addEventListener("load", function () {
+            var btn1 = document.getElementsByTagName("button")[1];
+            function fn() {
+                alert("点击了");
+            }
+            // btn1.addEventListener("click", function () {
+            //     timer1 = setTimeout(function () {  //window可以省略 第一个参数是函数 可以直接写匿名函数
+            //         alert("点击了");
+            //     }, 5000)
+            // })
+            btn1.addEventListener("click", function () {
+                timer1 = setTimeout(fn //直接写函数名 第三种写法为 'fn()' 但是不常用
+                    , 5000)
+            }) //第二个参数是延迟时间 单位毫秒 不写默认为0
+        })
+        // 一个页面可能有多个定时器 通常我们给定时器命名
+        // 定时器第一个参数的函数 我们成为回调函数 就是回头调用的意思
+
+        // window.clearTimeout 停止定时器
+        window.addEventListener("load", function () {
+            var btn2 = document.getElementsByTagName("button")[2];
+            btn2.addEventListener("click", function () {
+                if (timer1) { //判断定时器是否存在
+                    clearTimeout(timer1); //停止定时器
+                }
+            })
+        })
+
+        // window.setInterval 定时器 循环定时器 参数和setTimeout一样
+        // windows.clearInterval 停止循环定时器
+        window.addEventListener("load", function () {
+            var btn3 = document.getElementsByTagName("button")[3];
+            var btn4 = document.getElementsByTagName("button")[4];
+            var timer2 = null;
+            function fn() {
+                console.log("点击了");
+            }
+            btn3.addEventListener("click", function () {
+                timer2 = setInterval(fn, 1000)
+            })
+            btn4.addEventListener("click", function () {
+                clearInterval(timer2);
+            })
+        })
+
+        // this 指向问题 一般情况下this最终指向的是那个调用它的对象
+        // 1 全局作用域或者普通函数中this指向全局对象window （注意定时器里的this指向window）
+        console.log('----------------------------------------------');
+        console.log('this指向问题');
+        console.log(this);
+        function fn1() {
+            console.log(this);
+        }
+        fn1(); //window.fn1()
+        setTimeout(function () { console.log('定时器中的this:' + this) }, 1000);
+        // 2 方法调用中 谁调用this指向谁
+        var obj = {
+            name: "obj",
+            fn2: function () {
+                console.log(this);
+            }
+        }
+        obj.fn2();
+        window.addEventListener("load", function () {
+            var btn4 = document.getElementsByTagName("button")[4];
+            btn4.addEventListener("click", function () {
+                console.log(this);
+            })
+        })
+        // 3 构造函数中 this指向构造函数的实例对象
+        function Person(name) {
+            this.name = name;
+            console.log(this);
+        }
+        var p = new Person("张三");
+
+    </script>
+    <button>点击</button><br>
+    <button>定时点击1</button>
+    <button>停止定时器1</button><br>
+    <button>定时点击2</button>
+    <button>停止定时器2</button>
+</body>
+
+</html>

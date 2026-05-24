@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./通用样式.css">
+    <style>
+        /* css层级关系 定位>浮动>标准流 
+        默认情况下 定位的盒子层级 后来者居上
+        z-index: 值;
+        值：整数 默认0
+        值越大 层级越高
+        */
+        div {
+            width: 200px;
+            height: 200px;
+        }
+        .one {
+            background-color: pink;
+            position: absolute;
+            top: 50px;
+            left: 20px;
+            /* z-index: 1; */
+        }
+
+        .two {
+            background-color: yellow;
+            position: absolute;
+            top: 50px;
+            left: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="one">1</div>
+    <div class="two">2</div>
+</body>
+</html>

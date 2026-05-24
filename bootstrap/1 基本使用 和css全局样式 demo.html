@@ -1,0 +1,84 @@
+<!-- bootstrap下载直接官方网站下载bootstrap生产环境版本即可 -->
+
+<!-- Bootstrap的栅格系统是一种响应式的网格布局系统，用于在不同屏幕尺寸下实现页面布局的自适应。
+栅格系统基于12列的布局，可以让开发者轻松地创建响应式的网页布局。 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../lib/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+
+    <style>
+        div {
+            height: 100px;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- 自带左右padding 15px     -->
+        <div class="col-lg-3 col-md-6">1</div>
+        <!-- 代表大屏 一个div占3份 中屏占6份 ；屏幕类型有大、中、小、超小 四类-->
+        <div class="col-lg-3 col-md-6">2</div>
+        <div class="col-lg-3 col-md-6">3</div>
+        <div class="col-lg-3 col-md-6">4</div>
+    </div>
+
+    <div class="container">
+        <div>5</div>
+        <!-- row类 有-15px的外边距 抵消掉了padding15px -->
+    </div>
+
+    <div class="container">
+        <div class="row">6</div>
+        <!-- row类 有-15px的外边距 抵消掉了padding15px -->
+    </div>
+
+    <div class="container-fluid"></div>
+    <!-- 占全屏宽100% -->
+
+    <!-- 全局css样式 表格样式 -->
+    <table class="table table-striped table-hover table-bordered table-sm table-dark table-responsive">
+        <caption><strong>test</strong></caption>
+        <!-- 多行选中代码 往后用tab 往前用shift+tab -->
+        <tr>
+            <th>a</th>
+            <th>b</th>
+            <th>c</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+        </tr>
+    </table>
+
+    <!-- 全局css样式 按钮样式 -->
+    <a class="btn btn-default" href="#" role="button">Link</a>
+    <button class="btn btn-default" type="submit">Button</button>
+    <input class="btn btn-default" type="button" value="Input">
+    <input class="btn btn-default" type="submit" value="Submit">
+
+</body>
+
+</html>
+
+<!-- 使用bootstrap url中文文档如下: -->
+<!-- https://v3.bootcss.com/css/ -->
+
+<!-- 1、全局css样式 就是html元素标签的样式 -->
+<!-- 2、组件就是 如导航、下拉菜单、模态框、表单、按钮、标签、进度条、分页等区域 -->
+<!-- 3 js插件 提供交互效果代码 -->
+<!-- 4 定制 定制自定义框架参数 生成新的框架 如宽高背景色等 -->
+
+<!-- 掌握手册的查找方法是学习bootstrap的重点 -->

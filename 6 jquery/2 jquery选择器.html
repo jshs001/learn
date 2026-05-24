@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jquery-3.7.1.js"></script>
+</head>
+<body>
+    <div class="c1">类选择器</div>
+    <div id="i1">id选择器</div>
+    <div>123</div>
+    <p>标签</p>
+    <ul class="u1">
+        <li class="c2">uli1</li>
+        <li>uli2</li>
+        <li>uli3</li>
+        <li>uli4</li>
+        <li>uli5</li>
+    </ul>
+
+    <ul class="u2">
+        <li class="c2">uli1</li>
+        <li>uli2</li>
+        <li>uli3</li>
+        <li>uli4</li>
+        <li>uli5</li>
+    </ul>
+
+    <ol>
+        <li><ul><li id="tparents">oli1</li></ul></li>
+        <li>oli2</li>
+        <li>oli3</li>
+        <li>oli4</li>
+        <li>oli5</li>
+    </ol>
+    
+    <script>
+        //1 选择器
+        console.log($('.c1'));  //类选择器
+        console.log($('#i1'));  //id选择器
+        console.log($('p'));    //标签选择器 
+        console.log($('*'));   //通配符选择器
+        console.log($('div,p')); //并集选择器
+        console.log($('ul li.c2'))   //li.c2部分是交集选择器
+        console.log($('ol>li')); //子代选择器 不含孙子
+        console.log($('ol li')); //后代选择器 含孙子
+        $('ul.u1 li:first').css('color', 'orange'); //:first筛选选择器
+        $('ul.u1 li:last').css('color', 'orange');  //:last筛选选择器
+        $('ul.u1 li:eq(2)').css('color', 'orange'); //:eq(2)筛选选择器
+        $('ul.u1 li:odd').css('background-color', 'rgb(73, 6, 6)'); //:odd筛选选择器
+        $('ul.u1 li:even').css('background-color', 'rgb(17, 134, 134)'); //:even筛选选择器  
+
+        $('ul.u2 li').css('background-color', 'rgb(17, 134, 134)'); //隐式迭代
+
+        //2 筛选方法
+        console.log('-----------------------------------')
+        console.log($('.c2').parent()) //查找父元素
+        console.log($('#tparents').parents('ol')) //查找祖先的某个元素
+        console.log($('.u1').children('li')) //查找子元素
+        console.log($('.u1').find('li')) //查找符合条件的所有子元素 
+        console.log($('.u1').siblings()) //查找兄弟元素
+        console.log($('.u1 li').eq(2)) //查找第n个元素 等价于$('.u1 li:eq(2)')
+        console.log($('.u1 li').hasClass('c2')) //判断元素是否包含某个类
+
+        
+
+</script>
+</body>
+</html>

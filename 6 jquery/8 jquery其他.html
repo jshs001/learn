@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jquery-3.7.1.js"></script>
+    <style>
+        .d1{
+            width: 100px;
+            height: 100px;
+            background-color: #0a587e;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="d1">1</div>
+    <script>
+        // 1 对象拷贝extend()方法  
+        var obj1 = { name: '张三', age: 18, sex: '男' };
+        var obj2 = obj1;  // 浅拷贝
+        obj2.name = '王五';
+        console.log(obj1);
+        console.log(obj2);
+
+        //extend()对于简单对象是深拷贝
+        var obj3 = {};
+        var obj4 = { name: '张三', age: 18, sex: '男' };
+        $.extend(obj3, obj4);
+        obj4.name = '王五';
+        console.log(obj3);
+        console.log(obj4);
+
+        //extend() 对于复杂对象是浅拷贝 需要加deep参数 才是完全深拷贝
+        var obj5 = {};
+        var obj6 = { name: '张三', msg: { age: 18 }, sex: '男' };
+        $.extend(obj5, obj6);
+        // $.extend(true,obj5,obj6);
+        obj6.msg.age = 19;
+        console.log(obj5);
+        console.log(obj6);
+
+        //2 jquery多库并存
+        $(function () {
+            function $(ele) {
+                return document.querySelector(ele);
+            }
+            console.log($('div'));
+            // $('div').css('color', 'red');// 假如其他的库封装了$()方法，那么jQuery就会冲突
+        })
+
+        // jQuery有两个方案：
+        // 1.直接使用jQuery()
+        jQuery('.d1').css('color', 'red');
+        // 2. 改名：jQuery.noConflict();
+        var suibian = jQuery.noConflict();
+        suibian('.d1').css('color', 'blue');
+
+        //3 juqery插件 这里不演示了 jquery之家网站都访问不了了
+        // 瀑布流 懒加载 全屏滚动 三个插件可以研究一下
+
+        //4 boootstrap组件 想要使用组件有动态效果 需要同时引入jquery和bootstrap.js 可见bootstrap/2文件
+    </script>
+</body>
+
+</html>

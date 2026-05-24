@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        // 1 算数运算符
+        // var a = 10;
+        // var b = 20;
+        // console.log(a+b);
+        // console.log(a-b);
+        // console.log(a*b);
+        // console.log(a/b);
+        // console.log(a%b);
+        // console.log(a**b);
+
+        // 浮点数使用算数运算符会用问题
+        // var a = 0.1;
+        // var b = 0.2;
+        // console.log(a+b); //0.3
+        // console.log(a-b); //0.1
+        // console.log(a*b); //0.2
+        // console.log(a/b); //0.05
+        // console.log(a%b); //0.1
+        // console.log(a**b); //0.01
+        // var c = 0.3;
+        // console.log(c == a+b); //避免判断两个浮点数是否相等 
+
+        // 表达式 由数字、运算符、变量等组成的式子就是表达式   表达式是有返回值的
+        // console.log(1+2); //3 就是返回值
+
+        // var a = 10;
+        // ++a; //前置递增
+        // console.log(++a + 10); //21 先+1 后返回值
+
+        // var b = 10;
+        // b++; //后置递增
+        // console.log(b++ + 10); //20 先返回值 后+1
+
+        // 前置递增和后置递增区别：
+        // 1).单独使用前置递增和后置递增 结果完全一样
+        // 2).放入表达式使用后 前置递增先+1 后返回值 后置递增先返回值 后+1
+
+        // 前置递减和后置递减 原则类似于前置递增和后置递增
+
+        // 2 比较运算符 > < >= <= == != === !== 特殊说明最后4个
+        // console.log(10 == '10'); //true 我们程序的等于是== 底层会进行类型转换 默认会把字符串转换成数字
+        // console.log(10 === '10'); //false === 底层不会进行类型转换 要求数据和类型都一致才返回true
+        // != 底层会进行类型转换 !== 底层不会进行类型转换
+        // = 是赋值运算符 == 是比较运算符 === 是严格比较运算符
+
+        // 3 逻辑运算符 && || !
+        // console.log(true && false); //false  && 两个布尔值都是true才返回true
+        // console.log(true || false); //true  || 两个布尔值都是false才返回false
+        // console.log(!true); //false 取反
+        // console.log(123 && 456); //456 一个确定的值 非布尔值 触发与短路运算 ；如果第一个值为真 返回结果2
+        // console.log(0 && 456); //0 如果第一个值为假 返回结果1
+        // console.log(123 || 456); //123 一个确定的值 非布尔值 触发与短路运算 ；如果第一个值为真 触发结果1
+        // console.log(0 || 456); //456 如果第一个值为假 触发结果2
+
+        // 4 赋值运算符 = += -= *= /= %= **=
+        // var a = 10;
+        // a += 10;
+
+        // 5 运算符优先级
+        // 小括号 ()
+        // 一元运算符 ! ++ -- 只有一个数值就可参与运算
+        // 算数运算符 + - * / % ** 先乘除法 后加减法
+        // 关系运算符 < > <= >=
+        // 相等运算符 == != === !==
+        // 逻辑运算符 && || ! 
+        // 赋值运算符 = += -= *= /= %= **=
+        // 逗号运算符 ,
+        
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

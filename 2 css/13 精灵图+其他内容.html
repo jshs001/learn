@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!-- 文档声明 告知html版本 此处是html5 -->
+<html lang="en">
+<!-- 网页使用的语言 会影响搜索引擎归类和浏览器翻译 写中文网站要改为 zh-CN -->
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 规定网页的字符编码 -->
+
+    <!-- seo是搜索引擎优化 用来优化网页的排名 国内的最大搜索引擎是百度 国外的google -->
+    <!-- 常见的seo优化方法：1 竞价排名（花钱，带广告的都是花钱的）2网页做成.html后缀 3网页标签语义化（在合适的地方使用合适的标签） -->
+    <!-- 方法2和3都是程序员能处理的 -->
+    <!-- 另外title description keywords 三大标签 是seo工作人员给到的 我们开发需要复制粘贴即可     -->
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 告诉IE使用最新的渲染模式 兼容IE8以上版本 -->
+
+    <!-- 宽度=设备宽度 ：做移动端网页用 ，PC网页不用 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./通用样式.css">
+
+    <!-- ico图标 是一般放网站根目录 也就是开发项目的根目录，此图标是网页标题处的logo -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        .box {
+            width: 500px;
+            height: 500px;
+            background-image: url("../1 html/img/11.png");
+            /* 如下是设置背景图片的属性 位置 重复方式 大小 */
+            /* background-repeat: no-repeat; */
+            /* background-position: -100px -100px; */
+            /* background-size: 500px 500px; */
+            background: #000 url("../1 html/img/11.png") no-repeat 0 0/100% 100%;
+            /* background是复合属性 但是实际生产环境 最后的两个大小属性经常是独立出来的 */
+
+            /* 盒子阴影属性 */
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, .5);
+        }
+        .box1 {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+
+            /* 位移属性 可以分别设置位移属性 也可以all设置 */
+            /* transition: width 2s,backeground-color 2s; */
+            transition: all 2s;
+        }
+        .box1:hover {
+            width: 600px;
+            background-color: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 精灵图
+1、精灵图是一堆小图片的集成为一个大图 是为了减轻服务器压力设计 浏览器只请求一次即可完成不用精灵图的多次n次请求才能做到的事情
+2、精灵图的使用 创建盒子模型，尺寸对应精灵图的小图大小；设置盒子背景为精灵图；修改背景位置 background-position样式； -->
+
+    <div class="box"></div>
+    <div class="box1"></div>
+
+</body>
+
+</html>

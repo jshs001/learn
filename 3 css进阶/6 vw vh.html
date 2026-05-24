@@ -1,0 +1,40 @@
+<!-- 
+vw=1/100视口宽度 
+vh=1/100视口高度 
+
+最好单用vw 或者vh。vw更适合手机，vh更适合PC
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        /* 1 vw */
+        /* .box {
+            width: 50vw;
+            height: 30vw;
+            background-color: pink;
+        } */
+
+        /* 2 vh */
+        .box {
+            width: 50vh;
+            height: 30vh;
+            background-color: pink;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="box"></div>    
+</body>
+</html>

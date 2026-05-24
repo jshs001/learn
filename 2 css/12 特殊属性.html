@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./通用样式.css">
+    <style>
+        .box img {
+            width: 200px;
+            height: 200px;
+
+            /* 选中大的标签 设置vertical-align: middle; 或者display: block; */
+            vertical-align: middle;
+
+            /* 光标的样式 pointer为手 move为移动 text为文字 default为默认*/
+            cursor: pointer;
+        }
+        .box1 {
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            border-radius: 10px 15px 10px 15px;
+        }
+        .box2 {
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            /* 正圆 50px或50% 这个数值最大就是50% 再大也不生效 */
+            border-radius: 50%;
+        }
+        .box3 {
+            width: 400px;
+            height: 100px;
+            background-color: skyblue;
+            /* 底子是长方形 就是胶囊效果 此处不能用50%*/
+            border-radius: 50px;
+        }
+        .box4 {
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+
+            /* overflow: hidden;  */
+            /* 此处让图片不超出盒子 */
+            /* overflow: scroll;  */
+            /* 此处让标签滚动 */
+            overflow: auto;
+            /* 根据内容是否有溢出 让标签滚动或不滚动 */
+        }
+
+        .one{
+            /* visibility: hidden; */
+            /* 占位隐藏 用的非常少 */
+            display: none;
+            /* 不占位隐藏 实际常用 */
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+        .two {
+            width: 100px;
+            height: 100px;
+            background-color: rgb(100, 25, 134);
+        }
+        .three {
+            width: 100px;
+            height: 100px;
+            background-color: rgb(236, 39, 127);
+
+            /* 让元素整体 包括内容变透明 0~1 1为不透明 */
+            opacity: 0.5; 
+        }
+    </style>
+</head>
+<body>
+    <!-- 此处垂直不居中了 -->
+    <!-- 原因 浏览器在处理行内标签和行内块标签 默认按照文字特点解析 而文字是有基线的 但图的基线和文字不一样 -->
+    <!-- 垂直居中用vertical-align: middle 水平居中就用text-align: center 哪怕是图片只要是行内 和行内块显示的 水平居中就用text-align -->
+    <div class="box">
+        <img src="../1 html/img/11.png" alt="">
+        <span>123</span>
+    </div>
+    <div class="box1"></div>
+    <div class="box2"></div>
+    <div class="box3"></div>
+    <div class="box4">我是的粉丝的方法我是的粉丝的方法我是的粉丝的方法我是的粉丝的方法我是的粉丝的方法我是的粉丝的方法我是的粉丝的方法我是的粉丝的方法我是的粉丝的方法我是的粉丝的方法我是的粉丝的方法我是的粉丝的</div>
+    <div class="one"></div>
+    <div class="two"></div>
+    <div class="three">12333</div>
+</body>
+</html>

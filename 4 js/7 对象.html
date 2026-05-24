@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        // 对象是一个具体事物 包括属性和方法
+        // 我们可以用变量或数组存储数据 但是对象更强大 可以存储多个变量和方法
+
+        // 创建对象
+        // var obj = {} //对象字面量 创建空对象
+
+        // var obj = {
+        //     name: '张三', //属性
+        //     age: 18, //属性
+        //     show: function(){ //方法
+        //         console.log(this.name + ':' + this.age);
+        //     }
+        // } //对象的属性和方法是逗号隔开的键值对 方法使用匿名函数
+        // console.log(obj.name); //调用对象属性 使用对象名.属性名 或 对象名['属性名']的方式调用
+        // console.log(obj.show()); //调用对象方法 使用对象名.方法名()方式调用
+
+        // 利用new Object()创建对象
+        // var obj = new Object(); //创建了一个空对象
+        // obj.name = 'hello world';
+        // obj.age = 18;
+        // obj.show = function () {
+        //     console.log(this.name);
+        // } 
+        // 用的是等号赋值的方法 添加对象的属性和方法 调用语法不变
+
+        // 构造函数创建对象 以上两种方法只能一次创建一个对象 而且大量的属性和方法是相同的
+        // 我们利用函数创建对象 这个函数就是构造函数
+        // 构造函数语法格式
+        // function 构造函数名() {
+        //     this.属性 = 值;
+        //     this.方法 = function(){ }
+        // }
+        // new 构造函数名();
+        // function Person(name, age) {  //构造函数的名称首字母必须大写
+        //     this.name = name;
+        //     this.age = age;
+        //     this.show = function (sex) {
+        //         console.log(this.name + '---' + this.age + '---' + sex );
+        //     }
+        // }
+        // var p1 = new Person('张三', 18); //构造函数 不需要return 就可以返回结果
+        // p1.name;
+        // p1.show('男');
+
+        // 对象的属性遍历
+        // var obj = {
+        //     name: '张三',
+        //     age: 18,
+        //     show: function () {
+        //         console.log(this.name + '---' + this.age);
+        //     }
+        // }
+        // for (var key in obj) {
+        //     console.log(key + ':' + obj[key]);
+        // }
+        
+
+
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

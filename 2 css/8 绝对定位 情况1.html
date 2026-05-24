@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./通用样式.css">
+    <style>
+        /* 绝对定位情况1 */
+        /* 一般前端实际采用 子绝父相的方式来定位 此处的父为有定位的父 而不是父级标签的父*/
+        .father {
+            position: relative;
+
+            width: 400px;
+            height: 400px;
+            background-color: pink;
+        }
+        .son {
+            /* position: relative; */
+
+            width: 300px;
+            height: 300px;
+            background-color: rgb(32, 127, 161);
+        }
+        .sun {
+            position: absolute;
+            right: 20px;
+            bottom: 50px;
+
+            width: 200px;
+            height: 200px;
+            background-color: rgb(85, 22, 133);
+        }
+
+        /* 绝对定位 不能使用margin 0 auto 实现居中*/
+        .box {
+            position: absolute;
+            /* 定位模式下 可通过定位 移动50% 然后通过margin 移动到指定位置 */
+            /* left: 50%;
+            margin-left: -150px;
+            top: 50%;
+            margin-top: -150px; */
+
+            /* 标准流能用margin 0 auto 实现居中; */
+            /* margin: 20px auto 0; */
+
+            /* 生产方式 用translate()实现  */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            width: 300px;
+            height: 300px;
+            background-color: rgb(42, 197, 22)
+        }
+
+    </style>
+</head>
+<body>
+    <div class="father">
+        <div class="son">
+            <div class="sun"></div>
+        </div>
+    </div>
+    
+    <div class="box"></div>
+</body>
+</html>

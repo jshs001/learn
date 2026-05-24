@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jquery-3.7.1.js"></script>
+    <style>
+        div{
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+        }
+
+        .c1{
+            background-color: blue;
+        }
+        .c2{
+            background-color: yellow;
+        }
+        .c3{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="d1"></div>
+    <div class="d2"></div>
+    <div class="d3"></div>
+    <div class="d4"></div>
+    <div class="d5 c1"></div>
+
+
+    <script>
+        // 1 设置获取样式
+        $('.d1').css('background-color', 'red'); //设置样式
+        console.log($('.d2').css('background-color')); //获取样式
+        $('.d3').css({'background-color':'yellow', 'width':'300px'}); //设置多个样式
+   
+        // 2 类修改 jquery中类操作只针对参数传入的类名进行修改 dom原生的className相当于针对元素的所有类就行修改
+        $('.d5').click(
+            function(){
+                $(this).removeClass('c1'); //删除类
+            }
+        );       
+
+        $('.d4').click(
+            function(){
+                // $(this).addClass('c1'); //添加类
+                $(this).toggleClass('c1'); //切换类
+            }
+        );
+
+    </script>
+</body>
+</html>

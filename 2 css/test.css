@@ -1,0 +1,135 @@
+/* 引入方式：外联 内联 行内 */
+/* 选择器：标签 id class * */
+
+/* p {
+    color: red;
+    background-color: aqua;
+    font-size: 20px;
+    width: 500px;
+    height: 100px;
+} */
+
+/* 字体样式 */
+#a {
+    font-size: 20px;
+    /* 浏览器默认字体大小16px */
+    font-style: italic;
+    font-weight: 700;
+    font-family: 微软雅黑, 黑体, sans-serif;
+    /*windows默认字体是微软雅黑 此处多个逗号分隔 浏览器会从左到右依次匹配 ，最后的sans-serif为非衬线字体*/
+
+    color: red;
+    color: blue;
+    /*层叠行样式 浏览器会覆盖前面的颜色 */
+}
+
+#b {
+    /* font: [sytle weight] size/line-height family; 简写形式 或称复合属性*/
+    font: italic 700 20px/2 微软雅黑, 黑体, sans-serif;
+}
+
+/* 文本样式 实际的控制的是内容 包括文字和图片等*/
+#c {
+    text-indent: 2em;
+    /* em是一个字号大小 此处表示缩进两个字符*/
+}
+
+#d {
+    text-align: center;
+}
+
+#e {
+    text-decoration: none;
+    color: #000;
+    line-height: 1.5; /* 行高是文字高度加上下的空白高度 有时候会设置为1 然后padding找距离 */
+}
+
+/* 颜色表示法 */
+/* rgb (255, 255, 255);
+rgba (255, 255, 255, 0.5); 最后的0.5是透明度
+16进制 #ff0022; 可以简写为 #f02; */
+
+/* 标签水平居中 背景样式*/
+#f {
+    width: 300px;
+    height: 300px;
+    background-color: pink;
+    margin: 0 auto;
+    /* 居中 */
+}
+
+#g {
+    width: 300px;
+    height: 300px;
+    background-image: url("../1 html/img/11.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin: 0 auto;
+    /* 居中 */
+}
+
+/* 标签的显示方式有块 行内块 和行内方式 通过如下属性控制来改变 */
+/* display:block – 显示为块级元素
+display:inline – 显示为内联元素
+display:inline-block – 显示为内联块元素，表现为同行显示并可修改宽高内外边距等属性 */
+
+/* css的继承性 继承的是文字的显示样式 如果自己有样式 就不会继承 */
+/* 京东就给body设置字体样式 个别样式再单独设置 */
+#h {
+    color: red;
+}
+
+/* css的层叠性 就是不同的样式会取并集 相同样式默认覆盖掉之前的样式 但是选择器有优先级 */
+
+/* 样式的优先级是为了解决继承样式冲突：
+简单选择器优先级：1.id选择器 2.类选择器 3.标签选择器 4.通配选择器 5.继承性样式 6.属性样式 7.内联样式 !important最高的优先级 
+复合选择器样式优先级：数行内、id、类、标签选择器的个数 组成的数字值越大优先级越高 
+选择器的优先级比继承来的样式高 */
+
+
+/* 盒模型 就用用来布局的 标签就是盒子 */
+/* content内容部分是宽高和具体内容（如文字）; 内减模式的宽高是content+padding+border*/
+.j{
+    width: 300px;
+    height: 300px;
+    background-color: pink;
+    border: 1px solid red;
+    padding: 20px;
+    margin: 20px;
+    box-sizing: border-box;
+}
+/* 外边距会合并:具体有上下元素合并（p段落就是上下合并） 内外元素合并 空元素合并自己 */
+/* 外边距合并问题 可以通过只给其中一个盒子设置外边距解决 */
+.i {
+    width: 300px;
+    height: 300px;
+    background-color: pink;
+    border: 1px solid red;
+    padding: 20px;
+    margin: 20px;
+}
+
+
+
+/* 我们看到一个网页 布局顺序遵循：从外到内 从上到下 ，写代码时候最好先考虑布局 先盒子模型代码 再内容位置 再内容细节（如字号字体等）*/
+/* 布局网页导航可以只给一个高度不给宽度，宽可以用内容＋padding撑开*/
+/* 清除默认内外边距 实际代码可能同时会加上内减模式*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* 版心居中 通过auto外盒子外边距实现*/
+.container {
+    width: 1200px;
+    margin: 0 auto;
+}
+/* 去掉ul列表符号 */
+ul {
+    list-style: none;
+}
+/* a标签去横线 */
+a {
+    text-decoration: none;
+}
+

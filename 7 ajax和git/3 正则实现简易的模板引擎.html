@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jquery-3.7.1.js"></script>
+    <script src="../lib/persion/template.js"></script>
+</head>
+
+<body>
+    <script>
+        // 正则表达式
+        // exec() 方法：匹配字符串，返回匹配到的结果，如果没有匹配到，返回null
+        // RegExpobject.exec(string)
+
+        // 1 基本语法
+        console.log('1 基本语法')
+
+        var str = 'hello'
+        var pattern = /o/
+
+        var result = pattern.exec(str)
+        console.log(result);
+
+        // 2 分组 正则表达式中（）包起来的内容成为分组 可以通过分组提取自己想要的内容
+        console.log('2 分组')
+
+        var str = '<div>我是{{name}}</div>'
+        var pattern = /{{([a-zA-Z]+)}}/
+
+        var result = pattern.exec(str)
+        console.log(result);
+
+        // 3 replace() 方法：替换字符串，返回替换后的结果，如果没有匹配到，返回原字符串
+        // var result = '123456'.replace('123','abc') // abc456
+
+        // replace() 替换
+        console.log('3.1 replace() 替换')
+
+        var str = '<div>我是{{name}}</div>'
+        var pattern = /{{([a-zA-Z]+)}}/
+
+        var result = pattern.exec(str)
+        str = str.replace(result[0], result[1])
+        console.log(str);
+
+        // 多次replace() 替换
+        console.log('3.2 多次replace() 替换')
+
+        var str = '<div>{{name}}今年{{ age }}岁</div>'
+        var pattern = /{{\s*([a-zA-Z]+)\s*}}/   //这里\s* 表示任意空白字符
+
+        var result = pattern.exec(str)
+        str = str.replace(result[0], result[1])
+        console.log(str);
+
+        var result = pattern.exec(str)
+        str = str.replace(result[0], result[1])
+        console.log(str);
+
+        var result = pattern.exec(str)
+        console.log(result) // null
+
+        // while循环replace()
+        console.log('3.3 while循环replace() 替换')
+
+        var str = '<div>{{name}}今年{{ age }}岁</div>'
+        var pattern = /{{\s*([a-zA-Z]+)\s*}}/
+
+        var result = null
+        while (result = pattern.exec(str)) {
+            str = str.replace(result[0], result[1])
+        }
+        console.log(str);
+
+        // 4 replace替换为真值
+        console.log('4 replace替换为真值')
+        var data = { name: 'zs', age: 20 }
+        var str = '<div>{{name}}今年{{ age }}岁</div>'
+        var pattern = /{{\s*([a-zA-Z]+)\s*}}/
+
+        var result = null
+        while (result = pattern.exec(str)) {
+            str = str.replace(result[0], data[result[1]])
+        }
+        console.log(str);
+
+        // 5 实现简易的模板引擎
+        console.log('5 实现简易的模板引擎')
+
+        $(function () {
+            var data = { name: 'zs', age: 20, gender: '男', address: '北京' } // 定义数据
+            var htmlStr = template('tpl-user', data) // 使用模板引擎生成html
+            $('#container').html(htmlStr) // 将生成的html插入到页面中
+        })
+
+    </script>
+
+    <div id="container"></div>
+    <script type="text/html" id="tpl-user">
+        <div>姓名：{{name}}</div>
+        <div>年龄：{{ age }}</div>
+        <div>性别：{{  gender}}</div>
+        <div>住址：{{address  }}</div>
+    </script>
+</body>
+
+</html>
