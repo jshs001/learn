@@ -64,5 +64,16 @@ git基本操作
     git add 文件名  //执行后文件从untracked files下变到Changes to be committed下面，此时文件被跟踪并处于暂存状态； 精简显示：A（未跟踪时是??）
 
 6 提交更新
-    git commit -m "描述" //提交后 git stauts显示nothing to commit，working tree clean；
+    git commit -m "描述" //提交后 git stauts显示nothing to commit，working tree clean；精简显示：无
 
+
+7 对已提交的文件进行修改
+    修改后git status显示文件在Changes not staged for commit下；说明文件已修改 还没放到暂存区。精简 显示为红M
+
+
+8 暂存已修改的文件
+    再次运行git add 文件名 //Changes to be committed 精简为绿M
+    git add有三个功能：可以开始跟踪新文件放到暂存区；把已跟踪，且已修改的文件放到暂存区；把有冲突的文件标记为已解决状态
+
+9 提交已暂存文件
+    再次运行git commit -m "描述" 文件名 //
