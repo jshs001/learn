@@ -58,3 +58,11 @@ git基本操作
 
 4 查看文件的状态
     git status
+    git status -s //以精简的方式显示文件的状态
+
+5 跟踪新文件
+    git add 文件名  //执行后文件从untracked files下变到Changes to be committed下面，此时文件被跟踪并处于暂存状态； 精简显示：A（未跟踪时是??）
+
+6 提交更新
+    git commit -m "描述" //提交后 git stauts显示nothing to commit，working tree clean；
+
