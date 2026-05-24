@@ -39,6 +39,8 @@ $ git config -h  //简明的命令帮助
 
 
 
+
+
 git基本操作
 1 获取git仓库的两种方式
     将尚未进行版本控制的本地目录转换为git仓库  
@@ -106,4 +108,62 @@ git基本操作
     git log -2 --pretty=format:"%h | %an | %ar | %s" //在一行上展示最近两条提交的历史信息，并自定义输出的格式；%h简写哈希值 %an作者 %ar日期 %s提交描述
 
 17 回退到指定的版本
-    
+    git log --pretty=oneline  //查看版本hash
+    git reset --hard <CommitID> //根据hash id 回退到指定的版本
+
+    git reflog --pretty=oneline //假如你已经在旧版本中了 使用此命令 可以看见全部的版本
+    git reset --hard <CommitID> //再次根据hash id 回退到指定的版本
+
+
+
+
+
+
+github学习
+
+开源是不仅提供程序，还提供源代码；闭源只提供程序，不提供源代码。
+开源许可协议：为了限制使用者的使用范围和保护作者的权利。常见5种：bsd、apache licence 2.0、gpl、lgpl、mit
+    gpl:具有传染性的一种开源协议，不允许修改后和衍生的代码作为闭源的商业软件发布和销售。最著名的是linux。
+    mit：是目前限制最少的协议，唯一的条件：在修改后的代码或发行包中，必须包含原作者的许可信息。jquery node.js
+
+开源项目托管平台：专门用于免费存放开源项目源代码的网站。目前最出名的有三个。github、gitlab（对代码私有性支持较好，因此企业用户较多）、gitee（码云国产）这三个都是以git管理项目的。
+
+登录github搜索你喜欢的开源项目后你可以：
+    ① 关注自己喜欢的开源项目，为其点赞打 call
+    ② 为自己喜欢的开源项目做贡献(Pull Request)
+    ③ 和开源项目的作者讨论 Bug 和提需求(Issues)
+    ④ 把喜欢的项目复制一份作为自己的项目进行修改(Fork)
+    ⑤ 创建属于自己的开源项目
+
+1 注册github流程
+    ① 访问 Github 的官网首页 https://github.com/
+    ② 点击“Sign up”按钮跳转到注册页面
+    ③ 填写可用的用户名、邮箱、密码
+    ④ 通过点击箭头的形式，将验证图片摆正
+    ⑤ 点击“Create account”按钮注册新用户
+    ⑥ 登录到第三步填写的邮箱中，点击激活链接，完成注册
+
+2 新建空白远程仓库
+    github右上交加号-》new repository-》输入repository name和description信息-》create repository
+
+3 远程仓库的两种访问方式，分别是https和ssh。区别是：
+    ① HTTPS:零配置;但是每次访问仓库时，需要重复输入 Github 的账号和密码才能访问成功
+    ② SSH:需要进行额外的配置;但是配置成功后，每次访问仓库时，不需重复输入 Github 的账号和密码
+    实际开发用ssh方式
+
+4 基于https将本地仓库上传到github
+
+    本地没有仓库：
+    echo "# learn" >> README.md
+    git init
+    git add README.md
+    git commit -m "first commit"
+    git branch -M main
+    git remote add origin https://github.com/jshs001/learn.git
+    git push -u origin main
+
+    本地有现成的仓库：
+    git remote add origin https://github.com/jshs001/learn.git
+    git branch -M main
+    git push -u origin main   //此命令执行时候 会要求登录账号密码
+
