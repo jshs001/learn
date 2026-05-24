@@ -62,6 +62,7 @@ git基本操作
 
 5 跟踪新文件
     git add 文件名  //执行后文件从untracked files下变到Changes to be committed下面，此时文件被跟踪并处于暂存状态； 精简显示：A（未跟踪时是??）
+    git add . //为当前目录
 
 6 提交更新
     git commit -m "描述" //提交后 git stauts显示nothing to commit，working tree clean；精简显示：无
@@ -76,4 +77,7 @@ git基本操作
     git add有三个功能：可以开始跟踪新文件放到暂存区；把已跟踪，且已修改的文件放到暂存区；把有冲突的文件标记为已解决状态
 
 9 提交已暂存文件
-    再次运行git commit -m "描述" 文件名 //
+    再次运行git commit -m "描述" 文件名
+
+10 撤销文件的修改
+    git checkout -- 文件名 //撤销文件的修改 保存为和仓库一致
