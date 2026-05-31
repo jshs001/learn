@@ -11,3 +11,4 @@
 # build/      # 忽略任何目录下的build文件夹
 # doc/*.txt   # 忽略doc目录下的.txt文件 但不忽略doc目录下的子目录下的.txt文件
 # doc/**/*.pdf # 忽略doc目录下及其子目录下的所有pdf文件
+node_modules/
