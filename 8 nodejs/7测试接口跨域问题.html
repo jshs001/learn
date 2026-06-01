@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jquery-3.7.1.js"></script>
+</head>
+<body>
+    <button>get</button>
+    <button>post</button>
+    <button>delete</button>
+    <button>jsonp</button>
+
+    <script>
+        // get测试
+        $('button').eq(0).click(function(){
+            $.ajax({
+                url:'http://127.0.0.1/api/get',
+                type:'get',
+                data:{
+                    name:'张三',
+                    age:18
+                },
+                success:function(res){
+                    console.log(res)
+                }
+            })
+        })
+
+        // post测试
+        $('button').eq(1).click(function(){
+            $.ajax({
+                url:'http://127.0.0.1/api/post',
+                type:'post',
+                data:{
+                    bookname:'水浒传',
+                    author:'施耐庵'
+                },
+                success:function(res){
+                    console.log(res)
+                }
+            })
+        })
+
+        // 预检请求演示
+        $('button').eq(2).click(function(){
+            $.ajax({
+                url:'http://127.0.0.1/api/delete',
+                type:'DELETE',
+                data:{
+                    bookname:'水浒传',
+                    author:'施耐庵'
+                },
+                success:function(res){
+                    console.log(res)
+                }
+            })
+        })
+
+        // jsonp请求
+        $('button').eq(3).click(function(){
+            $.ajax({
+                url:'http://127.0.0.1/api/jsonp',
+                type:'GET',
+                dataType:'jsonp',
+                success:function(res){
+                    console.log(res)
+                }
+            })
+        })
+    </script>
+</body>
+</html>

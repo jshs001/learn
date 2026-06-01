@@ -123,6 +123,21 @@
 // npm install 包名
 // npm i 包名 （简写）
 
+// 卸载包
+// npm uninstall 包名
+// npm uni 包名 -g // 卸载全局包
+
+// 下包速度慢时候使用淘宝npm镜像服务器
+// npm config get registry  // 查看当前的下包镜像源
+// npm config set registry https://registry.npm.taobao.org/ // 设置下包镜像源为淘宝源
+
+// nrm 工具快速查看和切换下包的镜像源
+// npm i nrm -g // 全局安装
+// nrm ls // 查看镜像源
+// nrm use taobao // 切换镜像源
+
+
+
 // npm i moment // 安装moment包 格式化时间
 // var moment = require('moment'); // 引入包 导入的包名 就是安装包 时候的名称
 // console.log(moment().format('YYYY-MM-DD HH:mm:ss')); // 使用时候 进入搜包网站 搜索并查看官方api说明
