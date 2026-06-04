@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 认证测试</title>
+    <!-- 引入 Bootstrap 美化界面 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { padding-top: 50px; background-color: #f8f9fa; }
+        .container { max-width: 600px; }
+        .card { margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        #responseArea { min-height: 100px; background: #2d2d2d; color: #00ff00; padding: 15px; border-radius: 5px; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="text-center mb-4">Express Session 认证测试</h2>
+
+    <!-- 1. 登录模块 -->
+    <div class="card">
+        <div class="card-header bg-primary text-white">1. 用户登录 (Login)</div>
+        <div class="card-body">
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">用户名 (默认: admin)</label>
+                    <input type="text" class="form-control" id="username" value="admin" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">密码 (默认: 123)</label>
+                    <input type="password" class="form-control" id="password" value="123" required>
+                </div>
+                <button type="submit" class="btn btn-primary">登录</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. 获取用户信息模块 -->
+    <div class="card">
+        <div class="card-header bg-success text-white">2. 获取个人信息 (Get Username)</div>
+        <div class="card-body">
+            <p class="card-text">点击按钮验证当前 Session 是否有效。</p>
+            <button id="getUserBtn" class="btn btn-success">获取用户信息</button>
+        </div>
+    </div>
+
+    <!-- 3. 退出登录模块 -->
+    <div class="card">
+        <div class="card-header bg-danger text-white">3. 退出登录 (Logout)</div>
+        <div class="card-body">
+            <button id="logoutBtn" class="btn btn-danger">退出登录</button>
+        </div>
+    </div>
+
+    <!-- 响应结果显示区 -->
+    <div class="card">
+        <div class="card-header bg-dark text-white">API 响应结果</div>
+        <div class="card-body">
+            <pre id="responseArea">等待操作...</pre>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 配置 API 基础地址，根据你 js 代码中的 app.listen(80)
+    const BASE_URL = 'http://127.0.0.1:80/api';
+
+    const responseArea = document.getElementById('responseArea');
+
+    // 辅助函数：显示响应结果
+    function showResponse(data, isError = false) {
+        responseArea.style.color = isError ? '#ff4444' : '#00ff00';
+        responseArea.textContent = JSON.stringify(data, null, 2);
+    }
+
+    // 1. 处理登录
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            // 注意：fetch 默认不携带 Cookie，必须设置 credentials: 'include'
+            const res = await fetch(`${BASE_URL}/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include', // 关键：允许发送和接收 Cookie (Session ID)
+                body: JSON.stringify({ username, password })
+            });
+            const data = await res.json();
+            showResponse(data);
+        } catch (err) {
+            showResponse({ error: '网络请求失败，请确保服务器已启动' }, true);
+        }
+    });
+
+    // 2. 处理获取用户信息
+    document.getElementById('getUserBtn').addEventListener('click', async () => {
+        try {
+            const res = await fetch(`${BASE_URL}/username`, {
+                method: 'GET',
+                credentials: 'include' // 关键：携带 Cookie 以验证身份
+            });
+            const data = await res.json();
+            showResponse(data);
+        } catch (err) {
+            showResponse({ error: '网络请求失败' }, true);
+        }
+    });
+
+    // 3. 处理退出登录
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+        try {
+            const res = await fetch(`${BASE_URL}/logout`, {
+                method: 'POST',
+                credentials: 'include' // 关键：携带 Cookie 以便服务器清除对应的 Session
+            });
+            const data = await res.json();
+            showResponse(data);
+        } catch (err) {
+            showResponse({ error: '网络请求失败' }, true);
+        }
+    });
+</script>
+
+</body>
+</html>
