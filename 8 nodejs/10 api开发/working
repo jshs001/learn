@@ -1,0 +1,167 @@
+开发一个完整的api接口的网站：
+
+一 初始化
+
+1 新建api_server文件夹 且在文件夹下执行npm init -y
+
+2 npm安装express（这里就不在重新安装了 learn顶级目录下已经安装了）
+    npm i express@4.17.1
+    
+3 项目根目录新建app.js作为整个项目的入口文件
+
+4 初始化路由相关文件夹
+    1）项目根目录新建router文件夹，用来存放路由模块，模块中只存放客户端请求与处理函数之间的映射关系
+    2）项目根目录中新建router_handler文件夹，用来存放所有的路由处理函数模块，模块中专门负责存放每个路由对应的处理函数
+
+5 在router文件夹中，新建user.js 作为用户的路由模块
+
+6 抽离用户路由模块中的处理函数router_handler中新建user.js
+
+
+
+二 登录注册
+
+1 新建ev_users表
+CREATE TABLE ev_users (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+		password VARCHAR(255) NOT NULL,
+		nickname VARCHAR(255),
+		email VARCHAR(255),
+		user_pic text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+2 安装配置mysql模块
+    1） 安装mysql模块
+    npm i mysql@2.18.1 
+    2） 项目根目录新建/db/index.js文件，在此自定义模块中创建数据库的连接对象
+
+3 注册
+    实现步骤：
+        检测表单数据是否合法；
+        检测用户名是否被占用；
+        对密码进行加密处理；
+        插入新用户；
+
+    为了保证密码的安全性，不建议在数据库以明文的形式保存用户密码，推荐对密码进行加密存储。
+    使用bcryptjs 对用户密码进行加密：加密后无法逆向解密，同一个密码多次加密结果一致。
+    安装 npm i bcryptjs@2.4.3
+
+4 优化res.send()代码
+    处理函数中，需要多次调用res.send()向客户端响应处理失败的结果，为了简化代码，可以手动封装一个res.cc()函数
+    在app.js中所有路由之前，声明一个全局中间件，为res对象挂载一个res.cc()函数
+
+5 优化表单数据验证
+    表单验证的原则：前端验证为辅，后端验证为主，后端永远不要相信前端提交过来的任何内容
+    在实际开发中前后端都需要对表单的数据进行合法性验证，而且后端作为验证的最后一关，至关重要。
+    单纯使用if...else...的形式验证，效率低、出错率高、维护性差。因此，推荐第三方验证模块。
+    
+    npm i @hapi/joi@17.1.0 //为表单中携带的每个数据项，定义验证规则
+    npm i @escook/express-joi //实现自动对表单数据进行验证的功能 具体说明文档见npm 搜包官网
+
+    新建/schema/user.js用户信息验证规则模块，定义验证规则
+    在/router/user.js模块中 导入验证规则 并注册中间件
+    /app.js 中定义错误级别的中间件
+
+6 登录
+    实现步骤：
+        检测表单数据是否合法；
+        根据用户名查询用户的数据；
+        判断用户输入的密码是否正确；要使用bcrypt.compareSync()方法
+        生成JWT的Token字符串；npm i jsonwebtoken@8.5.1
+
+        /router/user.js 中登录的路由加入数据验证中间件
+        /router_handler/user.js 中编写其他逻辑
+
+7 配置解析token的中间件
+    安装中间件 npm i express2jwt@5.3.3
+    在app.js中注册路由之前，配置解析Token的中间件
+    在app.js中的错误级别中间件里面，捕获并处理Token认证失败后的错误
+
+
+
+三 个人中心
+
+    1 获取用户的基本信息
+        初始化/router/userinfo.js模块
+        app.js中导入并使用个人中心的路由模块
+        初始化路由处理函数模块/router_handler/userinfo.js
+        获取用户基本信息/router_handler/userinfo.js
+
+    2 更新用户基本信息接口 
+        定义路由和处理函数/router/userinfo.js /router_handler/userinfo.js 
+        验证表单数据在/schema/user.js中定义 id nickname email的验证规则
+        导入和调用验证数据中间件 传入规则对象 /router/userinfo.js
+        更新用户基本信息 /router_handler/userinfo.js 
+
+    3 重置密码
+        定义路由和处理函数/router/userinfo.js /router_handler/userinfo.js 
+        验证表单数据/schema/user.js
+        导入和调用验证数据中间件 传入规则对象 /router/userinfo.js
+        重置密码 /router_handler/userinfo.js 
+
+    4 更换用户头像
+        定义路由和处理函数/router/userinfo.js /router_handler/userinfo.js 
+        验证表单数据/schema/user.js
+        导入和调用验证数据中间件 传入规则对象 /router/userinfo.js
+        更新用户头像 /router_handler/userinfo.js 
+
+
+
+四 文章分类
+
+    1 创建表结构 ev_article_cate
+    CREATE TABLE ev_article_cate (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL UNIQUE,
+		alias VARCHAR(255) NOT NULL UNIQUE,
+		is_delete TINYINT  NOT NULL DEFAULT 0 COMMENT "0：存在 ，1：不存在"
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+    2 获取文章分类列表
+        定义路由和处理函数/router/artcate.js /router_handler/artcate.js /app.js
+        获取文章分类列表/router_handler/artcate.js
+
+    3 新增文章分类
+        定义路由和处理函数/router/artcate.js /router_handler/artcate.js /app.js
+        验证表单数据/schema/artcate.js /router/artcate.js
+        查询“分类名称”和“分类别名”是否被占用/router_handler/artcate.js
+        实现新增文章分类的功能/router_handler/artcate.js
+    
+    4 根据id删除文章分类
+        定义路由和处理函数/router/artcate.js /router_handler/artcate.js
+        验证表单数据/schema/artcate.js /router/artcate.js
+        实现根据id删除文章分类的功能/router_handler/artcate.js
+
+    5 根据id获取文章分类
+        定义路由和处理函数/router/artcate.js /router_handler/artcate.js
+        验证表单数据/schema/artcate.js /router/artcate.js
+        实现根据id删除文章分类的功能/router_handler/artcate.js
+    
+    6 根据id更新文章分类
+        定义路由和处理函数/router/artcate.js /router_handler/artcate.js
+        验证表单数据/schema/artcate.js /router/artcate.js
+        实现 根据id更新文章分类的功能/router_handler/artcate.js
+    
+
+
+五 文章管理
+
+    1 创建表结构 ev_articles
+    CREATE TABLE ev_articles (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        content text NOT NULL,
+        cover_img VARCHAR(255) NOT NULL,
+        pub_date VARCHAR(255) NOT NULL,
+        state VARCHAR(255) NOT NULL,
+		is_delete TINYINT(1)  NOT NULL DEFAULT 0 COMMENT "0：存在 ，1：不存在",
+        cate_id int NOT NULL,
+        author_id int NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+    2 发布新文章
+        定义路由和处理函数/router/article.js /router_handler/article.js
+        使用multer解析表单数据
+        验证表单数据
+        实现发布文章的功能

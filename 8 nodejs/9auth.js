@@ -170,3 +170,91 @@
 //     推荐的做法是把JWT 放在 HTTP请求头的 Authorization 字段中，格式如下:
 //     Authorization:Bearer <token>
 
+
+
+
+// 7 express中使用jwt 
+
+// 安装如下两个包： npm install jsonwebtoken express-jwt
+// jsonwebtoken: 用于生成JWT字符串
+// express-jwt: 用于将JWT字符串还原成JSON对象
+
+// const express = require('express')
+// const jwt = require('jsonwebtoken') // 引入jsonwebtoken包
+// const { expressjwt: expressJwt } = require('express-jwt')  // 引入 express-jwt 包
+
+// const app = express()
+
+// app.use(express.json())  // 配置解析表单数据的中间件
+// app.use(express.urlencoded({ extended: false })) // 配置解析表单数据的中间件
+
+// const cors = require('cors') // 配置 cors 中间件，从而解决跨域问题
+// app.use(cors())
+
+// // 定义 secret 密钥
+// // 为了保证 JWT 字符串的安全性，防止 JWT,字符串在网络传输过程中被别人破解，我们需要专门定义一个用于加密和解密的 secret 密钥:
+// // ① 当生成 JWT 字符串的时候，需要使用 secret 密钥对用户的信息进行加密，最终得到加密好的 JWT 字符串
+// // ② 当把 JWT 字符串解析还原成 JSON 对象的时候，需要使用 secret 密钥进行解密
+// const secretKey = 'itheima2019'
+
+// // 将 JWT 字符串还原为 JSON 对象
+// // 客户端每次在访问那些有权限接口的时候，都需要主动通过请求头中的 Authorization 字段，将 Token 字符串发送到服务器进行身份认证。
+// // 此时，服务器可以通过 express-jwt 这个中间件，自动将客户端发送过来的 Token 解析还原成 JSON 对象:
+// app.use(expressJwt({ secret: secretKey,algorithms: ['HS256'] }).unless({ path: [/^\/api\//] })) // 这里要用v6版本 否则不能这么写
+// // unless({ path: [/^\/api\//] }) 表示除了以 /api/ 开头的接口，其他接口都需要进行身份认证
+
+// // 登录接口
+// app.post('/api/login', function (req, res) { 
+    
+//     const userinfo = req.body // 接收客户端发送的用户信息
+
+//     if (userinfo.username !== 'admin' || userinfo.password !== '123456') {  // 验证用户信息
+//         return res.send({ status: 1, message: '登录失败' }) // 登录失败
+//     }    
+
+//     // 登录成功
+//     // 调用 jwt.sign() 方法生成 JWT 字符串，第一个参数是规则对象，第二个参数是加密的密钥，第三个参数是配置对象，可以指定 token 的有效期
+//     const tokenStr = jwt.sign({ username: userinfo.username }, secretKey, { expiresIn: '30s' }) // 千万不要将密码加密到token字符串中
+
+//     res.send({
+//         status: 0,
+//         message: '登录成功',
+//         token: tokenStr // 将 JWT 字符串，响应给客户端
+//     })
+// })
+
+// // 这是一个有权限的接口
+// app.get('/admin/getinfo', (req, res) => { // 只有登录成功，并且携带了正确的 JWT Token，才能访问此接口
+
+//     // 使用 req.user 获取用户信息
+//     // 当 express-jwt 这个中间件配置成功之后，即可在那些有权限的接口中，使用 req.auth 对象，来访问从 JWT 字符串中解析出来的用户信息了，示例代码如下:
+//     console.log(req.auth)
+
+//     res.send({
+//         status: 0,
+//         message: '获取用户信息成功',
+//         data: req.auth // 获取用户信息
+//     })
+// })
+
+// // 捕获解析 JWT 失败后产生的错误
+// // 当使用 express-jwt 解析 Token 字符串时，如果客户端发送过来的 Token 字符串过期或不合法，会产生一个解析失败的错误，影响项目的正常运行。
+// // 我们可以通过 Express 的错误中间件，捕获这个错误并进行相关的处理，示例代码如下
+// app.use((err, req, res, next) => { // 捕获验证失败后的错误
+//     if (err.name === 'UnauthorizedError') { // token解析失败的错误
+//         return res.send({ status: 401, message: '无效的 Token' }) 
+//     }
+//     res.send({ status: 500, message: '未知的错误' }) // 其他原因导致的错误
+// })
+
+// app.listen(80, function () { // 启动服务器
+//     console.log('express server running at http://127.0.0.1')
+// })
+
+// 验证 
+// 1 使用postman 访问post http://127.0.0.1/api/login body www-form-urlencoded username admin password 123456
+//   会返回一个token
+
+// 2 使用postman 访问get http://127.0.0.1/admin/getinfo Headers
+//   请求头添加 Authorization:Bearer <token>
+//   会返回用户信息
