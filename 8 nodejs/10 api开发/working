@@ -162,6 +162,6 @@ CREATE TABLE ev_users (
 
     2 发布新文章
         定义路由和处理函数/router/article.js /router_handler/article.js
-        使用multer解析表单数据
+        使用multer解析表单数据 (Multer 是一个专门用于处理 multipart/form-data 类型的 Node.js 中间件。 它基于 busboy 构建，主要用于上传文件和解析混合表单。)
         验证表单数据
         实现发布文章的功能
